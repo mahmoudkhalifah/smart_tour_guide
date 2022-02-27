@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+///You MUST specify height and width of the button
+///You MUST specify on pressed function
+///You MUST Specify child it or tree of children
+///You CAN change color of it but it's default color is our primary color
+///You CAN change text color but it's default is white
+
 class DefaultButton extends StatefulWidget {
   DefaultButton({
     Key? key,

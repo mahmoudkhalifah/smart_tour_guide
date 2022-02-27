@@ -4,11 +4,22 @@ import 'package:flutter/material.dart';
 
 import 'default_button.dart';
 
+
+/// You MUST specify photo's url
+/// You MUST specify description text
+/// You MUST specify on pressed function for learn more button
+
+
+
+
+
+
+
 class PlaceCard extends StatefulWidget {
   PlaceCard({
     Key? key,
     required this.onPressed,
-    required this.text,
+    required this.description,
     required this.photoURL,
   }) : super(key: key);
 
@@ -16,7 +27,7 @@ class PlaceCard extends StatefulWidget {
   bool visitedClicked   = false;
 
   final Function() onPressed;
-  final String text;
+  final String description;
   final String photoURL;
 
   @override
@@ -84,7 +95,7 @@ class _PlaceCardState extends State<PlaceCard> {
             Column(
                 children:[
                   Text(
-                    widget.text,
+                    widget.description,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
