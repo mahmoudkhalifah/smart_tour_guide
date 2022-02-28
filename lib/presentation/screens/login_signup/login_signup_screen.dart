@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:app/Modules/login_signup/signup_card.dart';
-import 'package:app/modules/login_signup/login_card.dart';
-import 'package:app/shared/components/default_button.dart';
+import 'package:app/presentation/screens/login_signup/login_card.dart';
+import 'package:app/presentation/screens/login_signup/signup_card.dart';
+import 'package:app/presentation/widgets/default_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

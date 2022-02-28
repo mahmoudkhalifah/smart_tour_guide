@@ -107,37 +107,37 @@ class _PlaceCardState extends State<PlaceCard> {
                     height: 9,
                   ),
                   Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                    clipBehavior: Clip.hardEdge,
-                    child: ClipRRect(
-                      child: Image.network(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                      clipBehavior: Clip.hardEdge,
+                      child: ClipRRect(
+                        child: Image.network(
                           widget.photoURL,
                           height: 163,
                           width: 308,
                           fit: BoxFit.cover,
                         ),
                       )
-                    ),
+                  ),
 
                   SizedBox(
                     height: 9,
                   ),
                   Center(
                     child: DefaultButton(
-                      height: 35,
-                      width: 150,
-                      onPressed: widget.onPressed,
-                      child:Text(
-                        "Learn More",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      )
+                        height: 35,
+                        width: 150,
+                        onPressed: widget.onPressed,
+                        child:Text(
+                          "Learn More",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        )
                     ),
                   ),
-              ]
+                ]
             ),
           ],
         ),

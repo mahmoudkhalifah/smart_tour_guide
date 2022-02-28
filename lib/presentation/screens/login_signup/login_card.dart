@@ -1,4 +1,4 @@
-import 'package:app/shared/components/default_text_field.dart';
+import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginCard extends StatefulWidget {
