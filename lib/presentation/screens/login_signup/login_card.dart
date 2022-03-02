@@ -16,11 +16,12 @@ class _LoginCardState extends State<LoginCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         DefaultTextField(
-          label: "email or username",
-          prefixIcon: Icons.person,
-          controller: emailController
+            label: "email or username",
+            prefixIcon: Icons.person,
+            controller: emailController
         ),
         DefaultTextField(
           obsecure: passwordObsecure,
@@ -37,6 +38,15 @@ class _LoginCardState extends State<LoginCard> {
 
           ),
           controller: passwordController,
+        ),
+        TextButton(
+            onPressed: () {},
+            child: Text(
+              "forgot password ?",
+              style: TextStyle(
+                  color: Colors.grey
+              ),
+            )
         )
       ],
     );

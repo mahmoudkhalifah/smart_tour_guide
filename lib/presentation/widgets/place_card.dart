@@ -18,6 +18,7 @@ import 'default_button.dart';
 class PlaceCard extends StatefulWidget {
   PlaceCard({
     Key? key,
+    required this.name,
     required this.onPressed,
     required this.description,
     required this.photoURL,
@@ -29,6 +30,7 @@ class PlaceCard extends StatefulWidget {
   final Function() onPressed;
   final String description;
   final String photoURL;
+  final String name;
 
   @override
   _PlaceCardState createState() => _PlaceCardState();
@@ -54,7 +56,7 @@ class _PlaceCardState extends State<PlaceCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Bey Citadal',
+                  widget.name,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

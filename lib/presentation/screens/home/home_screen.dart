@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
               padding: const EdgeInsets.all(20.0),
               child:PlaceCard(
+                name: "Bey Citadel",
                 description: 'Is a 15th-century defensive fortress located on the Mediterranean sea coast, '
                     'inssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the '
                     'Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress'
