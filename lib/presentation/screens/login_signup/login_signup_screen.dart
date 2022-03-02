@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/presentation/screens/home/home_screen.dart';
 import 'package:app/presentation/screens/login_signup/login_card.dart';
 import 'package:app/presentation/screens/login_signup/signup_card.dart';
 import 'package:app/presentation/screens/login_signup/social_media_button.dart';
@@ -113,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           DefaultButton(
                             onPressed: (){
-
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                             },
                             width: 235,
                             height: 44,
