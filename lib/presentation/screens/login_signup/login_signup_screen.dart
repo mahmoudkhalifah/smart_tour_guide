@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: CircleAvatar(
                     radius: MediaQuery.of(context).size.width,
                     child: Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.8:MediaQuery.of(context).size.height*0.5),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.8:MediaQuery.of(context).size.height*0.45),
                       child: Image.asset(
                         "assets/images/pyramids.jpg",
                       ),
@@ -128,9 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SocialMediaButton(url: "https://icons-for-free.com/iconfiles/png/512/facebook+logo+logo+website+icon-1320190502625926346.png"),
-                              SocialMediaButton(url: "https://ra.ac.ae/wp-content/uploads/2020/01/logo-twitter-icon-symbol-0.png"),
-                              SocialMediaButton(url: "https://freesvg.org/img/1534129544.png"),
+                              SocialMediaButton(name: "assets/images/fb.png"),
+                              SocialMediaButton(name: "assets/images/tw.png"),
+                              SocialMediaButton(name: "assets/images/go.png"),
                             ],
                           )
                         ],

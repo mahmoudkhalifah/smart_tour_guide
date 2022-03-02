@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 class SocialMediaButton extends StatelessWidget {
   SocialMediaButton({
     Key? key,
-    required this.url,
+    required this.name,
   }) : super(key: key);
 
-  String url;
+  String name;
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: name,
       onPressed: () {},
       elevation: 0,
       mini: true,
-      child: Image.network(url),
+      child: Image.asset(name),
       backgroundColor: Colors.white,
     );
   }

@@ -20,25 +20,25 @@ class _SignupCardState extends State<SignupCard> {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
+      children: [
         DefaultTextField(
-          label: "email or username",
-          prefixIcon: Icons.person,
-          controller: emailController
+            label: "email or username",
+            prefixIcon: Icons.person,
+            controller: emailController
         ),
         DefaultTextField(
           obsecure: passwordObsecure,
           label: "password",
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
-              onPressed: () {
-                passwordObsecure = !passwordObsecure;
-                setState(() {
+            onPressed: () {
+              passwordObsecure = !passwordObsecure;
+              setState(() {
 
-                });
-              },
-              icon: passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
-            ),
+              });
+            },
+            icon: passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
+          ),
           controller: passwordController,
         ),
         DefaultTextField(

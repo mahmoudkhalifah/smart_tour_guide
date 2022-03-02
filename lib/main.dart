@@ -2,12 +2,13 @@
 
 import 'package:app/presentation/screens/home/home_screen.dart';
 import 'package:app/presentation/screens/login_signup/login_signup_screen.dart';
+import 'package:app/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
       MaterialApp(
-        home: LoginScreen(),
+        home: SplashScreen(),
         debugShowMaterialGrid: false,
         //home: HomeScreen(),
         debugShowCheckedModeBanner: false,
