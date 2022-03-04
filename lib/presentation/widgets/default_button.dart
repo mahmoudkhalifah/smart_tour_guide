@@ -15,6 +15,7 @@ class DefaultButton extends StatefulWidget {
     required this.child,
     this.color,
     this.textColor,
+    this.borderColor
   }) : super(key: key);
 
   final double width;
@@ -23,6 +24,7 @@ class DefaultButton extends StatefulWidget {
   final Widget child;
   final Color? color;
   final Color? textColor;
+  final Color? borderColor;
 
   @override
   State<DefaultButton> createState() => _DefaultButtonState();
@@ -35,7 +37,10 @@ class _DefaultButtonState extends State<DefaultButton> {
       elevation: 0,
       onPressed: widget.onPressed,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(22),
+          side: BorderSide(
+              color: widget.borderColor ?? Colors.transparent
+          )
       ),
       minWidth: widget.width,
       height: widget.height,

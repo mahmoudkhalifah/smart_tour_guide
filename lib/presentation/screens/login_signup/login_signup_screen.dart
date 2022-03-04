@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           Positioned(
-            bottom: MediaQuery.of(context).size.height*0.65,
+            bottom: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.7:MediaQuery.of(context).size.height*0.72,
             right: -MediaQuery.of(context).size.width*0.5,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: CircleAvatar(
                     radius: MediaQuery.of(context).size.width,
                     child: Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.8:MediaQuery.of(context).size.height*0.45),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.82:MediaQuery.of(context).size.height*0.55),
                       child: Image.asset(
                         "assets/images/pyramids.jpg",
                       ),
@@ -114,11 +114,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           DefaultButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                             },
                             width: 235,
                             height: 44,
                             child: isLogin?Text("Login"):Text("Signup"),
+                          ),
+                          DefaultButton(
+                            onPressed: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            },
+                            width: 235,
+                            height: 44,
+                            child: Text("Enter as guest"),
+                            color: Colors.white,
+                            textColor: Theme.of(context).colorScheme.primary,
+                            borderColor: Theme.of(context).colorScheme.primary,
                           ),
                           Text(
                             "OR",
