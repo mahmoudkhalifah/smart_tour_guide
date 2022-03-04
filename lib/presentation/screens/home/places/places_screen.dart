@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:app/presentation/widgets/place_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlacesScreen extends StatefulWidget {
@@ -13,6 +16,19 @@ class _PlacesScreenState extends State<PlacesScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          width: 350,
+          height: 45,
+          child: TextFormField(
+            decoration: InputDecoration(
+                label: Text("Search"),
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                )
+            ),
+          ),
+        ),
         Padding(
             padding: const EdgeInsets.all(20.0),
             child:PlaceCard(

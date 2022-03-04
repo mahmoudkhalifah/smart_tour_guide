@@ -43,13 +43,13 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         controller: widget.controller,
         keyboardType: widget.type,
         decoration: InputDecoration(
-        label: Text(widget.label),
-        hintText: widget.hintText,
-        prefixIcon: Icon(
-          widget.prefixIcon,
-        ),
-        suffixIcon: widget.suffixIcon
-      )
+            label: Text(widget.label),
+            hintText: widget.hintText,
+            prefixIcon: Icon(
+              widget.prefixIcon,
+            ),
+            suffixIcon: widget.suffixIcon
+        )
     );
   }
 }

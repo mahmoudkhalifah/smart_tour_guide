@@ -63,34 +63,30 @@ class _PlaceCardState extends State<PlaceCard> {
                     color: Color.fromRGBO(100, 115, 107, 1),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: (){
-                        setState(() {
-                          widget.visitedClicked =!widget.visitedClicked;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.add_task_outlined,
-                        color: widget.visitedClicked? Colors.orange : Colors.black,
-                      ),
-                      iconSize: 24,
-                    ),
-                    IconButton(
-                      onPressed: (){
-                        setState(() {
-                          widget.favouriteClicked = !widget.favouriteClicked;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.favorite_rounded,
-                        color: widget.favouriteClicked? Colors.red : Colors.grey,
-                      ),
-                      iconSize: 24,
-                    ),
-                  ],
+                Spacer(),
+                IconButton(
+                  onPressed: (){
+                    setState(() {
+                      widget.visitedClicked =!widget.visitedClicked;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.add_task_outlined,
+                    color: widget.visitedClicked? Colors.orange : Colors.black,
+                  ),
+                  iconSize: 24,
+                ),
+                IconButton(
+                  onPressed: (){
+                    setState(() {
+                      widget.favouriteClicked = !widget.favouriteClicked;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.favorite_rounded,
+                    color: widget.favouriteClicked? Colors.red : Colors.grey,
+                  ),
+                  iconSize: 24,
                 )
               ],
             ),

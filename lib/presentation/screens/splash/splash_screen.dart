@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
         Duration(seconds: 2),
             () => Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (c, a1, a2) => LoginScreen(),
-            transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+            pageBuilder: (context, a1, a2) => LoginScreen(),
+            transitionsBuilder: (context, anim, a2, child) => FadeTransition(opacity: anim, child: child),
             transitionDuration: Duration(milliseconds: 1000),
           ),
         )

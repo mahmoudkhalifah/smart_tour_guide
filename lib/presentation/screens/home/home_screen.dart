@@ -2,7 +2,6 @@
 
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:app/presentation/screens/home/places/places_screen.dart';
-import 'package:app/presentation/widgets/place_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: widget.isHome?PlacesScreen():MenuScreen(),   //child changes regarding to bottom bar selection
+        child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(10),child: widget.isHome?PlacesScreen():MenuScreen(),
+            )
+        ),   //child changes regarding to bottom bar selection
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 4,
@@ -76,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      resizeToAvoidBottomInset: false,
     );
   }
 }

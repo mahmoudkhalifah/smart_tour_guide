@@ -1,3 +1,4 @@
+import 'package:app/presentation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,11 @@ class _LoginCardState extends State<LoginCard> {
           controller: passwordController,
         ),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => ForgotPasswordScreen()
+              ));
+            },
             child: Text(
               "forgot password ?",
               style: TextStyle(

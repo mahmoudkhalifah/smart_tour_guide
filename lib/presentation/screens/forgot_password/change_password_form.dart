@@ -1,33 +1,26 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app/presentation/widgets/default_button.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
-class SignupCard extends StatefulWidget {
-  SignupCard({Key? key}) : super(key: key);
-
-  TextEditingController emailController = TextEditingController();
+class ChangePasswordForm extends StatefulWidget {
+  ChangePasswordForm({Key? key}) : super(key: key);
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   bool passwordObsecure = true;
   bool confirmPasswordObsecure = true;
-
   @override
-  _SignupCardState createState() => _SignupCardState();
+  _ChangePasswordFormState createState() => _ChangePasswordFormState();
 }
 
-class _SignupCardState extends State<SignupCard> {
-
-
-
+class _ChangePasswordFormState extends State<ChangePasswordForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        DefaultTextField(
-            label: "email or username",
-            prefixIcon: Icons.person,
-            controller: widget.emailController
-        ),
         DefaultTextField(
           obsecure: widget.passwordObsecure,
           label: "password",
@@ -57,7 +50,7 @@ class _SignupCardState extends State<SignupCard> {
             icon: widget.confirmPasswordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
           controller: widget.confirmPasswordController,
-        )
+        ),
       ],
     );
   }
