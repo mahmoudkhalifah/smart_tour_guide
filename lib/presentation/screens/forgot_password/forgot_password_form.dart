@@ -11,9 +11,14 @@ class ForgotPasswordForm extends StatelessWidget {
     return Column(
       children: [
         DefaultTextField(
-            prefixIcon: Icons.person,
-            label: "email or username",
-            controller: emailController
+          prefixIcon: Icons.person,
+          label: "email or username",
+          controller: emailController,
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
         ),
       ],
     );

@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLogin = true;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Opacity(
                 opacity: 0.8,
                 child: Container(
-                    height: 523,
+                    height: 555,
                     width: 315,
                     decoration: BoxDecoration(
                         color: Color(0xFFFFFFFF),
@@ -64,9 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ]
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 41.5,vertical: 50),
+                      padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 40),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
@@ -108,18 +108,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                              height: 180,
-                              child:isLogin?LoginCard():SignupCard()
+                          SizedBox(height: 10,),
+                          Form(
+                            key: formKey,
+                            child:isLogin?LoginCard():SignupCard(),
                           ),
+                          Spacer(),
                           DefaultButton(
                             onPressed: (){
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                              if(formKey.currentState!.validate()) {
+
+                              }
                             },
                             width: 235,
                             height: 44,
                             child: isLogin?Text("Login"):Text("Signup"),
                           ),
+                          SizedBox(height: 10,),
                           DefaultButton(
                             onPressed: (){
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -131,12 +136,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             textColor: Theme.of(context).colorScheme.primary,
                             borderColor: Theme.of(context).colorScheme.primary,
                           ),
+                          SizedBox(height: 10,),
                           Text(
                             "OR",
                             style: TextStyle(
                                 color: Colors.grey
                             ),
                           ),
+                          SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

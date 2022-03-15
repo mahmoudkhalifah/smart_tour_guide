@@ -35,6 +35,11 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             icon: widget.passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
           controller: widget.passwordController,
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
         ),
         DefaultTextField(
           obsecure: widget.confirmPasswordObsecure,
@@ -50,6 +55,11 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             icon: widget.confirmPasswordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
           controller: widget.confirmPasswordController,
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
         ),
       ],
     );

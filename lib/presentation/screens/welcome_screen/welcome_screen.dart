@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -61,35 +63,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(
-                  top: 50
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Monuments',
-                    style: TextStyle(
-                      color: Color(0xffffb319),
-                      fontSize: 40.0,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Identifications',
-                    style: TextStyle(
-                      color: Color(0xffffb319),
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            Text(
+              'Monuments',
+              style: TextStyle(
+                color: Color(0xffffb319),
+                fontSize: 40.0,
               ),
             ),
-            const SizedBox(height: 100),
-            Container(
-              height: 400,
+            SizedBox(height: 10),
+            Text(
+              'Identifications',
+              style: TextStyle(
+                color: Color(0xffffb319),
+                fontSize: 40.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            //const SizedBox(height: 100),
+            Expanded(
               child: PageView.builder(
                 controller: welcomeController,
                 onPageChanged: (int index){
@@ -108,11 +99,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 itemBuilder: (context, index) => buildBoardingItem(welcome[index]),
                 itemCount: welcome.length,
                 scrollDirection: Axis.horizontal,
-
-
               ),
             ),
-            const SizedBox(height: 50),
+            //const SizedBox(height: 50),
             Row(
               children:  [
                 SmoothPageIndicator(controller: welcomeController, count: welcome.length,effect: const ExpandingDotsEffect(
@@ -136,19 +125,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   backgroundColor: Color(0xffffb319),
                 ),
               ],
-
             ),
-
-            //SizedBox(height: 30),
-
-
-
           ],
         ),
       ),
     );
-
-
   }
   Widget buildBoardingItem(WelcomeModel model) =>  Column(
     crossAxisAlignment: CrossAxisAlignment.start,

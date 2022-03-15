@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:app/presentation/screens/login_signup/login_signup_screen.dart';
+import 'package:app/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Duration(seconds: 2),
             () => Navigator.of(context).pushReplacement(
           PageRouteBuilder(
-            pageBuilder: (context, a1, a2) => LoginScreen(),
+            pageBuilder: (context, a1, a2) => WelcomeScreen(),
             transitionsBuilder: (context, anim, a2, child) => FadeTransition(opacity: anim, child: child),
             transitionDuration: Duration(milliseconds: 1000),
           ),

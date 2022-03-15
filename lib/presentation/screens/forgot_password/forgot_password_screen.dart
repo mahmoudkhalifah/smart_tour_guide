@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, annotate_overrides
 
 import 'package:app/presentation/screens/forgot_password/forgot_password_form.dart';
 import 'package:app/presentation/widgets/default_button.dart';
@@ -9,7 +9,10 @@ import 'change_password_form.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   ForgotPasswordScreen({Key? key}) : super(key: key);
+
   bool isEmailFound = false;
+  final formKey = GlobalKey<FormState>();
+
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
@@ -41,13 +44,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                !widget.isEmailFound?ForgotPasswordForm():ChangePasswordForm(),
+                                Form(
+                                  key: widget.formKey,
+                                  child: !widget.isEmailFound?ForgotPasswordForm():ChangePasswordForm(),
+                                ),
                                 SizedBox(height: 15,),
                                 DefaultButton(
                                   onPressed: (){
-                                    widget.isEmailFound = true;
+                                    if(widget.formKey.currentState!.validate())
+                                    {
+                                      widget.isEmailFound = true;
+                                    }
                                     setState(() {
-
                                     });
                                   },
                                   width: 235,

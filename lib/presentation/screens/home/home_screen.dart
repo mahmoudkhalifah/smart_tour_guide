@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
-import 'package:app/presentation/screens/home/places/places_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../../test_data.dart';
+import 'contents/places_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   bool isHome = true;
@@ -18,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Center(
             child: Padding(
-              padding: EdgeInsets.all(10),child: widget.isHome?PlacesScreen():MenuScreen(),
+              padding: EdgeInsets.all(10),child: widget.isHome?PlacesScreen(list: places):MenuScreen(),
             )
         ),   //child changes regarding to bottom bar selection
       ),

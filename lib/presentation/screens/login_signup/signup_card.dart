@@ -24,9 +24,14 @@ class _SignupCardState extends State<SignupCard> {
     return Column(
       children: [
         DefaultTextField(
-            label: "email or username",
-            prefixIcon: Icons.person,
-            controller: widget.emailController
+          label: "email or username",
+          prefixIcon: Icons.person,
+          controller: widget.emailController,
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
         ),
         DefaultTextField(
           obsecure: widget.passwordObsecure,
@@ -41,6 +46,11 @@ class _SignupCardState extends State<SignupCard> {
             },
             icon: widget.passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
           controller: widget.passwordController,
         ),
         DefaultTextField(
@@ -56,6 +66,11 @@ class _SignupCardState extends State<SignupCard> {
             },
             icon: widget.confirmPasswordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
+          validator: (value) {
+            if(value!.isEmpty) {
+              return "this field can't be empty";
+            }
+          },
           controller: widget.confirmPasswordController,
         )
       ],
