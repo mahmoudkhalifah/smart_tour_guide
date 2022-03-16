@@ -4,6 +4,8 @@ import 'package:app/presentation/screens/home/home_screen.dart';
 import 'package:app/presentation/screens/login_signup/login_signup_screen.dart';
 import 'package:app/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'presentation/screens/camera/camera_screen.dart';
+import 'package:camera/camera.dart';
 
 void main() {
   runApp(

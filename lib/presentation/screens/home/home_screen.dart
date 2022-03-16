@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/presentation/screens/camera/camera_screen.dart';
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CameraScreen(),
+            ),
+          );
+        },
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(
           Icons.camera_alt_rounded,
