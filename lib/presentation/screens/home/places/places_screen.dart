@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/presentation/screens/home/contents/place_card.dart';
+import 'package:app/presentation/screens/home/places/place_card.dart';
 import 'package:app/presentation/screens/place_info/place_info_screen.dart';
 import 'package:app/presentation/screens/statues/statues_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../test_data.dart';
@@ -45,16 +44,16 @@ class _PlacesScreenState extends State<PlacesScreen> {
               isAvailable: widget.list[index]["isAvailable"],
               name: widget.list[index]["name"],
               description: widget.list[index]["description"],
-              photoURL:widget.list[index]["photoURL"],
+              photoURL:widget.list[index]["photosURL"][0],
               onPressed: () {
                 //naviagtor push widget.places[index]
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => PlaceInfoScreen()
+                    builder: (context) => PlaceInfoScreen(title:widget.list[index]["name"], info: widget.list[index])
                 ));
               },
               onPressedBrowse: ()
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => StatuesScreeen(list:statues)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => StatuesScreeen(title: widget.list[index]["name"],list:statues)));
               },
             ),
             itemCount: widget.list.length,

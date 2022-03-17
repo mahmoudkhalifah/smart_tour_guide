@@ -52,12 +52,17 @@ class _PlaceCardState extends State<PlaceCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(100, 115, 107, 1),
+                Expanded(
+                  child: Text(
+                    widget.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(100, 115, 107, 1),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -72,10 +77,11 @@ class _PlaceCardState extends State<PlaceCard> {
                     ),
                     Text(
                       "Available",
+                      overflow: TextOverflow.fade,
                       style: TextStyle(color: Colors.green, fontSize: 15),
                     )
                   ]),
-                Spacer(),
+                //Spacer(),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -133,30 +139,30 @@ class _PlaceCardState extends State<PlaceCard> {
               ),
               Row(
                 mainAxisAlignment: widget.isAvailable
-                    ? MainAxisAlignment.spaceBetween
+                    ? MainAxisAlignment.spaceEvenly
                     : MainAxisAlignment.center,
                 children: [
                   DefaultButton(
                       height: 35,
-                      width: 150,
+                      width: 125,
                       onPressed: widget.onPressed,
                       child: Text(
                         "Learn More",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 15,
                         ),
                       )),
                   if (widget.isAvailable)
                     DefaultButton(
                         height: 35,
-                        width: 150,
+                        width: 125,
                         onPressed: widget.onPressedBrowse!,
                         child: Text(
                           "Browse Place",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 15,
                           ),
                         )),
                 ],

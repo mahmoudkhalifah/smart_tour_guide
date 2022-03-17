@@ -1,23 +1,40 @@
-// ignore_for_file: prefer_const_constructors
+// ignore-for-file: prefer_const_constructors
 
+
+
+
+
+
+
+
+
+
+import 'dart:io';
+
+import 'package:app/presentation/screens/statue_info/voice_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app/presentation/screens/camera/after_capture_Statue_info_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PlaceInfoScreen extends StatefulWidget {
+class AfterCaptureStatueInfoScreen extends StatefulWidget {
+  final File imageFile;
+  final List<File> fileList;
   final info;
-  final String title;
 
-  const PlaceInfoScreen({Key? key, required this.info,required this.title}) : super(key: key);
+  const AfterCaptureStatueInfoScreen({
+    required this.imageFile,
+    required this.fileList,
+    required this.info,
+  });
+
   @override
-  State<PlaceInfoScreen> createState() => _PlaceInfoScreenState();
+  State<AfterCaptureStatueInfoScreen> createState() => _AfterCaptureStatueInfoScreenState();
 }
 
-class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
+class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScreen> {
   int activeIndex = 0;
-  bool favouriteClicked = false;
-  bool visitedClicked = false;
+
   late List imagesPath;
 
   @override
@@ -25,50 +42,23 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
     imagesPath = widget.info["photosURL"];
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text(widget.info["name"]),
         elevation: 0,
-        title: Text(widget.title),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
             start: 40.0, top: 10, end: 40, bottom: 10),
         child: Column(
           children: [
-            Row(
-              children: [
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      visitedClicked = !visitedClicked;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.add_task_outlined,
-                    color: visitedClicked ? Colors.orange : Colors.black,
-                  ),
-                  iconSize: 24,
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      favouriteClicked = !favouriteClicked;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.favorite_rounded,
-                    color: favouriteClicked ? Colors.red : Colors.grey,
-                  ),
-                  iconSize: 24,
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
+            // Expanded(
+            //   child: Image.file(widget.imageFile),
+            // ),
             CarouselSlider.builder(
               options: CarouselOptions(
                 height: 170,
@@ -108,6 +98,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                 ),
               ),
             ),
+            VoicePlayer()
           ],
         ),
       ),
@@ -119,6 +110,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
         ),
+        
         child: Image.network(
           imagePath,
           fit: BoxFit.cover,
@@ -134,3 +126,11 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
         ),
       );
 }
+
+
+
+
+
+
+
+

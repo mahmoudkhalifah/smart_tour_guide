@@ -79,13 +79,13 @@ class _StatuesCardState extends State<StatuesCard> {
               ),
               DefaultButton(
                   height: 35,
-                  width: 150,
+                  width: 125,
                   onPressed: widget.onPressed,
                   child: Text(
                     "Learn More",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 15,
                     ),
                   )),
             ]),

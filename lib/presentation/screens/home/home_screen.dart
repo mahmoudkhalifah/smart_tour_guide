@@ -5,7 +5,7 @@ import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../test_data.dart';
-import 'contents/places_screen.dart';
+import 'places/places_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   bool isHome = true;

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:app/presentation/screens/camera/after_capture_Statue_info_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../main.dart';
+import '../../../test_data.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -260,22 +262,25 @@ class _CameraScreenState extends State<CameraScreen>
                                           left: 8.0,
                                           right: 8.0,
                                         ),
-                                        child : TextButton(
+                                        child: TextButton(
                                           onPressed: () => showDialog(
                                             context: context,
                                             builder: (context) => AlertDialog(
-                                              title:  Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children :[
+                                              title: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
                                                   Text(
-                                                  'Snap Tips',
-                                                  style: TextStyle(
+                                                    'Snap Tips',
+                                                    style: TextStyle(
                                                       color: Colors.grey[800],
-                                                      fontWeight: FontWeight.w900,
-                                                      fontStyle: FontStyle.italic,
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       fontSize: 40,
+                                                    ),
                                                   ),
-                                                ),
                                                   SizedBox(
                                                     height: 20.0,
                                                   ),
@@ -292,7 +297,8 @@ class _CameraScreenState extends State<CameraScreen>
                                                       'Place the object in the center.',
                                                       style: TextStyle(
                                                         fontSize: 20,
-                                                        fontStyle: FontStyle.italic,
+                                                        fontStyle:
+                                                            FontStyle.italic,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -302,7 +308,8 @@ class _CameraScreenState extends State<CameraScreen>
                                                       'For more accurate recognition, make sure the picture features only one object.',
                                                       style: TextStyle(
                                                         fontSize: 20,
-                                                        fontStyle: FontStyle.italic,
+                                                        fontStyle:
+                                                            FontStyle.italic,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -312,7 +319,8 @@ class _CameraScreenState extends State<CameraScreen>
                                                       'If the object is too big, take a photo to all object not a part of it.',
                                                       style: TextStyle(
                                                         fontSize: 20,
-                                                        fontStyle: FontStyle.italic,
+                                                        fontStyle:
+                                                            FontStyle.italic,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -323,7 +331,8 @@ class _CameraScreenState extends State<CameraScreen>
                                               ),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () => Navigator.pop(context),
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
                                                   child: Text('Got It'),
                                                 ),
                                               ],
@@ -467,6 +476,16 @@ class _CameraScreenState extends State<CameraScreen>
                                                 );
 
                                                 refreshAlreadyCapturedImages();
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                      AfterCaptureStatueInfoScreen(
+                                                        info: statues[0],
+                                                        imageFile: _imageFile!,
+                                                        fileList: allFileList,
+                                                    ),
+                                                  ),
+                                                );
                                               },
                                         child: Stack(
                                           alignment: Alignment.center,
@@ -499,15 +518,15 @@ class _CameraScreenState extends State<CameraScreen>
                                       InkWell(
                                         onTap: _imageFile != null
                                             ? () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PreviewScreen(
-                                                      imageFile: _imageFile!,
-                                                      fileList: allFileList,
-                                                    ),
-                                                  ),
-                                                );
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //    PreviewScreen(
+                                                //       imageFile: _imageFile!,
+                                                //       fileList: allFileList,
+                                                //     ),
+                                                //   ),
+                                                // );
                                               }
                                             : null,
                                         child: Container(
@@ -546,7 +565,7 @@ class _CameraScreenState extends State<CameraScreen>
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
-                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     16.0, 8.0, 16.0, 8.0),

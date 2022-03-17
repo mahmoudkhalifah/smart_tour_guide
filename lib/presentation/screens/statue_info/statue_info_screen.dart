@@ -1,74 +1,40 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/presentation/screens/statue_info/voice_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PlaceInfoScreen extends StatefulWidget {
+class StatueInfoScreen extends StatefulWidget {
   final info;
-  final String title;
 
-  const PlaceInfoScreen({Key? key, required this.info,required this.title}) : super(key: key);
+  const StatueInfoScreen({Key? key, required this.info}) : super(key: key);
   @override
-  State<PlaceInfoScreen> createState() => _PlaceInfoScreenState();
+  State<StatueInfoScreen> createState() => _StatueInfoScreenState();
 }
 
-class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
+class _StatueInfoScreenState extends State<StatueInfoScreen> {
   int activeIndex = 0;
-  bool favouriteClicked = false;
-  bool visitedClicked = false;
   late List imagesPath;
-
   @override
   void initState() {
     imagesPath = widget.info["photosURL"];
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text(widget.info["name"]),
         elevation: 0,
-        title: Text(widget.title),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
             start: 40.0, top: 10, end: 40, bottom: 10),
         child: Column(
           children: [
-            Row(
-              children: [
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      visitedClicked = !visitedClicked;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.add_task_outlined,
-                    color: visitedClicked ? Colors.orange : Colors.black,
-                  ),
-                  iconSize: 24,
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      favouriteClicked = !favouriteClicked;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.favorite_rounded,
-                    color: favouriteClicked ? Colors.red : Colors.grey,
-                  ),
-                  iconSize: 24,
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
             CarouselSlider.builder(
               options: CarouselOptions(
                 height: 170,
@@ -108,6 +74,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                 ),
               ),
             ),
+            VoicePlayer()
           ],
         ),
       ),
