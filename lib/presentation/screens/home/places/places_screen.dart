@@ -49,7 +49,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
               onPressed: () {
                 //naviagtor push widget.places[index]
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => PlaceInfoScreen(title:widget.list[index]["name"], info: widget.list[index])
+                    builder: (context) => PlaceInfoScreen(info: widget.list[index])
                 ));
               },
               onPressedBrowse: ()

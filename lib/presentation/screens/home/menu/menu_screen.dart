@@ -34,6 +34,25 @@ class MenuScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
+            AppLocalizations.of(context).translate("favourite statues"),
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          leading: Icon(
+            Icons.favorite,
+            color: Colors.red,
+          ),
+        ),
+        const Divider(
+          height: 20,
+          thickness: 1,
+          color: Colors.grey,
+        ),
+        ListTile(
+          title: Text(
             AppLocalizations.of(context).translate("visited places"),
             style: TextStyle(
               fontSize: 20.0,

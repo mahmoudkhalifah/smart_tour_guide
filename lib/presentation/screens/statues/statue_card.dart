@@ -22,6 +22,9 @@ class StatuesCard extends StatefulWidget {
 }
 
 class _StatuesCardState extends State<StatuesCard> {
+  bool isFavourite = false;
+  bool isVisited = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,13 +40,34 @@ class _StatuesCardState extends State<StatuesCard> {
         ),
         child: Column(
           children: [
-            Text(
-              widget.name,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color.fromRGBO(100, 115, 107, 1),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(100, 115, 107, 1),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isFavourite = !isFavourite;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.favorite_rounded,
+                    color: isFavourite ? Colors.red : Colors.grey,
+                  ),
+                )
+              ]
             ),
             SizedBox(
               width: 10,

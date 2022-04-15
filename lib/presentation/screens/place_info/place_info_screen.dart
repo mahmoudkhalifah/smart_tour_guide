@@ -6,17 +6,16 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PlaceInfoScreen extends StatefulWidget {
   final Map info;
-  final String title;
 
-  const PlaceInfoScreen({Key? key, required this.info,required this.title}) : super(key: key);
+  const PlaceInfoScreen({Key? key, required this.info}) : super(key: key);
   @override
   State<PlaceInfoScreen> createState() => _PlaceInfoScreenState();
 }
 
 class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
   int activeIndex = 0;
-  bool favouriteClicked = false;
-  bool visitedClicked = false;
+  bool isFavourite = false;
+  bool isVisited = false;
   late List imagesPath;
 
   @override
@@ -31,7 +30,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: Text(widget.title),
+        title: Text(widget.info["name"]),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
@@ -40,28 +39,40 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
           children: [
             Row(
               children: [
-                Spacer(),
+                Expanded(
+                  child: Text(
+                    widget.info["name"],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(100, 115, 107, 1),
+                    ),
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      visitedClicked = !visitedClicked;
+                      isVisited = !isVisited;
                     });
                   },
                   icon: Icon(
                     Icons.add_task_outlined,
-                    color: visitedClicked ? Colors.orange : Colors.black,
+                    color: isVisited ? Colors.orange : Colors.black,
                   ),
                   iconSize: 24,
                 ),
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      favouriteClicked = !favouriteClicked;
+                      isFavourite = !isFavourite;
                     });
                   },
                   icon: Icon(
                     Icons.favorite_rounded,
-                    color: favouriteClicked ? Colors.red : Colors.grey,
+                    color: isFavourite ? Colors.red : Colors.grey,
                   ),
                   iconSize: 24,
                 ),

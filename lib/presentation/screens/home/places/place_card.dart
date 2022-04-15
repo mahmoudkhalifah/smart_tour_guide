@@ -32,8 +32,8 @@ class PlaceCard extends StatefulWidget {
 }
 
 class _PlaceCardState extends State<PlaceCard> {
-  bool favouriteClicked = false;
-  bool visitedClicked = false;
+  bool isFavourite = false;
+  bool isVisited = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,24 +84,24 @@ class _PlaceCardState extends State<PlaceCard> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      visitedClicked = visitedClicked;
+                      isVisited = !isVisited;
                     });
                   },
                   icon: Icon(
                     Icons.add_task_outlined,
-                    color: visitedClicked ? Colors.orange : Colors.black,
+                    color: isVisited ? Colors.orange : Colors.black,
                   ),
                   iconSize: 24,
                 ),
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      favouriteClicked = favouriteClicked;
+                      isFavourite = !isFavourite;
                     });
                   },
                   icon: Icon(
                     Icons.favorite_rounded,
-                    color: favouriteClicked ? Colors.red : Colors.grey,
+                    color: isFavourite ? Colors.red : Colors.grey,
                   ),
                   iconSize: 24,
                 )

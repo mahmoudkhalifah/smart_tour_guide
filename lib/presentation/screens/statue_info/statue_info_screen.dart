@@ -16,6 +16,7 @@ class StatueInfoScreen extends StatefulWidget {
 class _StatueInfoScreenState extends State<StatueInfoScreen> {
   int activeIndex = 0;
   late List imagesPath;
+  bool isFavourite = false;
   @override
   void initState() {
     imagesPath = widget.info["photosURL"];
@@ -27,7 +28,6 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.info["name"]),
         elevation: 0,
       ),
       body: Padding(
@@ -35,6 +35,35 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             start: 40.0, top: 10, end: 40, bottom: 10),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.info["name"],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(100, 115, 107, 1),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isFavourite = !isFavourite;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.favorite_rounded,
+                    color: isFavourite ? Colors.red : Colors.grey,
+                  ),
+                )
+              ]
+            ),
             CarouselSlider.builder(
               options: CarouselOptions(
                 height: 170,
