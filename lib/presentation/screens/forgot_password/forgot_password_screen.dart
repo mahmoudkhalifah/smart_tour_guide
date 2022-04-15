@@ -10,7 +10,6 @@ import 'change_password_form.dart';
 class ForgotPasswordScreen extends StatefulWidget {
   ForgotPasswordScreen({Key? key}) : super(key: key);
 
-  bool isEmailFound = false;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -18,6 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  bool isEmailFound = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,21 +46,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               children: [
                                 Form(
                                   key: widget.formKey,
-                                  child: !widget.isEmailFound?ForgotPasswordForm():ChangePasswordForm(),
+                                  child: !isEmailFound?ForgotPasswordForm():ChangePasswordForm(),
                                 ),
                                 SizedBox(height: 15,),
                                 DefaultButton(
                                   onPressed: (){
                                     if(widget.formKey.currentState!.validate())
                                     {
-                                      widget.isEmailFound = true;
+                                      isEmailFound = true;
                                     }
                                     setState(() {
                                     });
                                   },
                                   width: 235,
                                   height: 44,
-                                  child: !widget.isEmailFound?Text(AppLocalizations.of(context).translate("forgot password")):Text(AppLocalizations.of(context).translate("reset password")),
+                                  child: !isEmailFound?Text(AppLocalizations.of(context).translate("forgot password")):Text(AppLocalizations.of(context).translate("reset password")),
                                 ),
                               ],
                             )

@@ -3,7 +3,13 @@ import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SignupCard extends StatefulWidget {
-  SignupCard({Key? key}) : super(key: key);
+  const SignupCard({Key? key}) : super(key: key);
+
+  @override
+  _SignupCardState createState() => _SignupCardState();
+}
+
+class _SignupCardState extends State<SignupCard> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -13,21 +19,13 @@ class SignupCard extends StatefulWidget {
   bool confirmPasswordObsecure = true;
 
   @override
-  _SignupCardState createState() => _SignupCardState();
-}
-
-class _SignupCardState extends State<SignupCard> {
-
-
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         DefaultTextField(
           label: AppLocalizations.of(context).translate("email"),
           prefixIcon: Icons.person,
-          controller: widget.emailController,
+          controller: emailController,
           validator: (value) {
             if(value!.isEmpty) {
               return AppLocalizations.of(context).translate("validation");
@@ -35,17 +33,17 @@ class _SignupCardState extends State<SignupCard> {
           },
         ),
         DefaultTextField(
-          obsecure: widget.passwordObsecure,
+          obsecure: passwordObsecure,
           label: AppLocalizations.of(context).translate("password"),
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
             onPressed: () {
-              widget.passwordObsecure = !widget.passwordObsecure;
+              passwordObsecure = !passwordObsecure;
               setState(() {
 
               });
             },
-            icon: widget.passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
+            icon: passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
           validator: (value) {
             if(value!.isEmpty) {
@@ -53,20 +51,20 @@ class _SignupCardState extends State<SignupCard> {
               return AppLocalizations.of(context).translate("password validation");
             }
           },
-          controller: widget.passwordController,
+          controller: passwordController,
         ),
         DefaultTextField(
-          obsecure: widget.confirmPasswordObsecure,
+          obsecure: confirmPasswordObsecure,
           label: AppLocalizations.of(context).translate("confirm password"),
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
             onPressed: () {
-              widget.confirmPasswordObsecure = !widget.confirmPasswordObsecure;
+              confirmPasswordObsecure = !confirmPasswordObsecure;
               setState(() {
 
               });
             },
-            icon: widget.confirmPasswordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
+            icon: confirmPasswordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
           ),
           validator: (value) {
             if(value!.isEmpty) {
@@ -74,7 +72,7 @@ class _SignupCardState extends State<SignupCard> {
               return AppLocalizations.of(context).translate("confirm password validation");
             }
           },
-          controller: widget.confirmPasswordController,
+          controller: confirmPasswordController,
         )
       ],
     );

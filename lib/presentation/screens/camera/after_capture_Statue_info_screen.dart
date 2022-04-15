@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:io';
 
 import 'package:app/presentation/screens/statue_info/voice_player.dart';
@@ -8,7 +9,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class AfterCaptureStatueInfoScreen extends StatefulWidget {
   final File imageFile;
   final List<File> fileList;
-  final info;
+  final Map info;
 
   const AfterCaptureStatueInfoScreen({
     Key? key,
@@ -87,7 +88,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
                 ),
               ),
             ),
-            VoicePlayer()
+            const VoicePlayer()
           ],
         ),
       ),

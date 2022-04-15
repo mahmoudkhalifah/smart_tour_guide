@@ -5,7 +5,7 @@ import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatelessWidget {
-  MenuScreen({Key? key}) : super(key: key);
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +74,25 @@ class MenuScreen extends StatelessWidget {
             ),
           ),
           leading: Icon(Icons.error_outline),
+        ),
+        const Divider(
+          height: 20,
+          thickness: 1,
+          color: Colors.grey,
+        ),
+        ListTile(
+          title: Text(
+            AppLocalizations.of(context).translate("login"),
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          leading: Icon(
+            Icons.login,
+            color: Colors.blue,
+          ),
         ),
         const Divider(
           height: 20,

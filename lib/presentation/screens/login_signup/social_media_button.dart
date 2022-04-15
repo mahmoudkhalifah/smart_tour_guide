@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SocialMediaButton extends StatelessWidget {
-  SocialMediaButton({
+  const SocialMediaButton({
     Key? key,
     required this.name,
   }) : super(key: key);
 
-  String name;
+  final String name;
 
   @override
   Widget build(BuildContext context) {

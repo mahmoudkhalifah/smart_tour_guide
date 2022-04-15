@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CapturesScreen extends StatelessWidget {
   final List<File> imageFileList;
 
-  const CapturesScreen({required this.imageFileList});
+  const CapturesScreen({Key? key, required this.imageFileList}):super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PlaceInfoScreen extends StatefulWidget {
-  final info;
+  final Map info;
   final String title;
 
   const PlaceInfoScreen({Key? key, required this.info,required this.title}) : super(key: key);

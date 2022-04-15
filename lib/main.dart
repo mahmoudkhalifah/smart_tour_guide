@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:io';
 
 import 'package:app/localization/app_localizations.dart';
@@ -8,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
@@ -68,12 +66,12 @@ class _AppState extends State<App> {
         return supportedLocales.first;
       },
 
-      home: SplashScreen(),
+      home: const SplashScreen(),
       debugShowMaterialGrid: false,
       //home: HomeScreen(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.light(
+        colorScheme: const ColorScheme.light(
             primary: Color(0xffffb319), secondary: Color(0xffE8F6EF)),
       ),
     );

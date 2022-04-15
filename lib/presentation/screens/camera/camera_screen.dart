@@ -35,7 +35,6 @@ class _CameraScreenState extends State<CameraScreen>
 
   // Current values
   double _currentZoomLevel = 1.0;
-  double _currentExposureOffset = 0.0;
   FlashMode? _currentFlashMode;
 
   List<File> allFileList = [];
@@ -121,7 +120,6 @@ class _CameraScreenState extends State<CameraScreen>
 
   void resetCameraValues() async {
     _currentZoomLevel = 1.0;
-    _currentExposureOffset = 0.0;
   }
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
@@ -188,7 +186,7 @@ class _CameraScreenState extends State<CameraScreen>
   void initState() {
     // Hide the status bar in Android
     initCamera();
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     getPermissionStatus();
     super.initState();
   }
@@ -291,40 +289,40 @@ class _CameraScreenState extends State<CameraScreen>
                                                 height: 300.0,
                                                 child: Column(
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20.0,
                                                     ),
                                                     Text(
                                                       AppLocalizations.of(context).translate("snap tip1"),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
                                                             FontStyle.italic,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20.0,
                                                     ),
                                                     Text(
                                                       AppLocalizations.of(context).translate("snap tip2"),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
                                                             FontStyle.italic,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20.0,
                                                     ),
                                                     Text(
                                                       AppLocalizations.of(context).translate("snap tip3"),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
                                                             FontStyle.italic,
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 20.0,
                                                     ),
                                                   ],
