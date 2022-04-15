@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, annotate_overrides
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/forgot_password/forgot_password_form.dart';
 import 'package:app/presentation/widgets/default_button.dart';
-import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
 import 'change_password_form.dart';
@@ -23,7 +23,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text("Forgot password"),
+          title: Text(AppLocalizations.of(context).translate("forgot password")),
         ),
         body: Center(
             child: SingleChildScrollView(
@@ -60,7 +60,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   },
                                   width: 235,
                                   height: 44,
-                                  child: !widget.isEmailFound?Text("forgot password"):Text("reset password"),
+                                  child: !widget.isEmailFound?Text(AppLocalizations.of(context).translate("forgot password")):Text(AppLocalizations.of(context).translate("reset password")),
                                 ),
                               ],
                             )

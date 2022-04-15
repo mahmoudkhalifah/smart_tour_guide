@@ -1,18 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/camera/after_capture_Statue_info_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:app/presentation/screens/camera/preview_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../main.dart';
 import '../../../test_data.dart';
 
 class CameraScreen extends StatefulWidget {
+  const CameraScreen({Key? key}) : super(key: key);
+
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
@@ -78,14 +79,14 @@ class _CameraScreenState extends State<CameraScreen>
     allFileList.clear();
     List<Map<int, dynamic>> fileNames = [];
 
-    fileList.forEach((file) {
+    for (var file in fileList) {
       if (file.path.contains('.jpg') || file.path.contains('.mp4')) {
         allFileList.add(File(file.path));
 
         String name = file.path.split('/').last.split('.').first;
         fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
       }
-    });
+    }
 
     if (fileNames.isNotEmpty) {
       final recentFile =
@@ -271,7 +272,7 @@ class _CameraScreenState extends State<CameraScreen>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Snap Tips',
+                                                    AppLocalizations.of(context).translate("snap tips"),
                                                     style: TextStyle(
                                                       color: Colors.grey[800],
                                                       fontWeight:
@@ -281,12 +282,12 @@ class _CameraScreenState extends State<CameraScreen>
                                                       fontSize: 40,
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 20.0,
                                                   ),
                                                 ],
                                               ),
-                                              content: Container(
+                                              content: SizedBox(
                                                 height: 300.0,
                                                 child: Column(
                                                   children: [
@@ -294,7 +295,7 @@ class _CameraScreenState extends State<CameraScreen>
                                                       height: 20.0,
                                                     ),
                                                     Text(
-                                                      'Place the object in the center.',
+                                                      AppLocalizations.of(context).translate("snap tip1"),
                                                       style: TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
@@ -305,7 +306,7 @@ class _CameraScreenState extends State<CameraScreen>
                                                       height: 20.0,
                                                     ),
                                                     Text(
-                                                      'For more accurate recognition, make sure the picture features only one object.',
+                                                      AppLocalizations.of(context).translate("snap tip2"),
                                                       style: TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
@@ -316,7 +317,7 @@ class _CameraScreenState extends State<CameraScreen>
                                                       height: 20.0,
                                                     ),
                                                     Text(
-                                                      'If the object is too big, take a photo to all object not a part of it.',
+                                                      AppLocalizations.of(context).translate("snap tip3"),
                                                       style: TextStyle(
                                                         fontSize: 20,
                                                         fontStyle:
@@ -333,14 +334,14 @@ class _CameraScreenState extends State<CameraScreen>
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(context),
-                                                  child: Text('Got It'),
+                                                  child: Text(AppLocalizations.of(context).translate("got it")),
                                                 ),
                                               ],
                                               elevation: 24.0,
                                               backgroundColor: Colors.white,
                                             ),
                                           ),
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.info_outlined,
                                             color: Color(0xffFFB319),
                                           ),
@@ -348,11 +349,11 @@ class _CameraScreenState extends State<CameraScreen>
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         right: 8.0, top: 16.0),
                                   ),
-                                  Expanded(
+                                  const Expanded(
                                     child: RotatedBox(
                                       quarterTurns: 3,
                                     ),
@@ -390,7 +391,7 @@ class _CameraScreenState extends State<CameraScreen>
                                               _currentZoomLevel
                                                       .toStringAsFixed(1) +
                                                   'x',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white),
                                             ),
                                           ),
@@ -421,7 +422,7 @@ class _CameraScreenState extends State<CameraScreen>
                                         child: Stack(
                                           alignment: Alignment.center,
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.circle,
                                               color: Colors.transparent,
                                               size: 60,
@@ -429,12 +430,12 @@ class _CameraScreenState extends State<CameraScreen>
                                             _isRecordingInProgress
                                                 ? controller!
                                                         .value.isRecordingPaused
-                                                    ? Icon(
+                                                    ? const Icon(
                                                         Icons.play_arrow,
                                                         color: Colors.white,
                                                         size: 30,
                                                       )
-                                                    : Icon(
+                                                    : const Icon(
                                                         Icons.pause,
                                                         color: Colors.white,
                                                         size: 30,
@@ -506,7 +507,7 @@ class _CameraScreenState extends State<CameraScreen>
                                             ),
                                             _isVideoCameraSelected &&
                                                     _isRecordingInProgress
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons.stop_rounded,
                                                     color: Colors.white,
                                                     size: 32,
@@ -560,11 +561,11 @@ class _CameraScreenState extends State<CameraScreen>
                       ),
                       Expanded(
                         child: SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 8.0),
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
@@ -650,7 +651,7 @@ class _CameraScreenState extends State<CameraScreen>
                       ),
                     ],
                   )
-                : Center(
+                : const Center(
                     child: Text(
                       'LOADING',
                       style: TextStyle(color: Colors.white),
@@ -660,20 +661,20 @@ class _CameraScreenState extends State<CameraScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(),
-                  Text(
+                  const Text(
                     'Permission denied',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () {
                       getPermissionStatus();
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         'Give permission',
                         style: TextStyle(

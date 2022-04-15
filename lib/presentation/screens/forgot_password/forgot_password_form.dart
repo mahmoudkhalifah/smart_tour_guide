@@ -1,3 +1,4 @@
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +13,11 @@ class ForgotPasswordForm extends StatelessWidget {
       children: [
         DefaultTextField(
           prefixIcon: Icons.person,
-          label: "email or username",
+          label: AppLocalizations.of(context).translate("email"),
           controller: emailController,
           validator: (value) {
             if(value!.isEmpty) {
-              return "this field can't be empty";
+              return AppLocalizations.of(context).translate("validation");
             }
           },
         ),

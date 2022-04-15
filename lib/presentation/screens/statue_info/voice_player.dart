@@ -48,7 +48,6 @@ class _VoicePlayerState extends State<VoicePlayer> {
             onChanged: (value) {
               setState(() {
                 time = value.toInt();
-                print(time);
               });
             },
           ),

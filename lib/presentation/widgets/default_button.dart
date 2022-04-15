@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 ///You CAN change text color but it's default is white
 
 class DefaultButton extends StatefulWidget {
-  DefaultButton({
+  const DefaultButton({
     Key? key,
     required this.height,
     required this.width,

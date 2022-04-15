@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/cupertino.dart';
+import 'package:app/localization/app_localizations.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatelessWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+  MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class MenuScreen extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Favourites',
+            AppLocalizations.of(context).translate("favourite places"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -33,7 +34,7 @@ class MenuScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-            'Visited Places',
+            AppLocalizations.of(context).translate("visited places"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -49,7 +50,7 @@ class MenuScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-            'Settings',
+            AppLocalizations.of(context).translate("settings"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -65,7 +66,7 @@ class MenuScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-            'About',
+            AppLocalizations.of(context).translate("about"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -81,7 +82,7 @@ class MenuScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-            'Logout',
+            AppLocalizations.of(context).translate("logout"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -90,6 +91,34 @@ class MenuScreen extends StatelessWidget {
           ),
           leading: Icon(
             Icons.logout,
+            color: Colors.blue,
+          ),
+        ),
+        const Divider(
+          height: 20,
+          thickness: 1,
+          color: Colors.grey,
+        ),
+        ListTile(
+          title: Row(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    App.setLocale(context, Locale('ar'));
+                  },
+                  child: Text(
+                    "AR",
+                    style: TextStyle(),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    App.setLocale(context, Locale('en'));
+                  },
+                  child: Text("EN"))
+            ],
+          ),
+          leading: Icon(
+            Icons.language,
             color: Colors.blue,
           ),
         ),

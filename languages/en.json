@@ -1,0 +1,39 @@
+{
+    "splash": "Your Tour Guide",
+
+    "Monuments Identifications": "Monuments Identifications",
+    "welcome desc1":"Browse historical places and monuments.",
+    "welcome desc2":"Take photos of monuments and identify them.",
+    "welcome desc3":"Listen and read the story behind the monuments.",
+    
+    "login":"Login",
+    "signup":"Signup",
+    "forgot password":"Forgot Password?",
+    "email":"Email or Username",
+    "password":"Password",
+    "confirm password":"confirm password",
+    "guest":"Enter as Guest",
+    "or":"or",
+    "validation":"this field is required",
+    "password validation":"password must be at least 6 characters",
+    "confirm password validation":"passwords are not identical",
+    "reset password":"Reset Password",
+
+    "search":"Search",
+    "available":"Available",
+    "learn more":"Learn More",
+    "browse place":"Browse Place",
+
+    "favourite places":"Favourite Places",
+    "favourite statues":"Favourite Statues",
+    "visited places":"Visited Places",
+    "settings":"Settings",
+    "about":"About",
+    "logout":"Logout",
+
+    "snap tips":"Snap Tips",
+    "snap tip1":"Place the object in the center.",
+    "snap tip2":"For more accurate recognition, make sure the picture features only one statue.",
+    "snap tip3":"If the statue is too big, take a photo to all object not a part of it.",
+    "got it":"Got It"
+}

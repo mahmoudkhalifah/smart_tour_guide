@@ -1,9 +1,10 @@
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginCard extends StatefulWidget {
-  LoginCard({Key? key}) : super(key: key);
+  const LoginCard({Key? key}) : super(key: key);
 
   @override
   _LoginCardState createState() => _LoginCardState();
@@ -20,48 +21,46 @@ class _LoginCardState extends State<LoginCard> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         DefaultTextField(
-            label: "email or username",
-            prefixIcon: Icons.person,
-            controller: emailController,
-            validator: (value) {
-              if(value!.isEmpty) {
-                return "this field can't be empty";
-              }
-            },
+          label: AppLocalizations.of(context).translate("email"),
+          prefixIcon: Icons.person,
+          controller: emailController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return AppLocalizations.of(context).translate("validation");
+            }
+          },
         ),
         DefaultTextField(
           obsecure: passwordObsecure,
-          label: "password",
+          label: AppLocalizations.of(context).translate("password"),
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
             onPressed: () {
               passwordObsecure = !passwordObsecure;
-              setState(() {
-
-              });
+              setState(() {});
             },
-            icon: passwordObsecure?const Icon(Icons.visibility):const Icon(Icons.visibility_off),
+            icon: passwordObsecure
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
           ),
           validator: (value) {
-            if(value!.isEmpty) {
-              return "this field can't be empty";
+            if (value!.isEmpty) {
+              return AppLocalizations.of(context).translate("validation");
             }
           },
           controller: passwordController,
         ),
         TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ForgotPasswordScreen()
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ForgotPasswordScreen()));
             },
             child: Text(
-              "forgot password ?",
-              style: TextStyle(
-                  color: Colors.grey
-              ),
-            )
-        )
+              AppLocalizations.of(context).translate("forgot password"),
+              style: const TextStyle(color: Colors.grey),
+            ))
       ],
     );
   }

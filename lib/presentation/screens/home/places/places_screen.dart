@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/places/place_card.dart';
 import 'package:app/presentation/screens/place_info/place_info_screen.dart';
 import 'package:app/presentation/screens/statues/statues_screen.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import '../../../../test_data.dart';
 
 class PlacesScreen extends StatefulWidget {
-  PlacesScreen({
+  const PlacesScreen({
     Key? key,
     required this.list
   }) : super(key: key);
@@ -28,7 +29,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
           height: 45,
           child: TextFormField(
             decoration: InputDecoration(
-                label: Text("Search"),
+                label: Text(AppLocalizations.of(context).translate("search")),
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),

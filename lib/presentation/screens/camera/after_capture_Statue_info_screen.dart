@@ -1,20 +1,8 @@
-// ignore-for-file: prefer_const_constructors
-
-
-
-
-
-
-
-
-
-
 import 'dart:io';
 
 import 'package:app/presentation/screens/statue_info/voice_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:app/presentation/screens/camera/after_capture_Statue_info_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AfterCaptureStatueInfoScreen extends StatefulWidget {
@@ -23,10 +11,11 @@ class AfterCaptureStatueInfoScreen extends StatefulWidget {
   final info;
 
   const AfterCaptureStatueInfoScreen({
+    Key? key,
     required this.imageFile,
     required this.fileList,
     required this.info,
-  });
+  }): super(key: key);
 
   @override
   State<AfterCaptureStatueInfoScreen> createState() => _AfterCaptureStatueInfoScreenState();
@@ -68,8 +57,8 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
                 enableInfiniteScroll: true,
                 reverse: false,
                 autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(seconds: 1),
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(seconds: 1),
                 autoPlayCurve: Curves.fastOutSlowIn,
                 scrollDirection: Axis.horizontal,
                 onPageChanged: (index, reason) =>
@@ -81,18 +70,18 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
                 return buildImage(imagePath, index);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             buildIndicator(),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
                   widget.info["description"],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
@@ -121,7 +110,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
         count: imagesPath.length,
-        effect: ExpandingDotsEffect(
+        effect: const ExpandingDotsEffect(
           activeDotColor: Color(0xffffb319),
         ),
       );

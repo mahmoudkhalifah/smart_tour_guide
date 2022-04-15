@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -9,11 +10,11 @@ import '../login_signup/login_signup_screen.dart';
 class WelcomeModel
 {
   late final String image;
-  late final String title;
+  late final String descKey;
 
   WelcomeModel({
     required this.image,
-    required this.title,
+    required this.descKey,
   });
 }
 
@@ -26,25 +27,19 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  @override
-
   var welcomeController = PageController();
   List<WelcomeModel> welcome = [
     WelcomeModel(
         image: 'assets/images/pyramids.jpg',
-        title: 'Take photos of monumentes and identify them'
+        descKey: "welcome desc1"
     ),
     WelcomeModel(
         image: 'assets/images/fb.png',
-        title: 'Take photos of monumentes and identify them'
+        descKey: "welcome desc2"
     ),
     WelcomeModel(
         image: 'assets/images/go.png',
-        title: 'Take photos of monumentes and identify them'
-    ),
-    WelcomeModel(
-        image: 'assets/images/tw.png',
-        title: 'Take photos of monumentes and identify them'
+        descKey: "welcome desc3"
     ),
   ];
   bool? isLast = false;
@@ -55,6 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           (route) => false);
 
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -64,15 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Monuments',
-              style: TextStyle(
-                color: Color(0xffffb319),
-                fontSize: 40.0,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Identifications',
+              AppLocalizations.of(context).translate("Monuments Identifications"),
               style: TextStyle(
                 color: Color(0xffffb319),
                 fontSize: 40.0,
@@ -143,7 +131,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
       const SizedBox(height: 20,),
       Text(
-        model.title,
+        AppLocalizations.of(context).translate(model.descKey),
         style: const TextStyle(
           fontSize: 20,
         ),

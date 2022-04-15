@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:app/presentation/screens/camera/preview_screen.dart';
 
 class CapturesScreen extends StatelessWidget {
   final List<File> imageFileList;
@@ -13,12 +12,12 @@ class CapturesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               
               child: Text(
                 'Captures',
@@ -30,7 +29,7 @@ class CapturesScreen extends StatelessWidget {
             ),
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               children: [
                 for (File imageFile in imageFileList)

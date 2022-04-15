@@ -5,7 +5,7 @@ import 'package:app/presentation/screens/statues/statue_card.dart';
 import 'package:flutter/material.dart';
 
 class StatuesScreeen extends StatefulWidget {
-  StatuesScreeen({Key? key, required this.list,required this.title}) : super(key: key);
+  const StatuesScreeen({Key? key, required this.list,required this.title}) : super(key: key);
   final String title;
   final List list;
   @override

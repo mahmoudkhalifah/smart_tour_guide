@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/default_button.dart';
@@ -9,7 +10,7 @@ import '../../../widgets/default_button.dart';
 /// You MUST specify on pressed function for learn more button
 
 class PlaceCard extends StatefulWidget {
-  PlaceCard({
+  const PlaceCard({
     Key? key,
     required this.name,
     required this.onPressed,
@@ -19,11 +20,8 @@ class PlaceCard extends StatefulWidget {
     required this.isAvailable,
   }) : super(key: key);
 
-  bool favouriteClicked = false;
-  bool visitedClicked = false;
-
   final Function() onPressed;
-  Function()? onPressedBrowse;
+  final Function()? onPressedBrowse;
   final String description;
   final String photoURL;
   final String name;
@@ -34,6 +32,8 @@ class PlaceCard extends StatefulWidget {
 }
 
 class _PlaceCardState extends State<PlaceCard> {
+  bool favouriteClicked = false;
+  bool visitedClicked = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +42,6 @@ class _PlaceCardState extends State<PlaceCard> {
         borderRadius: BorderRadius.circular(25),
         color: Color.fromRGBO(232, 246, 239, 1),
       ),
-      //color: Colors.amber,
       child: Padding(
         padding: const EdgeInsets.all(
           21,
@@ -76,7 +75,7 @@ class _PlaceCardState extends State<PlaceCard> {
                       size: 15,
                     ),
                     Text(
-                      "Available",
+                      AppLocalizations.of(context).translate("available"),
                       overflow: TextOverflow.fade,
                       style: TextStyle(color: Colors.green, fontSize: 15),
                     )
@@ -85,24 +84,24 @@ class _PlaceCardState extends State<PlaceCard> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      widget.visitedClicked = !widget.visitedClicked;
+                      visitedClicked = visitedClicked;
                     });
                   },
                   icon: Icon(
                     Icons.add_task_outlined,
-                    color: widget.visitedClicked ? Colors.orange : Colors.black,
+                    color: visitedClicked ? Colors.orange : Colors.black,
                   ),
                   iconSize: 24,
                 ),
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      widget.favouriteClicked = !widget.favouriteClicked;
+                      favouriteClicked = favouriteClicked;
                     });
                   },
                   icon: Icon(
                     Icons.favorite_rounded,
-                    color: widget.favouriteClicked ? Colors.red : Colors.grey,
+                    color: favouriteClicked ? Colors.red : Colors.grey,
                   ),
                   iconSize: 24,
                 )
@@ -147,7 +146,7 @@ class _PlaceCardState extends State<PlaceCard> {
                       width: 125,
                       onPressed: widget.onPressed,
                       child: Text(
-                        "Learn More",
+                        AppLocalizations.of(context).translate("learn more"),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -159,7 +158,7 @@ class _PlaceCardState extends State<PlaceCard> {
                         width: 125,
                         onPressed: widget.onPressedBrowse!,
                         child: Text(
-                          "Browse Place",
+                          AppLocalizations.of(context).translate("browse place"),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

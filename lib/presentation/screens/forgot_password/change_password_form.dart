@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/presentation/widgets/default_button.dart';
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
       children: [
         DefaultTextField(
           obsecure: widget.passwordObsecure,
-          label: "password",
+          label: AppLocalizations.of(context).translate("password"),
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
             onPressed: () {
@@ -37,13 +37,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           controller: widget.passwordController,
           validator: (value) {
             if(value!.isEmpty) {
-              return "this field can't be empty";
+              return AppLocalizations.of(context).translate("password validation");
             }
           },
         ),
         DefaultTextField(
           obsecure: widget.confirmPasswordObsecure,
-          label: "confirm password",
+          label: AppLocalizations.of(context).translate("confirm password"),
           prefixIcon: Icons.lock,
           suffixIcon: IconButton(
             onPressed: () {
@@ -57,7 +57,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           controller: widget.confirmPasswordController,
           validator: (value) {
             if(value!.isEmpty) {
-              return "this field can't be empty";
+              return AppLocalizations.of(context).translate("confirm password validation");
             }
           },
         ),

@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/home_screen.dart';
 import 'package:app/presentation/screens/login_signup/login_card.dart';
 import 'package:app/presentation/screens/login_signup/signup_card.dart';
 import 'package:app/presentation/screens/login_signup/social_media_button.dart';
 import 'package:app/presentation/widgets/default_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -26,8 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           Positioned(
-            bottom: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.7:MediaQuery.of(context).size.height*0.72,
-            right: -MediaQuery.of(context).size.width*0.5,
+            bottom: MediaQuery.of(context).size.height < 700
+                ? MediaQuery.of(context).size.height * 0.7
+                : MediaQuery.of(context).size.height * 0.72,
+            right: -MediaQuery.of(context).size.width * 0.5,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const NeverScrollableScrollPhysics(),
@@ -37,7 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: CircleAvatar(
                     radius: MediaQuery.of(context).size.width,
                     child: Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height<700?MediaQuery.of(context).size.height*0.82:MediaQuery.of(context).size.height*0.55),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height < 700
+                              ? MediaQuery.of(context).size.height * 0.82
+                              : MediaQuery.of(context).size.height * 0.55),
                       child: Image.asset(
                         "assets/images/pyramids.jpg",
                       ),
@@ -52,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Opacity(
                 opacity: 0.8,
                 child: Container(
-                    height: 555,
+                    height: 565,
                     width: 315,
                     decoration: BoxDecoration(
                         color: Color(0xFFFFFFFF),
@@ -60,12 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         boxShadow: [
                           BoxShadow(
                               color: Color.fromRGBO(205, 204, 241, .3),
-                              blurRadius: 15
-                          )
-                        ]
-                    ),
+                              blurRadius: 15)
+                        ]),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 40),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 30),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -74,76 +78,97 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(22),
                                 border: Border.all(
-                                    color: Theme.of(context).colorScheme.primary
-                                )
-                            ),
+                                    color:
+                                        Theme.of(context).colorScheme.primary)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 DefaultButton(
-                                  onPressed: isLogin?(){}:(){
-                                    setState(() {
-                                      isLogin = true;
-                                    });
-                                  },
+                                  onPressed: isLogin
+                                      ? () {}
+                                      : () {
+                                          setState(() {
+                                            isLogin = true;
+                                          });
+                                        },
                                   width: 112,
                                   height: 28,
-                                  child: Text("Login"),
-                                  color: isLogin?null:Colors.white,
-                                  textColor: isLogin?Colors.white:Theme.of(context).colorScheme.primary,
+                                  child: Text(AppLocalizations.of(context)
+                                      .translate("login")),
+                                  color: isLogin ? null : Colors.white,
+                                  textColor: isLogin
+                                      ? Colors.white
+                                      : Theme.of(context).colorScheme.primary,
                                 ),
                                 DefaultButton(
-                                  onPressed: !isLogin?(){}:(){
-                                    setState(() {
-                                      isLogin = false;
-                                    });
-                                  },
+                                  onPressed: !isLogin
+                                      ? () {}
+                                      : () {
+                                          setState(() {
+                                            isLogin = false;
+                                          });
+                                        },
                                   width: 112,
                                   height: 28,
-                                  child: Text("Signup"),
-                                  color: !isLogin?null:Colors.white,
-                                  textColor: !isLogin?Colors.white:Theme.of(context).colorScheme.primary,
+                                  child: Text(AppLocalizations.of(context)
+                                      .translate("signup")),
+                                  color: !isLogin ? null : Colors.white,
+                                  textColor: !isLogin
+                                      ? Colors.white
+                                      : Theme.of(context).colorScheme.primary,
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Form(
                             key: formKey,
-                            child:isLogin?LoginCard():SignupCard(),
+                            child: isLogin ? LoginCard() : SignupCard(),
                           ),
                           Spacer(),
                           DefaultButton(
-                            onPressed: (){
-                              if(formKey.currentState!.validate()) {
-
-                              }
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {}
                             },
                             width: 235,
                             height: 44,
-                            child: isLogin?Text("Login"):Text("Signup"),
+                            child: isLogin
+                                ? Text(AppLocalizations.of(context)
+                                    .translate("login"))
+                                : Text(AppLocalizations.of(context)
+                                    .translate("signup")),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           DefaultButton(
-                            onPressed: (){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()));
                             },
                             width: 235,
                             height: 44,
-                            child: Text("Enter as guest"),
+                            child: Text(AppLocalizations.of(context)
+                                .translate("guest")),
                             color: Colors.white,
                             textColor: Theme.of(context).colorScheme.primary,
                             borderColor: Theme.of(context).colorScheme.primary,
                           ),
-                          SizedBox(height: 10,),
-                          Text(
-                            "OR",
-                            style: TextStyle(
-                                color: Colors.grey
-                            ),
+                          SizedBox(
+                            height: 8,
                           ),
-                          SizedBox(height: 10,),
+                          Text(
+                            AppLocalizations.of(context).translate("or"),
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -154,8 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           )
                         ],
                       ),
-                    )
-                ),
+                    )),
               ),
             ),
           ),

@@ -1,17 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_button.dart';
 import 'package:flutter/material.dart';
 
 class StatuesCard extends StatefulWidget {
-  StatuesCard({
+  const StatuesCard({
     Key? key,
     required this.name,
     required this.onPressed,
     required this.description,
     required this.photoURL,
   }) : super(key: key);
-
 
   final Function() onPressed;
   final String description;
@@ -82,7 +82,7 @@ class _StatuesCardState extends State<StatuesCard> {
                   width: 125,
                   onPressed: widget.onPressed,
                   child: Text(
-                    "Learn More",
+                    AppLocalizations.of(context).translate("learn more"),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,

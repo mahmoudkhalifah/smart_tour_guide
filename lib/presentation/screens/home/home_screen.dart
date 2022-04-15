@@ -8,20 +8,22 @@ import '../../../test_data.dart';
 import 'places/places_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  bool isHome = true;
+  const HomeScreen({Key? key}) : super(key: key);
+
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  bool isHome = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Center(
             child: Padding(
-              padding: EdgeInsets.all(10),child: widget.isHome?PlacesScreen(list: places):MenuScreen(),
+              padding: EdgeInsets.fromLTRB(10,10,10,0),child: isHome?PlacesScreen(list: places):MenuScreen(),
             )
         ),   //child changes regarding to bottom bar selection
       ),
@@ -34,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             IconButton(
                 onPressed: () {
-                  widget.isHome = true;
+                  isHome = true;
                   setState(() {
 
                   });
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(
                   Icons.home_rounded,
                   size: 30,
-                  color: widget.isHome?Theme.of(context).colorScheme.primary:Colors.black,
+                  color: isHome?Theme.of(context).colorScheme.primary:Colors.black,
                 )
             ),
             Opacity(
@@ -57,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             IconButton(
                 onPressed: () {
-                  widget.isHome = false;
+                  isHome = false;
                   setState(() {
 
                   });
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(
                   Icons.menu_rounded,
                   size: 30,
-                  color: !widget.isHome?Theme.of(context).colorScheme.primary:Colors.black,
+                  color: !isHome?Theme.of(context).colorScheme.primary:Colors.black,
                 )
             ),
           ],

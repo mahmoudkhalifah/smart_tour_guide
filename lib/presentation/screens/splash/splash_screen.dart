@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:app/presentation/screens/login_signup/login_signup_screen.dart';
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               )
           ),
           child: Center(
-            child: Text("Your Tour Guide",
+            child: Text(AppLocalizations.of(context).translate("splash"),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40
