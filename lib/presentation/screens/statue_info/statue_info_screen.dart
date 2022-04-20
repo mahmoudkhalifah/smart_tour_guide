@@ -35,35 +35,32 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             start: 40.0, top: 10, end: 40, bottom: 10),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.info["name"],
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(100, 115, 107, 1),
-                    ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
+                child: Text(
+                  widget.info["name"],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(100, 115, 107, 1),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isFavourite = !isFavourite;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.favorite_rounded,
-                    color: isFavourite ? Colors.red : Colors.grey,
-                  ),
-                )
-              ]
-            ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isFavourite = !isFavourite;
+                  });
+                },
+                icon: Icon(
+                  Icons.favorite_rounded,
+                  color: isFavourite ? Colors.red : Colors.grey,
+                ),
+              )
+            ]),
             CarouselSlider.builder(
               options: CarouselOptions(
                 height: 170,
@@ -111,16 +108,16 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
   }
 
   Widget buildImage(String imagePath, int index) => Container(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Image.network(
-          imagePath,
-          fit: BoxFit.cover,
-          width: 300,
-        ),
-      );
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: FadeInImage.assetNetwork(
+        placeholder: "assets/images/loading.gif",
+        image: imagePath,
+        width: 300,
+        fit: BoxFit.cover,
+      ));
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,

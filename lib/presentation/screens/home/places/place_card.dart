@@ -126,13 +126,13 @@ class _PlaceCardState extends State<PlaceCard> {
                       borderRadius: BorderRadius.circular(25)),
                   clipBehavior: Clip.hardEdge,
                   child: ClipRRect(
-                    child: Image.network(
-                      widget.photoURL,
-                      height: 163,
-                      width: 308,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                      child: FadeInImage.assetNetwork(
+                    placeholder: "assets/images/loading.gif",
+                    image: widget.photoURL,
+                    width: 308,
+                    height: 163,
+                    fit: BoxFit.cover,
+                  ))),
               SizedBox(
                 height: 9,
               ),
@@ -158,7 +158,8 @@ class _PlaceCardState extends State<PlaceCard> {
                         width: 125,
                         onPressed: widget.onPressedBrowse!,
                         child: Text(
-                          AppLocalizations.of(context).translate("browse place"),
+                          AppLocalizations.of(context)
+                              .translate("browse place"),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

@@ -23,9 +23,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
     imagesPath = widget.info["photosURL"];
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -125,16 +125,16 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
   }
 
   Widget buildImage(String imagePath, int index) => Container(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Image.network(
-          imagePath,
-          fit: BoxFit.cover,
-          width: 300,
-        ),
-      );
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: FadeInImage.assetNetwork(
+        placeholder: "assets/images/loading.gif",
+        image: imagePath,
+        width: 300,
+        fit: BoxFit.cover,
+      ));
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,

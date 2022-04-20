@@ -40,35 +40,32 @@ class _StatuesCardState extends State<StatuesCard> {
         ),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.name,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(100, 115, 107, 1),
-                    ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
+                child: Text(
+                  widget.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(100, 115, 107, 1),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isFavourite = !isFavourite;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.favorite_rounded,
-                    color: isFavourite ? Colors.red : Colors.grey,
-                  ),
-                )
-              ]
-            ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isFavourite = !isFavourite;
+                  });
+                },
+                icon: Icon(
+                  Icons.favorite_rounded,
+                  color: isFavourite ? Colors.red : Colors.grey,
+                ),
+              )
+            ]),
             SizedBox(
               width: 10,
             ),
@@ -91,13 +88,13 @@ class _StatuesCardState extends State<StatuesCard> {
                       borderRadius: BorderRadius.circular(25)),
                   clipBehavior: Clip.hardEdge,
                   child: ClipRRect(
-                    child: Image.network(
-                      widget.photoURL,
-                      height: 163,
-                      width: 308,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                      child: FadeInImage.assetNetwork(
+                    placeholder: "assets/images/loading.gif",
+                    image: widget.photoURL,
+                    width: 308,
+                    height: 163,
+                    fit: BoxFit.cover,
+                  ))),
               SizedBox(
                 height: 9,
               ),
