@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'dart:io';
 
+import 'package:app/data/models/statue.dart';
 import 'package:app/presentation/screens/statue_info/voice_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class AfterCaptureStatueInfoScreen extends StatefulWidget {
   final File imageFile;
   final List<File> fileList;
-  final Map info;
+  final Statue statue;
 
   const AfterCaptureStatueInfoScreen({
     Key? key,
     required this.imageFile,
     required this.fileList,
-    required this.info,
+    required this.statue,
   }): super(key: key);
 
   @override
@@ -29,7 +30,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
 
   @override
   void initState() {
-    imagesPath = widget.info["photosURL"];
+    imagesPath = widget.statue.images;
     super.initState();
   }
 
@@ -38,7 +39,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.info["name"]),
+        title: Text(widget.statue.name),
         elevation: 0,
       ),
       body: Padding(
@@ -81,7 +82,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  widget.info["description"],
+                  widget.statue.name,
                   style: const TextStyle(
                     fontSize: 20,
                   ),

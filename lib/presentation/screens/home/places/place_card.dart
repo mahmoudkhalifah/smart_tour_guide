@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/data/models/place.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -12,20 +13,15 @@ import '../../../widgets/default_button.dart';
 class PlaceCard extends StatefulWidget {
   const PlaceCard({
     Key? key,
-    required this.name,
+    required this.place,
     required this.onPressed,
     this.onPressedBrowse,
-    required this.description,
-    required this.photoURL,
-    required this.isAvailable,
   }) : super(key: key);
 
   final Function() onPressed;
   final Function()? onPressedBrowse;
-  final String description;
-  final String photoURL;
-  final String name;
-  final bool isAvailable;
+
+  final Place place;
 
   @override
   _PlaceCardState createState() => _PlaceCardState();
@@ -53,7 +49,7 @@ class _PlaceCardState extends State<PlaceCard> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.name,
+                    widget.place.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -67,7 +63,7 @@ class _PlaceCardState extends State<PlaceCard> {
                 SizedBox(
                   width: 10,
                 ),
-                if (widget.isAvailable)
+                if (widget.place.isAvailable)
                   Row(children: [
                     Icon(
                       Icons.camera_alt_rounded,
@@ -109,7 +105,7 @@ class _PlaceCardState extends State<PlaceCard> {
             ),
             Column(children: [
               Text(
-                widget.description,
+                widget.place.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -128,7 +124,7 @@ class _PlaceCardState extends State<PlaceCard> {
                   child: ClipRRect(
                       child: FadeInImage.assetNetwork(
                     placeholder: "assets/images/loading.gif",
-                    image: widget.photoURL,
+                    image: widget.place.images[0],
                     width: 308,
                     height: 163,
                     fit: BoxFit.cover,
@@ -137,7 +133,7 @@ class _PlaceCardState extends State<PlaceCard> {
                 height: 9,
               ),
               Row(
-                mainAxisAlignment: widget.isAvailable
+                mainAxisAlignment: widget.place.isAvailable
                     ? MainAxisAlignment.spaceEvenly
                     : MainAxisAlignment.center,
                 children: [
@@ -152,7 +148,7 @@ class _PlaceCardState extends State<PlaceCard> {
                           fontSize: 15,
                         ),
                       )),
-                  if (widget.isAvailable)
+                  if (widget.place.isAvailable)
                     DefaultButton(
                         height: 35,
                         width: 125,

@@ -9,8 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../test_data.dart';
-
 class CameraScreen extends StatefulWidget {
   const CameraScreen({Key? key}) : super(key: key);
 
@@ -475,16 +473,19 @@ class _CameraScreenState extends State<CameraScreen>
                                                 );
 
                                                 refreshAlreadyCapturedImages();
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                      AfterCaptureStatueInfoScreen(
-                                                        info: statues[0],
-                                                        imageFile: _imageFile!,
-                                                        fileList: allFileList,
-                                                    ),
-                                                  ),
-                                                );
+                                                //todo send photo to API to classify
+                                                //todo Maybe make Cubit for statues alone
+                                                //todo blocbuilder for classified statue
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //       AfterCaptureStatueInfoScreen(
+                                                //         statue: statues[0],
+                                                //         imageFile: _imageFile!,
+                                                //         fileList: allFileList,
+                                                //     ),
+                                                //   ),
+                                                // );
                                               },
                                         child: Stack(
                                           alignment: Alignment.center,

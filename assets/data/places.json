@@ -1,0 +1,35 @@
+[
+    {
+        "id":1,
+        "name": "Egyptian Museum",
+        "description": "Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.",
+        "images": [
+            "https://www.egypttoday.com/siteimages/Larg/202104060425572557.jpg",
+            "https://www.al-monitor.com/sites/default/files/styles/article_header/public/2021-06/GettyImages-460492878.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/The_Egyptian_Museum.jpg/330px-The_Egyptian_Museum.jpg"
+        ],
+        "is_available": true
+    },
+    {
+        "id":2,
+        "name": "Bey Citadel",
+        "description": "Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.",
+        "images": [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/QaitbeyCitadel.jpg/375px-QaitbeyCitadel.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/CW_QaitbayCitadel_Front.jpg/390px-CW_QaitbayCitadel_Front.jpg",
+            "https://www.etbtoursegypt.com/Wiki/wp-content/uploads/2020/10/Qaitbay-Citadel-Trips-in-Egypt-2-1024x486.jpg"
+        ],
+        "is_available": false
+    },
+    {
+        "id":3,
+        "name": "pyramids",
+        "description": "Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt. Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.",
+        "images": [
+            "https://www.planetware.com/photos-large/EGY/egypt-cairo-pyramids-of-giza-and%20camels-2.jpg",
+            "https://www.planetware.com/photos-large/EGY/egypt-pyramids-of-giza-great-pyramid-with-tomb-of-senegemib-inti-in-front.jpg",
+            "https://www.planetware.com/photos-large/EGY/egypt-pyramids-of-giza-chephren-pyramid.jpg"
+        ],
+        "is_available": false
+    }
+]

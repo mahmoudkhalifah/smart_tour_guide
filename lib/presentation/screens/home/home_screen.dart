@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/business_logic/cubit/places_cubit.dart';
+import 'package:app/data/api/places_api.dart';
+import 'package:app/data/repository/places_repository.dart';
 import 'package:app/presentation/screens/camera/camera_screen.dart';
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../test_data.dart';
 import 'places/places_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Center(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(10,10,10,0),child: isHome?PlacesScreen(list: places):MenuScreen(),
+              padding: EdgeInsets.fromLTRB(10,10,10,0),child: isHome? BlocProvider(create: (context)=>PlacesCubit(PlacesRepository(PlacesAPI())) ,child: PlacesScreen(),):MenuScreen(),
             )
         ),   //child changes regarding to bottom bar selection
       ),

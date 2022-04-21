@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/data/models/statue.dart';
 import 'package:app/presentation/screens/statue_info/voice_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class StatueInfoScreen extends StatefulWidget {
-  final Map info;
+  final Statue statue;
 
-  const StatueInfoScreen({Key? key, required this.info}) : super(key: key);
+  const StatueInfoScreen({Key? key, required this.statue}) : super(key: key);
   @override
   State<StatueInfoScreen> createState() => _StatueInfoScreenState();
 }
@@ -19,7 +20,7 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
   bool isFavourite = false;
   @override
   void initState() {
-    imagesPath = widget.info["photosURL"];
+    imagesPath = widget.statue.images;
     super.initState();
   }
 
@@ -38,7 +39,7 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
-                  widget.info["name"],
+                  widget.statue.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
@@ -93,7 +94,7 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  widget.info["description"],
+                  widget.statue.description,
                   style: TextStyle(
                     fontSize: 20,
                   ),

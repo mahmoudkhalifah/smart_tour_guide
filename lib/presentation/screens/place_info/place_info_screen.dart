@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/data/models/place.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PlaceInfoScreen extends StatefulWidget {
-  final Map info;
+  final Place place;
 
-  const PlaceInfoScreen({Key? key, required this.info}) : super(key: key);
+  const PlaceInfoScreen({Key? key, required this.place}) : super(key: key);
   @override
   State<PlaceInfoScreen> createState() => _PlaceInfoScreenState();
 }
@@ -20,7 +21,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
 
   @override
   void initState() {
-    imagesPath = widget.info["photosURL"];
+    imagesPath = widget.place.images;
     super.initState();
   }
 
@@ -30,7 +31,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: Text(widget.info["name"]),
+        title: Text(widget.place.name),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
@@ -41,7 +42,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.info["name"],
+                    widget.place.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -111,7 +112,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  widget.info["description"],
+                  widget.place.description,
                   style: TextStyle(
                     fontSize: 20,
                   ),
