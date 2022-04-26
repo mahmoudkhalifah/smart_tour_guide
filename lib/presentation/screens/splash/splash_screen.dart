@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
           PageRouteBuilder(
             pageBuilder: (context, a1, a2) => LoginScreen(),
             transitionsBuilder: (context, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-            transitionDuration: Duration(milliseconds: 2000),
+            transitionDuration: Duration(milliseconds: 1000),
           ),
       );
     } else {
@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
           PageRouteBuilder(
             pageBuilder: (context, a1, a2) => WelcomeScreen(),
             transitionsBuilder: (context, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-            transitionDuration: Duration(milliseconds: 1500),
+            transitionDuration: Duration(milliseconds: 500),
           ),
       );
     }
@@ -45,7 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    checkFirstTime();
+    Future.delayed(Duration(milliseconds: 1500), () {
+      checkFirstTime();
+    });
   }
   
   @override

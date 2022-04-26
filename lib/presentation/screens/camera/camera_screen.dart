@@ -268,13 +268,12 @@ class _CameraScreenState extends State<CameraScreen>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    AppLocalizations.of(context).translate("snap tips"),
+                                                    AppLocalizations.of(context)
+                                                        .translate("snap tips"),
                                                     style: TextStyle(
                                                       color: Colors.grey[800],
                                                       fontWeight:
                                                           FontWeight.w900,
-                                                      fontStyle:
-                                                          FontStyle.italic,
                                                       fontSize: 40,
                                                     ),
                                                   ),
@@ -290,35 +289,59 @@ class _CameraScreenState extends State<CameraScreen>
                                                     const SizedBox(
                                                       height: 20.0,
                                                     ),
-                                                    Text(
-                                                      AppLocalizations.of(context).translate("snap tip1"),
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
+                                                    Row(
+                                                      children: [
+                                                        Image.asset("assets/images/tip 1.png",height: 75,width: 75,),
+                                                        Text(
+                                                          AppLocalizations.of(
+                                                                  context)
+                                                              .translate(
+                                                                  "snap tip1"),
+                                                                  maxLines: 3,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     const SizedBox(
                                                       height: 20.0,
                                                     ),
-                                                    Text(
-                                                      AppLocalizations.of(context).translate("snap tip2"),
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
+                                                    Row(
+                                                      children: [
+                                                        Image.asset("assets/images/tip 2.png",height: 75,width: 75,),
+                                                        Text(
+                                                          AppLocalizations.of(
+                                                                  context)
+                                                              .translate(
+                                                                  "snap tip2"),
+                                                                  maxLines: 3,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     const SizedBox(
                                                       height: 20.0,
                                                     ),
-                                                    Text(
-                                                      AppLocalizations.of(context).translate("snap tip3"),
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
+                                                    Row(
+                                                      children: [
+                                                        Image.asset("assets/images/tip 3.png",height: 75,width: 75,),
+                                                        Text(
+                                                          AppLocalizations.of(
+                                                                  context)
+                                                              .translate(
+                                                                  "snap tip3"),
+                                                                  maxLines: 3,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     const SizedBox(
                                                       height: 20.0,
@@ -330,7 +353,10 @@ class _CameraScreenState extends State<CameraScreen>
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(context),
-                                                  child: Text(AppLocalizations.of(context).translate("got it")),
+                                                  child: Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .translate("got it")),
                                                 ),
                                               ],
                                               elevation: 24.0,
@@ -346,8 +372,8 @@ class _CameraScreenState extends State<CameraScreen>
                                     ),
                                   ),
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 8.0, top: 16.0),
+                                    padding:
+                                        EdgeInsets.only(right: 8.0, top: 16.0),
                                   ),
                                   const Expanded(
                                     child: RotatedBox(
@@ -474,7 +500,6 @@ class _CameraScreenState extends State<CameraScreen>
 
                                                 refreshAlreadyCapturedImages();
                                                 //todo send photo to API to classify
-                                                //todo Maybe make Cubit for statues alone
                                                 //todo blocbuilder for classified statue
                                                 // Navigator.of(context).push(
                                                 //   MaterialPageRoute(

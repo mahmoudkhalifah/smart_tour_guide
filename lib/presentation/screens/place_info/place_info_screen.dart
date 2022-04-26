@@ -133,7 +133,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       child: FadeInImage.assetNetwork(
         placeholder: "assets/images/loading.gif",
         image: imagePath,
-        width: 300,
+        width: double.infinity,
         fit: BoxFit.cover,
       ));
 

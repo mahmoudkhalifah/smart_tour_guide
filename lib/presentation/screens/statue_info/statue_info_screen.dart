@@ -116,7 +116,7 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
       child: FadeInImage.assetNetwork(
         placeholder: "assets/images/loading.gif",
         image: imagePath,
-        width: 300,
+        width: double.infinity,
         fit: BoxFit.cover,
       ));
 
