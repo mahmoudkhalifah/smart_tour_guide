@@ -80,27 +80,30 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
               ],
             ),
             SizedBox(height: 20),
-            CarouselSlider.builder(
-              options: CarouselOptions(
-                height: 170,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(seconds: 1),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index, reason) =>
-                    setState(() => activeIndex = index),
+            Hero(
+              tag: widget.place.id,
+              child: CarouselSlider.builder(
+                options: CarouselOptions(
+                  height: 170,
+                  viewportFraction: 1.0,
+                  enlargeCenterPage: false,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(seconds: 1),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index, reason) =>
+                      setState(() => activeIndex = index),
+                ),
+                itemCount: (imagesPath.length),
+                itemBuilder: (context, index, realIndex) {
+                  final imagePath = imagesPath[index];
+                  return buildImage(imagePath, index);
+                },
               ),
-              itemCount: (imagesPath.length),
-              itemBuilder: (context, index, realIndex) {
-                final imagePath = imagesPath[index];
-                return buildImage(imagePath, index);
-              },
             ),
             SizedBox(
               height: 30,

@@ -282,72 +282,109 @@ class _CameraScreenState extends State<CameraScreen>
                                                   ),
                                                 ],
                                               ),
-                                              content: SizedBox(
-                                                height: 300.0,
-                                                child: Column(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 20.0,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Image.asset("assets/images/tip 1.png",height: 75,width: 75,),
-                                                        Text(
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const SizedBox(
+                                                    height: 20.0,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/tip 1.png",
+                                                        height: 75,
+                                                        width: 75,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 20.0,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 180,
+                                                        child: Text(
                                                           AppLocalizations.of(
                                                                   context)
                                                               .translate(
                                                                   "snap tip1"),
-                                                                  maxLines: 3,
-                                                                  overflow: TextOverflow.ellipsis,
-                                                          style: const TextStyle(
-                                                            fontSize: 10,
+                                                          maxLines: 4,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 20.0,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Image.asset("assets/images/tip 2.png",height: 75,width: 75,),
-                                                        Text(
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20.0,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/tip 2.png",
+                                                        height: 75,
+                                                        width: 75,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 20.0,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 180,
+                                                        child: Text(
                                                           AppLocalizations.of(
                                                                   context)
                                                               .translate(
                                                                   "snap tip2"),
-                                                                  maxLines: 3,
-                                                                  overflow: TextOverflow.ellipsis,
-                                                          style: const TextStyle(
-                                                            fontSize: 10,
+                                                          maxLines: 4,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 20.0,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Image.asset("assets/images/tip 3.png",height: 75,width: 75,),
-                                                        Text(
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20.0,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/tip 3.png",
+                                                        height: 75,
+                                                        width: 75,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 20.0,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 180,
+                                                        child: Text(
                                                           AppLocalizations.of(
                                                                   context)
                                                               .translate(
                                                                   "snap tip3"),
-                                                                  maxLines: 3,
-                                                                  overflow: TextOverflow.ellipsis,
-                                                          style: const TextStyle(
-                                                            fontSize: 10,
+                                                          maxLines: 4,
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 20.0,
-                                                    ),
-                                                  ],
-                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20.0,
+                                                  ),
+                                                ],
                                               ),
                                               actions: [
                                                 TextButton(

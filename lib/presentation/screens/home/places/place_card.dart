@@ -121,14 +121,17 @@ class _PlaceCardState extends State<PlaceCard> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)),
                   clipBehavior: Clip.hardEdge,
-                  child: ClipRRect(
-                      child: FadeInImage.assetNetwork(
-                    placeholder: "assets/images/loading.gif",
-                    image: widget.place.images[0],
-                    width: 308,
-                    height: 163,
-                    fit: BoxFit.cover,
-                  ))),
+                  child: Hero(
+                    tag: widget.place.id,
+                    child: ClipRRect(
+                        child: FadeInImage.assetNetwork(
+                      placeholder: "assets/images/loading.gif",
+                      image: widget.place.images[0],
+                      width: 308,
+                      height: 163,
+                      fit: BoxFit.cover,
+                    )),
+                  )),
               SizedBox(
                 height: 9,
               ),

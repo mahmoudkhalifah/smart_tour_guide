@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/data/models/statue.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_button.dart';
 import 'package:flutter/material.dart';
@@ -7,16 +8,12 @@ import 'package:flutter/material.dart';
 class StatuesCard extends StatefulWidget {
   const StatuesCard({
     Key? key,
-    required this.name,
+    required this.statue,
     required this.onPressed,
-    required this.description,
-    required this.photoURL,
   }) : super(key: key);
 
+  final Statue statue;
   final Function() onPressed;
-  final String description;
-  final String photoURL;
-  final String name;
   @override
   _StatuesCardState createState() => _StatuesCardState();
 }
@@ -43,7 +40,7 @@ class _StatuesCardState extends State<StatuesCard> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
-                  widget.name,
+                  widget.statue.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
@@ -71,7 +68,7 @@ class _StatuesCardState extends State<StatuesCard> {
             ),
             Column(children: [
               Text(
-                widget.description,
+                widget.statue.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -87,14 +84,17 @@ class _StatuesCardState extends State<StatuesCard> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)),
                   clipBehavior: Clip.hardEdge,
-                  child: ClipRRect(
-                      child: FadeInImage.assetNetwork(
-                    placeholder: "assets/images/loading.gif",
-                    image: widget.photoURL,
-                    width: 308,
-                    height: 163,
-                    fit: BoxFit.cover,
-                  ))),
+                  child: Hero(
+                    tag: widget.statue.id,
+                    child: ClipRRect(
+                        child: FadeInImage.assetNetwork(
+                      placeholder: "assets/images/loading.gif",
+                      image: widget.statue.images[0],
+                      width: 308,
+                      height: 163,
+                      fit: BoxFit.cover,
+                    )),
+                  )),
               SizedBox(
                 height: 9,
               ),

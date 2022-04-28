@@ -44,9 +44,7 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
         padding: const EdgeInsets.all(20.0),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) => StatuesCard(
-          name: statues[index].name,
-          description: statues[index].description,
-          photoURL: statues[index].images[0],
+          statue: statues[index],
           onPressed: () {
             Navigator.push(
                 context,
