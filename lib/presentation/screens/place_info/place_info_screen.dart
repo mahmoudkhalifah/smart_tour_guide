@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/business_logic/cubit/places_cubit.dart';
 import 'package:app/data/models/place.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlaceInfoScreen extends StatefulWidget {
   final Place place;
@@ -24,6 +27,7 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
     imagesPath = widget.place.images;
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,15 +114,43 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
             ),
             buildIndicator(),
             SizedBox(
-              height: 30,
+              height: 15,
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Text(
-                  widget.place.description,
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                child: Column(
+                  children: [
+                    BlocBuilder<PlacesCubit, PlacesState>(
+                      builder: (context, state) {
+                        return MaterialButton(
+                          onPressed: () {
+                            BlocProvider.of<PlacesCubit>(context).navigateTo(widget.place.lat, widget.place.long);
+                          },
+                          textColor: Theme.of(context).colorScheme.primary,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.location_on),
+                              SizedBox(width: 10),
+                              Text(
+                                "show on map",
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      widget.place.description,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

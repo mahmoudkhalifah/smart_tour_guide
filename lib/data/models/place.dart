@@ -6,6 +6,8 @@ class Place {
   late String description;
   late bool isAvailable;
   late List<dynamic> images;
+  late double lat;
+  late double long;
   
   Place.fromJson(Map<String,dynamic> json) {
     id = json["id"];
@@ -13,5 +15,7 @@ class Place {
     isAvailable = json["is_available"];
     description = json["description"];
     images = json["images"];
+    lat = json["lat"];
+    long = json["lon"];
   }
 }

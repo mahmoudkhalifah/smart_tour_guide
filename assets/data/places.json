@@ -8,6 +8,8 @@
             "https://www.al-monitor.com/sites/default/files/styles/article_header/public/2021-06/GettyImages-460492878.jpg",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/The_Egyptian_Museum.jpg/330px-The_Egyptian_Museum.jpg"
         ],
+        "lat": 30.047866301199594,
+        "lon": 31.23361093631487,
         "is_available": true
     },
     {
@@ -19,6 +21,8 @@
             "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/CW_QaitbayCitadel_Front.jpg/390px-CW_QaitbayCitadel_Front.jpg",
             "https://www.etbtoursegypt.com/Wiki/wp-content/uploads/2020/10/Qaitbay-Citadel-Trips-in-Egypt-2-1024x486.jpg"
         ],
+        "lat": 31.22603030789921,
+        "lon": 29.884322096549784,
         "is_available": false
     },
     {
@@ -30,6 +34,8 @@
             "https://www.planetware.com/photos-large/EGY/egypt-pyramids-of-giza-great-pyramid-with-tomb-of-senegemib-inti-in-front.jpg",
             "https://www.planetware.com/photos-large/EGY/egypt-pyramids-of-giza-chephren-pyramid.jpg"
         ],
+        "lat": 29.979316627588688,
+        "lon": 31.134256537934746,
         "is_available": false
     }
 ]

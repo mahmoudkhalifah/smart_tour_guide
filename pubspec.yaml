@@ -40,6 +40,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   camera: ^0.9.4+21
   image_picker: ^0.8.5
+  geocoding: ^2.0.4
+  geolocator: ^8.0.0
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
