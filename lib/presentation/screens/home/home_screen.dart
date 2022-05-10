@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/business_logic/cubit/location_cubit.dart';
 import 'package:app/business_logic/cubit/places_cubit.dart';
 import 'package:app/data/api/places_api.dart';
 import 'package:app/data/repository/places_repository.dart';
@@ -86,8 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           //TODO
           var sheetController = showModalBottomSheet(
-            backgroundColor: Colors.grey[100],
-              context: context, builder: (context) => buildCameraImagePickerBottomSheet());
+              backgroundColor: Colors.grey[100],
+              context: context,
+              builder: (context) => buildCameraImagePickerBottomSheet());
           sheetController.then((value) {});
         },
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -104,153 +106,159 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildSnapTips() {
     return Column(
-        children: [
-          Text(
-            AppLocalizations.of(context).translate("snap tips"),
-            style: TextStyle(
-              color: Colors.grey[800],
-              fontWeight: FontWeight.w900,
-              fontSize: 26,
+      children: [
+        Text(
+          AppLocalizations.of(context).translate("snap tips"),
+          style: TextStyle(
+            color: Colors.grey[800],
+            fontWeight: FontWeight.w900,
+            fontSize: 26,
+          ),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/tip 1.png",
+              height: 70,
+              width: 70,
             ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/tip 1.png",
-                height: 70,
-                width: 70,
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  AppLocalizations.of(context).translate("snap tip1"),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.6,
+              child: Text(
+                AppLocalizations.of(context).translate("snap tip1"),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/tip 2.png",
-                height: 70,
-                width: 70,
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  AppLocalizations.of(context).translate("snap tip2"),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/tip 2.png",
+              height: 70,
+              width: 70,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.6,
+              child: Text(
+                AppLocalizations.of(context).translate("snap tip2"),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/tip 3.png",
-                height: 70,
-                width: 70,
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  AppLocalizations.of(context).translate("snap tip3"),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/tip 3.png",
+              height: 70,
+              width: 70,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.6,
+              child: Text(
+                AppLocalizations.of(context).translate("snap tip3"),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.min,
+    return BlocProvider(
+      create: (context) => LocationCubit(),
+      child: BlocBuilder<LocationCubit, LocationState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                MaterialButton(
-                  color: Theme.of(context).colorScheme.primary,
-                  onPressed: () async {
-                    // Capture a photo
-                    final XFile? photo =
-                        await _picker.pickImage(source: ImageSource.camera);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 30,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    MaterialButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () async {
+                        // Capture a photo
+                        final XFile? photo =
+                            await _picker.pickImage(source: ImageSource.camera);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      shape: CircleBorder(),
                     ),
-                  ),
-                  shape: CircleBorder(),
-                ),
-                
-                MaterialButton(
-                  color: Theme.of(context).colorScheme.primary,
-                  onPressed: () async {
-                    // Pick an image
-                    final XFile? image =
-                        await _picker.pickImage(source: ImageSource.gallery);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.photo,
-                      color: Colors.white,
-                      size: 30,
+                    MaterialButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () async {
+                        // Pick an image
+                        final XFile? image = await _picker.pickImage(
+                            source: ImageSource.gallery);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.photo,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      shape: CircleBorder(),
                     ),
-                  ),
-                  shape: CircleBorder(),
+                  ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                buildSnapTips(),
               ],
             ),
-            SizedBox(height: 20,),
-            buildSnapTips(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
