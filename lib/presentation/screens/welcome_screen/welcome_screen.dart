@@ -45,9 +45,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool? isLast = false;
 
 
-  void navigateTo(context , widget) => Navigator.pushAndRemoveUntil(context,
-      MaterialPageRoute(builder: (context) => widget),
-          (route) => false);
+  void navigateTo(context , widget) => Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) => widget),
+          (route) => false,
+  );
 
 
   @override
