@@ -11,7 +11,6 @@ import 'package:app/presentation/screens/statues/statues_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class PlacesScreen extends StatefulWidget {
   const PlacesScreen({Key? key}) : super(key: key);
 
@@ -87,7 +86,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
             padding: const EdgeInsets.all(20.0),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) => PlaceCard(
-              place: _searchController.text.isNotEmpty? _searchedPlaces[index]:places[index],
+              place: _searchController.text.isNotEmpty
+                  ? _searchedPlaces[index]
+                  : places[index],
               onPressed: () {
                 Navigator.push(
                     context,
@@ -100,7 +101,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => BlocProvider(
-                              create: (context) => PlacesCubit(PlacesRepository(PlacesAPI())),
+                              create: (context) =>
+                                  PlacesCubit(PlacesRepository(PlacesAPI())),
                               child: StatuesScreeen(
                                 placeId: places[index].id,
                                 title: places[index].name,
@@ -108,7 +110,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
                             )));
               },
             ),
-            itemCount: _searchController.text.isNotEmpty? _searchedPlaces.length:places.length,
+            itemCount: _searchController.text.isNotEmpty
+                ? _searchedPlaces.length
+                : places.length,
             separatorBuilder: (context, index) => SizedBox(
               height: 20,
             ),

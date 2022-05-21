@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:app/business_logic/cubit/places_cubit.dart';
+import 'package:app/data/api/places_api.dart';
+import 'package:app/data/repository/places_repository.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/home_screen.dart';
 import 'package:app/presentation/screens/login_signup/login_card.dart';
@@ -7,6 +10,7 @@ import 'package:app/presentation/screens/login_signup/signup_card.dart';
 import 'package:app/presentation/screens/login_signup/social_media_button.dart';
 import 'package:app/presentation/widgets/default_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -149,7 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                                      builder: (context) => BlocProvider(
+                                          create: (context) => PlacesCubit(
+                                              PlacesRepository(PlacesAPI())),
+                                          child: HomeScreen())));
                             },
                             width: 235,
                             height: 44,

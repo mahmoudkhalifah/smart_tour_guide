@@ -3,6 +3,7 @@
 import 'package:app/business_logic/cubit/location_cubit.dart';
 import 'package:app/business_logic/cubit/places_cubit.dart';
 import 'package:app/data/api/places_api.dart';
+import 'package:app/data/models/place.dart';
 import 'package:app/data/repository/places_repository.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/camera/camera_screen.dart';
@@ -16,12 +17,19 @@ import 'places/places_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isHome = true;
+  late List<Place> places;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
             child: Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: isHome
-              ? BlocProvider(
-                  create: (context) =>
-                      PlacesCubit(PlacesRepository(PlacesAPI())),
-                  child: PlacesScreen(),
-                )
-              : MenuScreen(),
+          child: isHome ? PlacesScreen() : MenuScreen(),
         )), //child changes regarding to bottom bar selection
       ),
       bottomNavigationBar: BottomAppBar(
@@ -123,14 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 1.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip1"),
                 maxLines: 4,
@@ -150,14 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 2.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip2"),
                 maxLines: 4,
@@ -177,14 +179,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 3.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip3"),
                 maxLines: 4,
@@ -206,22 +208,54 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) => LocationCubit(),
       child: BlocBuilder<LocationCubit, LocationState>(
         builder: (context, state) {
+          if(state is LocationInitial){
+            BlocProvider.of<LocationCubit>(context).getlocation();
+          } else if(state is LocationLoaded){
+            //TODO should get places to pass it
+            //BlocProvider.of<LocationCubit>(context).getNearistPlaceToUser(state.lat,state.long);
+          }
           return Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Location"),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    state is LocationInitial
+                        ? CircularProgressIndicator()
+                        : SizedBox(),
+                    state is LocationLoaded
+                        ? Text("${state.lat}, ${state.long}")
+                        : SizedBox(),
+                    state is LocationDetected
+                        ? Text(state.placeName)
+                        : SizedBox(),
+                    state is LocationNotDetected
+                        ? Text(state.errorMessage)
+                        : SizedBox(),
+                    MaterialButton(onPressed: () {
+                      BlocProvider.of<LocationCubit>(context).clearLocation();
+                    }, child: Icon(Icons.close,size: 20,),height: 10,)
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     MaterialButton(
                       color: Theme.of(context).colorScheme.primary,
-                      onPressed: () async {
-                        // Capture a photo
-                        final XFile? photo =
-                            await _picker.pickImage(source: ImageSource.camera);
-                      },
+                      onPressed: state is LocationDetected
+                          ? () async {
+                              // Capture a photo
+                              final XFile? photo = await _picker.pickImage(
+                                  source: ImageSource.camera);
+                            }
+                          : () {},
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Icon(
@@ -234,11 +268,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     MaterialButton(
                       color: Theme.of(context).colorScheme.primary,
-                      onPressed: () async {
-                        // Pick an image
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                      },
+                      onPressed: state is LocationDetected
+                          ? () async {
+                              // Pick an image
+                              final XFile? image = await _picker.pickImage(
+                                  source: ImageSource.gallery);
+                            }
+                          : () {},
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Icon(
@@ -252,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 buildSnapTips(),
               ],
