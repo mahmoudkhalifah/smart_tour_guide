@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+import 'package:flutter/material.dart';
 
 class VoicePlayer extends StatefulWidget {
   const VoicePlayer({Key? key}) : super(key: key);
@@ -11,44 +14,68 @@ class VoicePlayer extends StatefulWidget {
 
 class _VoicePlayerState extends State<VoicePlayer> {
   bool _isPlaying = false;
-  int time = 0;
+  final AudioPlayer audioPlayer = AudioPlayer();
+  Duration duration=Duration.zero;
+  Duration position=Duration.zero;
+  static const url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+  @override
+  void initState(){
+    super.initState();
+    audioPlayer.onPlayerStateChanged.listen((state){
+      setState((){
+        _isPlaying=state==PlayerState.PLAYING;
+      });
+    });
+    audioPlayer.onDurationChanged.listen((newDuration){
+      setState((){
+        duration=newDuration;
+      });
+    });
+
+    audioPlayer.onAudioPositionChanged.listen((newPosition){
+      setState((){
+        position=newPosition;
+
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         _isPlaying
             ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    _isPlaying = !_isPlaying;
-                  });
-                },
-                icon: Icon(
-                  Icons.pause,
-                  size: 35,
-                  color: Theme.of(context).colorScheme.primary,
-                ))
+            onPressed: ()async{
+              if(_isPlaying){
+                await audioPlayer.pause();
+              } },
+
+            icon: Icon(
+              Icons.pause,
+              size: 35,
+              color: Theme.of(context).colorScheme.primary,
+            ))
             : IconButton(
-                onPressed: () {
-                  setState(() {
-                    _isPlaying = !_isPlaying;
-                  });
-                },
-                icon: Icon(
-                  Icons.play_arrow,
-                  size: 35,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+          onPressed: ()async{
+            if(!_isPlaying){
+              await audioPlayer.play(url);
+            } },
+
+          icon: Icon(
+            Icons.play_arrow,
+            size: 35,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
         Expanded(
           child: Slider(
-            value: time.toDouble(),
             min: 0,
-            max: 100,
-            onChanged: (value) {
-              setState(() {
-                time = value.toInt();
-              });
+            max: duration.inSeconds.toDouble(),
+            value: position.inSeconds.toDouble(),
+            onChanged: (value)async{final position= Duration(seconds:value.toInt());
+            await audioPlayer.seek(duration);
+
+            await audioPlayer.resume();
             },
           ),
         ),
