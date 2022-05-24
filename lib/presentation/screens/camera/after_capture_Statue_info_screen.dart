@@ -89,7 +89,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
                 ),
               ),
             ),
-            VoicePlayer(url: widget.statue.voiceOver,)
+            const VoicePlayer()
           ],
         ),
       ),

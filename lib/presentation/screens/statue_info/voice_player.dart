@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+import 'package:flutter/material.dart';
+
 class VoicePlayer extends StatefulWidget {
-  const VoicePlayer({Key? key, required this.url}) : super(key: key);
-  final String url;
+  const VoicePlayer({Key? key}) : super(key: key);
 
   @override
   State<VoicePlayer> createState() => _VoicePlayerState();
@@ -16,6 +17,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
   final AudioPlayer audioPlayer = AudioPlayer();
   Duration duration=Duration.zero;
   Duration position=Duration.zero;
+  static const url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
   @override
   void initState(){
     super.initState();
@@ -56,7 +58,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
             : IconButton(
           onPressed: ()async{
             if(!_isPlaying){
-              await audioPlayer.play(widget.url);
+              await audioPlayer.play(url);
             } },
 
           icon: Icon(
