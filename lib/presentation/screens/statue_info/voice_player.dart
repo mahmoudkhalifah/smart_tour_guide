@@ -18,6 +18,13 @@ class _VoicePlayerState extends State<VoicePlayer> {
   Duration duration=Duration.zero;
   Duration position=Duration.zero;
   static const url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+  void seekToSec(int sec) {
+    Duration newPos = Duration(seconds: sec);
+    audioPlayer.seek(newPos); // Jumps to the given position within the audio file
+  }
+  void changeVolume(double value) {
+    audioPlayer.setVolume(value);
+  }
   @override
   void initState(){
     super.initState();
@@ -48,6 +55,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
             onPressed: ()async{
               if(_isPlaying){
                 await audioPlayer.pause();
+
               } },
 
             icon: Icon(
@@ -58,7 +66,9 @@ class _VoicePlayerState extends State<VoicePlayer> {
             : IconButton(
           onPressed: ()async{
             if(!_isPlaying){
+              audioPlayer.setVolume(9.6);
               await audioPlayer.play(url);
+
             } },
 
           icon: Icon(
@@ -72,8 +82,8 @@ class _VoicePlayerState extends State<VoicePlayer> {
             min: 0,
             max: duration.inSeconds.toDouble(),
             value: position.inSeconds.toDouble(),
-            onChanged: (value)async{final position= Duration(seconds:value.toInt());
-            await audioPlayer.seek(duration);
+            onChanged: (value)async{
+            seekToSec(value.toInt());
 
             await audioPlayer.resume();
             },
