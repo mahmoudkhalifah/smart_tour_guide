@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:app/localization/app_localizations.dart';
-import 'package:app/presentation/screens/splash/splash_screen.dart';
 import 'package:app/presentation/widgets/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/material.dart';
 
 void main() {
   runApp(const App());

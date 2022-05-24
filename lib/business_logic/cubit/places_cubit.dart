@@ -13,9 +13,10 @@ class PlacesCubit extends Cubit<PlacesState> {
 
   PlacesCubit(this.placesRepository) : super(PlacesInitial());
   
-  void getAllPlaces() {
-    placesRepository.getAllPlaces().then((places) {
+  Future<List<Place>> getAllPlaces() {
+    return placesRepository.getAllPlaces().then((places) {
       emit(PlacesLoaded(places));
+      return places;
     });
   }
   

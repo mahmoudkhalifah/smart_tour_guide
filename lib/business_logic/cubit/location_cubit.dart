@@ -36,6 +36,16 @@ class LocationCubit extends Cubit<LocationState> {
         placeName = place.name;
       }
     }
+    if (minDistance < 500) {
+      emit(LocationDetected(placeName));
+    }
+    else {
+      emit(LocationNotDetected("can't get the place"));
+    }
+    
+  }
+
+  void setPlace(String placeName) {
     emit(LocationDetected(placeName));
   }
 

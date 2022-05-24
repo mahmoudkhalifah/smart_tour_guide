@@ -29,7 +29,6 @@ class _PlacesScreenState extends State<PlacesScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PlacesCubit>(context).getAllPlaces();
   }
 
   Widget buildBlocWidget() {
