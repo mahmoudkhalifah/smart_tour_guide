@@ -12,26 +12,11 @@ class PlacesCubit extends Cubit<PlacesState> {
   final PlacesRepository placesRepository;
 
   PlacesCubit(this.placesRepository) : super(PlacesInitial());
-
-  void navigateTo(double lat, double long) async {
-    //var uri = Uri.parse("google.navigation:q=$lat,$long&mode=d");
-    var uri = Uri.parse("geo:$lat,$long?z=18");
-    //https://www.google.com/maps/search/?api=1&query=
-    try {
-      await launchUrl(uri);
-    } catch (e) {
-      print(e);
-    }
-    // if (await canLaunchUrl(uri)) {
-    //   await launchUrl(uri);
-    // } else {
-    //   throw 'Could not launch ${uri.toString()}';
-    // }
-  }
   
-  void getAllPlaces() {
-    placesRepository.getAllPlaces().then((places) {
+  Future<List<Place>> getAllPlaces() {
+    return placesRepository.getAllPlaces().then((places) {
       emit(PlacesLoaded(places));
+      return places;
     });
   }
   

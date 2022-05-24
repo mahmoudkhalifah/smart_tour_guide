@@ -7,6 +7,8 @@ import 'package:app/presentation/screens/statues/statue_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/router.dart';
+
 class StatuesScreeen extends StatefulWidget {
   const StatuesScreeen({Key? key,required this.title,required this.placeId}) : super(key: key);
   final String title;
@@ -17,7 +19,7 @@ class StatuesScreeen extends StatefulWidget {
 
 class _StatuesScreeenState extends State<StatuesScreeen> {
   late List<Statue> statues;
-  
+
   @override
   void initState() {
     super.initState();
@@ -41,23 +43,22 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
 
   Widget buildStatuesList() {
     return ListView.separated(
-        padding: const EdgeInsets.all(20.0),
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => StatuesCard(
-          statue: statues[index],
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        StatueInfoScreen(statue: statues[index])));
-          },
-        ),
-        itemCount: statues.length,
-        separatorBuilder: (context, index) => SizedBox(
-          height: 20,
-        ),
-      );
+      padding: const EdgeInsets.all(20.0),
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) => StatuesCard(
+        statue: statues[index],
+        onPressed: () {
+          Navigator.pushNamed(
+              context,
+              AppRoute.statueInfoViewRoute,
+              arguments: StatueInfoScreen(statue: statues[index]));
+        },
+      ),
+      itemCount: statues.length,
+      separatorBuilder: (context, index) => SizedBox(
+        height: 20,
+      ),
+    );
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:app/data/models/statue.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Place {
   late int id;
@@ -17,5 +18,14 @@ class Place {
     images = json["images"];
     lat = json["lat"];
     long = json["lon"];
+  }
+
+    void openLocation(double lat, double long) async {
+    var uri = Uri.parse("geo:$lat,$long?z=18");
+    try {
+      await launchUrl(uri);
+    } catch (e) {
+      print(e);
+    }
   }
 }

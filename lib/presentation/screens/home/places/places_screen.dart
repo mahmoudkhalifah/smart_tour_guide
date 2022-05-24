@@ -8,9 +8,9 @@ import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/places/place_card.dart';
 import 'package:app/presentation/screens/place_info/place_info_screen.dart';
 import 'package:app/presentation/screens/statues/statues_screen.dart';
+import 'package:app/presentation/widgets/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class PlacesScreen extends StatefulWidget {
   const PlacesScreen({Key? key}) : super(key: key);
@@ -29,7 +29,6 @@ class _PlacesScreenState extends State<PlacesScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PlacesCubit>(context).getAllPlaces();
   }
 
   Widget buildBlocWidget() {
@@ -87,28 +86,32 @@ class _PlacesScreenState extends State<PlacesScreen> {
             padding: const EdgeInsets.all(20.0),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) => PlaceCard(
-              place: _searchController.text.isNotEmpty? _searchedPlaces[index]:places[index],
+              place: _searchController.text.isNotEmpty
+                  ? _searchedPlaces[index]
+                  : places[index],
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            PlaceInfoScreen(place: places[index])));
+                Navigator.pushNamed(
+                  context,
+                  AppRoute.placeInfoViewRoute,
+                  arguments: PlaceInfoScreen(place: places[index],),
+                );
               },
               onPressedBrowse: () {
-                Navigator.push(
+                Navigator.pushNamed(
+
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                              create: (context) => PlacesCubit(PlacesRepository(PlacesAPI())),
-                              child: StatuesScreeen(
-                                placeId: places[index].id,
-                                title: places[index].name,
-                              ),
-                            )));
+                    AppRoute.statuesViewRoute,
+                  arguments: StatuesScreeen(
+                      title: places[index].name,
+                      placeId: places[index].id,
+                  ),
+                );
+
               },
             ),
-            itemCount: _searchController.text.isNotEmpty? _searchedPlaces.length:places.length,
+            itemCount: _searchController.text.isNotEmpty
+                ? _searchedPlaces.length
+                : places.length,
             separatorBuilder: (context, index) => SizedBox(
               height: 20,
             ),

@@ -2,10 +2,8 @@
 
 import 'package:app/business_logic/cubit/location_cubit.dart';
 import 'package:app/business_logic/cubit/places_cubit.dart';
-import 'package:app/data/api/places_api.dart';
-import 'package:app/data/repository/places_repository.dart';
+import 'package:app/data/models/place.dart';
 import 'package:app/localization/app_localizations.dart';
-import 'package:app/presentation/screens/camera/camera_screen.dart';
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +20,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isHome = true;
+  late List<Place> availablePlaces;
+  bool canTakePhoto = false;
+  LocationCubit locationCubit = LocationCubit();
+
+  void getPlaces() async {
+    availablePlaces =
+        await BlocProvider.of<PlacesCubit>(context).getAllPlaces();
+    availablePlaces =
+        availablePlaces.where((place) => place.isAvailable).toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPlaces();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    locationCubit.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
             child: Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: isHome
-              ? BlocProvider(
-                  create: (context) =>
-                      PlacesCubit(PlacesRepository(PlacesAPI())),
-                  child: PlacesScreen(),
-                )
-              : MenuScreen(),
+          child: isHome ? PlacesScreen() : MenuScreen(),
         )), //child changes regarding to bottom bar selection
       ),
       bottomNavigationBar: BottomAppBar(
@@ -82,21 +97,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        onPressed: () {
-          //TODO
-          var sheetController = showModalBottomSheet(
-              backgroundColor: Colors.grey[100],
-              context: context,
-              builder: (context) => buildCameraImagePickerBottomSheet());
-          sheetController.then((value) {});
-        },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: Icon(
-          Icons.camera_alt_rounded,
-          size: 35,
-          color: Colors.white,
+      floatingActionButton: BlocProvider(
+        create: (context) => locationCubit,
+        child: FloatingActionButton(
+          elevation: 0,
+          onPressed: () {
+            var sheetController = showModalBottomSheet(
+                backgroundColor: Colors.grey[100],
+                context: context,
+                builder: (newContext) => BlocProvider.value(
+                    //create:(_) => LocationCubit(),
+                    value: locationCubit,
+                    child:
+                        Scaffold(body: buildCameraImagePickerBottomSheet())));
+            sheetController.then((value) {});
+          },
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          child: Icon(
+            Icons.camera_alt_rounded,
+            size: 35,
+            color: Colors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -123,14 +144,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 1.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip1"),
                 maxLines: 4,
@@ -150,14 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 2.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip2"),
                 maxLines: 4,
@@ -177,14 +198,14 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Image.asset(
               "assets/images/tip 3.png",
-              height: 70,
-              width: 70,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(
               width: 10.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
                 AppLocalizations.of(context).translate("snap tip3"),
                 maxLines: 4,
@@ -200,65 +221,177 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget buildDropDown(String placeName) {
+    return DropdownButton<String>(
+      value: placeName,
+      icon: Icon(
+        Icons.arrow_downward,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      elevation: 16,
+      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+      underline: Container(
+        height: 2,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      onChanged: (String? newValue) {
+        placeName = newValue!;
+        BlocProvider.of<LocationCubit>(context).setPlace(placeName);
+        print(placeName);
+      },
+      items: availablePlaces
+          .map((e) => e.name)
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget buildLocationRow() {
+    return BlocBuilder<LocationCubit, LocationState>(
+      builder: (context, state) {
+        String placeName = "";
+        if (state is LocationInitial) {
+          print("hello");
+          BlocProvider.of<LocationCubit>(context).getlocation();
+        } else if (state is LocationLoaded) {
+          BlocProvider.of<LocationCubit>(context)
+              .getNearistPlaceToUser(state.lat, state.long, availablePlaces);
+        } else if (state is LocationDetected) {
+          placeName = state.placeName;
+        }
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Location"),
+            const SizedBox(
+              width: 10.0,
+            ),
+            state is LocationInitial ? CircularProgressIndicator() : SizedBox(),
+            // state is LocationLoaded
+            //     ? Text("${state.lat}, ${state.long}")
+            //     : SizedBox(),
+            state is LocationDetected
+                ? DropdownButton<String>(
+                    value: placeName,
+                    icon: Icon(
+                      Icons.arrow_downward,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    elevation: 16,
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                    underline: Container(
+                      height: 2,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onChanged: (String? newValue) {
+                      placeName = newValue!;
+                      BlocProvider.of<LocationCubit>(context)
+                          .setPlace(placeName);
+                      print(placeName);
+                    },
+                    items: availablePlaces
+                        .map((e) => e.name)
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList()
+                    //TODO add a not detected select item
+                    //.add(DropdownMenuItem<String>(value: "Not Selected",child: Text("Not Selected"))),
+                  )
+                : SizedBox(),
+            state is LocationNotDetected
+                ? Text(state.errorMessage)
+                : SizedBox(),
+            MaterialButton(
+              onPressed: () {
+                BlocProvider.of<LocationCubit>(context).clearLocation();
+              },
+              child: Icon(
+                Icons.close,
+                size: 20,
+              ),
+              height: 10,
+            )
+          ],
+        );
+      },
+    );
+  }
+
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
-    return BlocProvider(
-      create: (context) => LocationCubit(),
-      child: BlocBuilder<LocationCubit, LocationState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    MaterialButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () async {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          buildLocationRow(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MaterialButton(
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: canTakePhoto
+                    ? () async {
                         // Capture a photo
                         final XFile? photo =
                             await _picker.pickImage(source: ImageSource.camera);
+                      }
+                    : () {
+                        final snackbar = SnackBar(
+                          content: Text("choose location first"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      shape: CircleBorder(),
-                    ),
-                    MaterialButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () async {
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                shape: CircleBorder(),
+              ),
+              MaterialButton(
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: canTakePhoto
+                    ? () async {
                         // Pick an image
                         final XFile? image = await _picker.pickImage(
                             source: ImageSource.gallery);
+                      }
+                    : () {
+                        final snackbar = SnackBar(
+                          content: Text("choose location first"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.photo,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      shape: CircleBorder(),
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.photo,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                buildSnapTips(),
-              ],
-            ),
-          );
-        },
+                shape: CircleBorder(),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          buildSnapTips(),
+        ],
       ),
     );
   }

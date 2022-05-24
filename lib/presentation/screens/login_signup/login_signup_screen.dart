@@ -6,6 +6,7 @@ import 'package:app/presentation/screens/login_signup/login_card.dart';
 import 'package:app/presentation/screens/login_signup/signup_card.dart';
 import 'package:app/presentation/screens/login_signup/social_media_button.dart';
 import 'package:app/presentation/widgets/default_button.dart';
+import 'package:app/presentation/widgets/router.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -146,10 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           DefaultButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoute.homeViewRoute,
+                              );
                             },
                             width: 235,
                             height: 44,

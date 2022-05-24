@@ -37,5 +37,18 @@
         "lat": 29.979316627588688,
         "lon": 31.134256537934746,
         "is_available": false
+    },
+    {
+        "id":3,
+        "name": "Mohamed Ali Citadel",
+        "description": "Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt. Is a 15th-century defensive fortress located on the Mediterranean sea coast,\ninssdf Alexandria, Egypt Is a 15th-century defensive fortress located on the\nMediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress\nlocated on the Mediterranean sea coast, in Alexandria, Egypt.Is a 15th-century defensive fortress located on the Mediterranean sea coast, in Alexandria, Egypt.",
+        "images": [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Flickr_-_HuTect_ShOts_-_Citadel_of_Salah_El.Din_and_Masjid_Muhammad_Ali_%D9%82%D9%84%D8%B9%D8%A9_%D8%B5%D9%84%D8%A7%D8%AD_%D8%A7%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D8%A3%D9%8A%D9%88%D8%A8%D9%8A_%D9%88%D9%85%D8%B3%D8%AC%D8%AF_%D9%85%D8%AD%D9%85%D8%AF_%D8%B9%D9%84%D9%8A_-_Cairo_-_Egypt_-_17_04_2010_%284%29.jpg/375px-thumbnail.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%D8%AC%D8%A7%D9%85%D8%B9_%D9%85%D8%AD%D9%85%D8%AF_%D8%B9%D9%84%D9%8A.JPG/1200px-%D8%AC%D8%A7%D9%85%D8%B9_%D9%85%D8%AD%D9%85%D8%AF_%D8%B9%D9%84%D9%8A.JPG?20140907002841",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mohammed_Ali_Mosque%2C_Citadel_interior%2C_Cairo%2C_Egypt%2C_North_Africa.jpg/1200px-Mohammed_Ali_Mosque%2C_Citadel_interior%2C_Cairo%2C_Egypt%2C_North_Africa.jpg?20130523181622"
+        ],
+        "lat": 30.028974303091296,
+        "lon": 31.25975264035123,
+        "is_available": true
     }
 ]

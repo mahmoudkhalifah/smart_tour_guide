@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:app/localization/app_localizations.dart';
-import 'package:app/presentation/screens/splash/splash_screen.dart';
+import 'package:app/presentation/widgets/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -65,8 +65,8 @@ class _AppState extends State<App> {
         // from the list (English, in this case).
         return supportedLocales.first;
       },
-
-      home: const SplashScreen(),
+      initialRoute: AppRoute.splashViewRoute,
+      onGenerateRoute: AppRoute.generateRoute,
       debugShowMaterialGrid: false,
       //home: HomeScreen(),
       debugShowCheckedModeBanner: false,

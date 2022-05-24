@@ -28,7 +28,6 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,26 +119,23 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    BlocBuilder<PlacesCubit, PlacesState>(
-                      builder: (context, state) {
-                        return MaterialButton(
-                          onPressed: () {
-                            BlocProvider.of<PlacesCubit>(context).navigateTo(widget.place.lat, widget.place.long);
-                          },
-                          textColor: Theme.of(context).colorScheme.primary,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.location_on),
-                              SizedBox(width: 10),
-                              Text(
-                                "show on map",
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        );
+                    MaterialButton(
+                      onPressed: () {
+                        widget.place
+                            .openLocation(widget.place.lat, widget.place.long);
                       },
+                      textColor: Theme.of(context).colorScheme.primary,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.location_on),
+                          SizedBox(width: 10),
+                          Text(
+                            "show on map",
+                            style: TextStyle(fontSize: 16),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 15,
