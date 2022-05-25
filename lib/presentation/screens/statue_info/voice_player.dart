@@ -22,23 +22,35 @@ class _VoicePlayerState extends State<VoicePlayer> {
   }
 
   @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     audioPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
+      if(mounted) {
+        setState(() {
         _isPlaying = state == PlayerState.PLAYING;
       });
+      }
     });
     audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
+      if(mounted) {
+        setState(() {
         duration = newDuration;
       });
+      }
     });
 
     audioPlayer.onAudioPositionChanged.listen((newPosition) {
-      setState(() {
+      if(mounted) {
+        setState(() {
         position = newPosition;
       });
+      }
     });
   }
 
