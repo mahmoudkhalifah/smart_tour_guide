@@ -14,8 +14,8 @@ class LocationLoaded extends LocationState {
 
 class LocationDetected extends LocationState {
   final String placeName;
-
-  LocationDetected(this.placeName);
+  final int placeId;
+  LocationDetected(this.placeName,this.placeId);
 }
 
 class LocationNotDetected extends LocationState {

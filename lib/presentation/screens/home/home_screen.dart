@@ -21,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isHome = true;
   late List<Place> availablePlaces;
-  bool canTakePhoto = false;
   LocationCubit locationCubit = LocationCubit();
 
   void getPlaces() async {
@@ -39,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     locationCubit.close();
     super.dispose();
   }
@@ -221,33 +219,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildDropDown(String placeName) {
-    return DropdownButton<String>(
-      value: placeName,
-      icon: Icon(
-        Icons.arrow_downward,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      elevation: 16,
-      style: TextStyle(color: Theme.of(context).colorScheme.primary),
-      underline: Container(
-        height: 2,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      onChanged: (String? newValue) {
-        placeName = newValue!;
-        BlocProvider.of<LocationCubit>(context).setPlace(placeName);
-        print(placeName);
-      },
-      items: availablePlaces
-          .map((e) => e.name)
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+  List<DropdownMenuItem<String>> getDropDownItemsList(bool isDetected) {
+    List<DropdownMenuItem<String>> items = availablePlaces
+        .map((e) => e.name)
+        .map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
+    if (!isDetected) {
+      items.add(DropdownMenuItem<String>(
+        value: "Not Detected",
+        child: Text("Not Detected"),
+      ));
+    }
+    return items;
   }
 
   Widget buildLocationRow() {
@@ -255,69 +242,81 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, state) {
         String placeName = "";
         if (state is LocationInitial) {
-          print("hello");
           BlocProvider.of<LocationCubit>(context).getlocation();
         } else if (state is LocationLoaded) {
           BlocProvider.of<LocationCubit>(context)
               .getNearistPlaceToUser(state.lat, state.long, availablePlaces);
         } else if (state is LocationDetected) {
           placeName = state.placeName;
+        } else if (state is LocationNotDetected) {
+          placeName = "Not Detected";
         }
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Location"),
-            const SizedBox(
-              width: 10.0,
-            ),
-            state is LocationInitial ? CircularProgressIndicator() : SizedBox(),
-            // state is LocationLoaded
-            //     ? Text("${state.lat}, ${state.long}")
-            //     : SizedBox(),
             state is LocationDetected
-                ? DropdownButton<String>(
-                    value: placeName,
-                    icon: Icon(
-                      Icons.arrow_downward,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    elevation: 16,
+                ? Text(
+                    "You are currently in",
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
-                    underline: Container(
-                      height: 2,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onChanged: (String? newValue) {
-                      placeName = newValue!;
-                      BlocProvider.of<LocationCubit>(context)
-                          .setPlace(placeName);
-                      print(placeName);
-                    },
-                    items: availablePlaces
-                        .map((e) => e.name)
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList()
-                    //TODO add a not detected select item
-                    //.add(DropdownMenuItem<String>(value: "Not Selected",child: Text("Not Selected"))),
                   )
                 : SizedBox(),
             state is LocationNotDetected
-                ? Text(state.errorMessage)
+                ? LimitedBox(
+                  maxWidth: 150,
+                  child: Text(
+                      state.errorMessage,
+                      maxLines: 3,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                )
                 : SizedBox(),
-            MaterialButton(
+            SizedBox(width: 5,),
+            state is LocationInitial ? CircularProgressIndicator() : SizedBox(),
+            state is LocationDetected || state is LocationNotDetected
+                ? Column(
+                    children: [
+                      DropdownButton<String>(
+                          value: placeName,
+                          icon: Icon(
+                            Icons.arrow_downward,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          menuMaxHeight: 100,
+                          itemHeight: 50,
+                          elevation: 2,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                          underline: Container(
+                            height: 2,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          onChanged: (String? newValue) {
+                            placeName = newValue!;
+                            if (placeName != "Not Detected") {
+                              BlocProvider.of<LocationCubit>(context)
+                                  .setPlace(placeName,availablePlaces);
+                            } else {
+                              BlocProvider.of<LocationCubit>(context)
+                                  .setPlace("",availablePlaces);
+                            }
+
+                            print(placeName);
+                          },
+                          items: state is LocationDetected
+                              ? getDropDownItemsList(true)
+                              : getDropDownItemsList(false)),
+                    ],
+                  )
+                : SizedBox(),
+            IconButton(
               onPressed: () {
                 BlocProvider.of<LocationCubit>(context).clearLocation();
               },
-              child: Icon(
+              icon: Icon(
                 Icons.close,
                 size: 20,
               ),
-              height: 10,
             )
           ],
         );
@@ -333,59 +332,67 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.max,
         children: [
           buildLocationRow(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MaterialButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: canTakePhoto
-                    ? () async {
-                        // Capture a photo
-                        final XFile? photo =
-                            await _picker.pickImage(source: ImageSource.camera);
-                      }
-                    : () {
-                        final snackbar = SnackBar(
-                          content: Text("choose location first"),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      },
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                    size: 30,
+          SizedBox(height: 10,),
+          BlocBuilder<LocationCubit, LocationState>(
+            builder: (context, state) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MaterialButton(
+                    color: Theme.of(context).colorScheme.primary,
+                    onPressed: state is LocationDetected
+                        ? () async {
+                            print(state.placeId);
+                            // Capture a photo
+                            final XFile? photo = await _picker.pickImage(
+                                source: ImageSource.camera);
+                          }
+                        : () {
+                            final snackbar = SnackBar(
+                              content: Text("choose location first"),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                    shape: CircleBorder(),
                   ),
-                ),
-                shape: CircleBorder(),
-              ),
-              MaterialButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: canTakePhoto
-                    ? () async {
-                        // Pick an image
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                      }
-                    : () {
-                        final snackbar = SnackBar(
-                          content: Text("choose location first"),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      },
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Icon(
-                    Icons.photo,
-                    color: Colors.white,
-                    size: 30,
+                  MaterialButton(
+                    color: Theme.of(context).colorScheme.primary,
+                    onPressed: state is LocationDetected
+                        ? () async {
+                            // Pick an image
+                            final XFile? image = await _picker.pickImage(
+                                source: ImageSource.gallery);
+                          }
+                        : () {
+                            final snackbar = SnackBar(
+                              content: Text("choose location first"),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.photo,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                    shape: CircleBorder(),
                   ),
-                ),
-                shape: CircleBorder(),
-              ),
-            ],
+                ],
+              );
+            },
           ),
           SizedBox(
             height: 10,

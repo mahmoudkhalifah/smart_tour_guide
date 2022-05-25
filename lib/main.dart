@@ -4,6 +4,7 @@ import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const App());
@@ -23,13 +24,34 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   String defaultLocale = Platform.localeName;
-  late Locale _locale = Locale(defaultLocale.split('_')[0]) ;
-
+  late Locale _locale = Locale(defaultLocale.split('_')[0]);
+  late SharedPreferences prefs;
 
   changeLanguage(Locale locale) {
     setState(() {
+      prefs.setString('lang',locale.languageCode);
       _locale = locale;
     });
+  }
+
+  getLocalLocale() async {
+    prefs = await SharedPreferences.getInstance();
+    final String? language = prefs.getString('lang');
+    if(language!=null){
+      print(language);
+      _locale = Locale(language);
+      setState(() {
+        
+      });
+    } else {
+      _locale = Locale(defaultLocale.split('_')[0]);
+    }
+  }
+
+  @override
+  void initState() {
+    getLocalLocale();
+    super.initState();
   }
 
   @override
@@ -68,7 +90,6 @@ class _AppState extends State<App> {
       initialRoute: AppRoute.splashViewRoute,
       onGenerateRoute: AppRoute.generateRoute,
       debugShowMaterialGrid: false,
-      //home: HomeScreen(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: const ColorScheme.light(

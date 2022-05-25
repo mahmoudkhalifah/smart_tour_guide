@@ -64,14 +64,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               )
           ),
-          child: Center(
-            child: Text(AppLocalizations.of(context).translate("splash"),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40
-              ),
-            ),
-          ),
+          // child: Center(
+          //   child: Text(AppLocalizations.of(context).translate("splash"),
+          //     style: TextStyle(
+          //         fontWeight: FontWeight.bold,
+          //         fontSize: 40
+          //     ),
+          //   ),
+          // ),
         )
     );
   }
