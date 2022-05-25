@@ -17,13 +17,15 @@ class AfterCaptureStatueInfoScreen extends StatefulWidget {
     required this.imageFile,
     required this.fileList,
     required this.statue,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
-  State<AfterCaptureStatueInfoScreen> createState() => _AfterCaptureStatueInfoScreenState();
+  State<AfterCaptureStatueInfoScreen> createState() =>
+      _AfterCaptureStatueInfoScreenState();
 }
 
-class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScreen> {
+class _AfterCaptureStatueInfoScreenState
+    extends State<AfterCaptureStatueInfoScreen> {
   int activeIndex = 0;
 
   late List imagesPath;
@@ -89,7 +91,7 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
                 ),
               ),
             ),
-            const VoicePlayer()
+            VoicePlayer(url: widget.statue.voiceOver)
           ],
         ),
       ),
@@ -101,7 +103,6 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
         ),
-        
         child: Image.network(
           imagePath,
           fit: BoxFit.cover,
@@ -117,11 +118,3 @@ class _AfterCaptureStatueInfoScreenState extends State<AfterCaptureStatueInfoScr
         ),
       );
 }
-
-
-
-
-
-
-
-
