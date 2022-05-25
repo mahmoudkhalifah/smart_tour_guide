@@ -104,7 +104,7 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
                 ),
               ),
             ),
-            VoicePlayer(url: widget.statue.voiceOver,)
+            VoicePlayer()
           ],
         ),
       ),
