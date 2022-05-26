@@ -216,7 +216,9 @@ class _HomeScreenState extends State<HomeScreen> {
               .getNearistPlaceToUser(state.lat, state.long, availablePlaces);
         } else if (state is LocationDetected) {
           placeName = state.placeName;
-        } else if (state is LocationNotDetected || state is LocationServiceDisabled || state is LocationPermissionDenied) {
+        } else if (state is LocationNotDetected ||
+            state is LocationServiceDisabled ||
+            state is LocationPermissionDenied) {
           placeName = AppLocalizations.of(context).translate("not detected");
         }
         return Row(
@@ -234,19 +236,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 : SizedBox(),
-            state is LocationNotDetected
-                ? LimitedBox(
-                    maxWidth: MediaQuery.of(context).size.width * 0.3,
-                    child: Text(
-                      AppLocalizations.of(context)
-                          .translate(state.errorMessage),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
-                : SizedBox(),
-            state is LocationServiceDisabled
+            Column(
+              children: [
+                state is LocationServiceDisabled
                 ? LimitedBox(
                     maxWidth: MediaQuery.of(context).size.width * 0.3,
                     child: Text(
@@ -270,51 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 : SizedBox(),
-            SizedBox(
-              width: 5,
-            ),
-            state is LocationInitial ? CircularProgressIndicator() : SizedBox(),
-            state is LocationDetected ||
-                    state is LocationNotDetected ||
-                    state is LocationServiceDisabled ||
-                    state is LocationPermissionDenied
-                ? Column(
-                    children: [
-                      LimitedBox(
-                        maxWidth: MediaQuery.of(context).size.width * 0.5,
-                        child: DropdownButton<String>(
-                            alignment: Alignment.center,
-                            value: placeName,
-                            icon: Icon(
-                              Icons.arrow_downward,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            menuMaxHeight: 100,
-                            itemHeight: 50,
-                            elevation: 2,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
-                            underline: Container(
-                              height: 2,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            onChanged: (String? newValue) {
-                              placeName = newValue!;
-                              if (placeName !=
-                                  AppLocalizations.of(context)
-                                      .translate("not detected")) {
-                                BlocProvider.of<LocationCubit>(context)
-                                    .setPlace(placeName, availablePlaces);
-                              } else {
-                                BlocProvider.of<LocationCubit>(context)
-                                    .setPlace("", availablePlaces);
-                              }
-                            },
-                            items: state is LocationDetected
-                                ? getDropDownItemsList(true)
-                                : getDropDownItemsList(false)),
-                      ),
-                      state is LocationServiceDisabled ||
+                state is LocationServiceDisabled ||
                               state is LocationPermissionDenied
                           ? MaterialButton(
                               onPressed: () {
@@ -332,7 +280,61 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Theme.of(context).colorScheme.primary,
                             )
                           : SizedBox()
-                    ],
+              ],
+            ),
+            state is LocationNotDetected
+                ? LimitedBox(
+                    maxWidth: MediaQuery.of(context).size.width * 0.3,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .translate(state.errorMessage),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
+                : SizedBox(),
+            SizedBox(
+              width: 5,
+            ),
+            state is LocationInitial ? CircularProgressIndicator() : SizedBox(),
+            state is LocationDetected ||
+                    state is LocationNotDetected ||
+                    state is LocationServiceDisabled ||
+                    state is LocationPermissionDenied
+                ? LimitedBox(
+                    maxWidth: MediaQuery.of(context).size.width * 0.5,
+                    child: DropdownButton<String>(
+                        alignment: Alignment.center,
+                        value: placeName,
+                        icon: Icon(
+                          Icons.arrow_downward,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        menuMaxHeight: 100,
+                        itemHeight: 50,
+                        elevation: 2,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
+                        underline: Container(
+                          height: 2,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        onChanged: (String? newValue) {
+                          placeName = newValue!;
+                          if (placeName !=
+                              AppLocalizations.of(context)
+                                  .translate("not detected")) {
+                            BlocProvider.of<LocationCubit>(context)
+                                .setPlace(placeName, availablePlaces);
+                          } else {
+                            BlocProvider.of<LocationCubit>(context)
+                                .setPlace("", availablePlaces);
+                          }
+                        },
+                        items: state is LocationDetected
+                            ? getDropDownItemsList(true)
+                            : getDropDownItemsList(false)),
                   )
                 : SizedBox(),
             IconButton(
