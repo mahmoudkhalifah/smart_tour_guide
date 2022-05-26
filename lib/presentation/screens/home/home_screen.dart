@@ -197,10 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
     if (!isDetected) {
       items.add(DropdownMenuItem<String>(
-        value: "Not Detected",
+        value: AppLocalizations.of(context).translate("not detected"),
         child: Text(AppLocalizations.of(context).translate("not detected")),
       ));
     }
+    print(items.map((e) => e.value));
     return items;
   }
 
@@ -215,10 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
               .getNearistPlaceToUser(state.lat, state.long, availablePlaces);
         } else if (state is LocationDetected) {
           placeName = state.placeName;
-        } else if (state is LocationNotDetected) {
-          placeName = "Not Detected";
-        } else if (state is LocationServiceDisabled) {
-          placeName = "Not Detected";
+        } else if (state is LocationNotDetected || state is LocationServiceDisabled || state is LocationPermissionDenied) {
+          placeName = AppLocalizations.of(context).translate("not detected");
         }
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? LimitedBox(
                     maxWidth: MediaQuery.of(context).size.width * 0.3,
                     child: Text(
-                      AppLocalizations.of(context).translate("current location"),
+                      AppLocalizations.of(context)
+                          .translate("current location"),
                       maxLines: 3,
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.primary),
@@ -238,7 +238,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? LimitedBox(
                     maxWidth: MediaQuery.of(context).size.width * 0.3,
                     child: Text(
-                      AppLocalizations.of(context).translate(state.errorMessage),
+                      AppLocalizations.of(context)
+                          .translate(state.errorMessage),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.red),
@@ -249,7 +250,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? LimitedBox(
                     maxWidth: MediaQuery.of(context).size.width * 0.3,
                     child: Text(
-                      AppLocalizations.of(context).translate(state.errorMessage),
+                      AppLocalizations.of(context)
+                          .translate(state.errorMessage),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
+                : SizedBox(),
+            state is LocationPermissionDenied
+                ? LimitedBox(
+                    maxWidth: MediaQuery.of(context).size.width * 0.3,
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .translate(state.errorMessage),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.red),
@@ -286,7 +300,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             onChanged: (String? newValue) {
                               placeName = newValue!;
-                              if (placeName != "Not Detected") {
+                              if (placeName !=
+                                  AppLocalizations.of(context)
+                                      .translate("not detected")) {
                                 BlocProvider.of<LocationCubit>(context)
                                     .setPlace(placeName, availablePlaces);
                               } else {
@@ -308,7 +324,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : BlocProvider.of<LocationCubit>(context)
                                         .openAppSettings();
                               },
-                              child: Text(AppLocalizations.of(context).translate("change settings"),),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                    .translate("change settings"),
+                              ),
                               textColor: Colors.white,
                               color: Theme.of(context).colorScheme.primary,
                             )
@@ -333,9 +352,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -360,7 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           : () {
                               final snackbar = SnackBar(
-                                content: Text(AppLocalizations.of(context).translate("choose first")),
+                                content: Text(AppLocalizations.of(context)
+                                    .translate("choose first")),
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackbar);
@@ -385,7 +405,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           : () {
                               final snackbar = SnackBar(
-                                content: Text(AppLocalizations.of(context).translate("choose first")),
+                                content: Text(AppLocalizations.of(context)
+                                    .translate("choose first")),
                               );
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackbar);
