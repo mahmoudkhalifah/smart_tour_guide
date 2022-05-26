@@ -12,27 +12,82 @@ class LocationCubit extends Cubit<LocationState> {
   late List<Place> places;
 
   void getlocation() async {
-    LocationPermission per = await Geolocator.checkPermission();
-    if (per == LocationPermission.denied ||
-        per == LocationPermission.deniedForever) {
-      print("permission denied");
-      LocationPermission per1 = await Geolocator.requestPermission();
-      if (!(per1 == LocationPermission.denied ||
-          per1 == LocationPermission.deniedForever)) {
+    bool serviceEnabled;
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        emit(LocationPermissionDenied(
+            "no permissions"));
+      } else {
+        serviceEnabled = await Geolocator.isLocationServiceEnabled();
+        if (!serviceEnabled) {
+          emit(LocationServiceDisabled("GPS off"));
+        } else {
+          Position currentLoc = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.best);
+          emit(LocationLoaded(
+              lat: currentLoc.latitude, long: currentLoc.longitude));
+        }
+      }
+    } else {
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        emit(LocationServiceDisabled("GPS off"));
+      } else {
         Position currentLoc = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best);
         emit(LocationLoaded(
             lat: currentLoc.latitude, long: currentLoc.longitude));
-      } else {
-        emit(LocationNotDetected("No location permission!Please choose place"));
       }
-    } else {
-      Position currentLoc = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
-      emit(
-          LocationLoaded(lat: currentLoc.latitude, long: currentLoc.longitude));
     }
   }
+
+  void openAppSettings() {
+    Geolocator.openAppSettings();
+  }
+
+  void openLocationSettings() {
+    Geolocator.openLocationSettings();
+  }
+
+  // void getlocation() async {
+  //   LocationPermission per = await Geolocator.checkPermission();
+  //   bool serviceEnabled;
+  //   if (per == LocationPermission.denied ||
+  //       per == LocationPermission.deniedForever) {
+  //     print("permission denied");
+  //     LocationPermission per1 = await Geolocator.requestPermission();
+  //     if (!(per1 == LocationPermission.denied ||
+  //         per1 == LocationPermission.deniedForever)) {
+  //       Position currentLoc = await Geolocator.getCurrentPosition(
+  //           desiredAccuracy: LocationAccuracy.best);
+  //       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //       if (serviceEnabled) {
+  //         Position currentLoc = await Geolocator.getCurrentPosition(
+  //             desiredAccuracy: LocationAccuracy.best);
+  //         emit(LocationLoaded(
+  //             lat: currentLoc.latitude, long: currentLoc.longitude));
+  //       } else {
+  //         emit(LocationNotDetected("Please open GPS or choose yourself"));
+  //       }
+  //     } else {
+  //       emit(LocationNotDetected("No location permission!Please choose place"));
+  //     }
+  //   } else {
+  //     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //     Position currentLoc = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.best);
+  //     if (serviceEnabled) {
+  //       emit(LocationLoaded(
+  //           lat: currentLoc.latitude, long: currentLoc.longitude));
+  //     } else {
+  //       emit(LocationNotDetected("Please open GPS or choose yourself"));
+  //     }
+  //   }
+  // }
 
   void getNearistPlaceToUser(
       double userLat, double userLong, List<Place> places) {
@@ -53,7 +108,7 @@ class LocationCubit extends Cubit<LocationState> {
     if (minDistance < 1500) {
       emit(LocationDetected(placeName, placeId));
     } else {
-      emit(LocationNotDetected("Can't detect you are too far"));
+      emit(LocationNotDetected("too far"));
     }
   }
 
@@ -63,7 +118,7 @@ class LocationCubit extends Cubit<LocationState> {
       print(placeId);
       emit(LocationDetected(placeName, placeId));
     } else {
-      emit(LocationNotDetected("Please Choose your location"));
+      emit(LocationNotDetected("choose place"));
     }
   }
 

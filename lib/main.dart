@@ -26,19 +26,31 @@ class _AppState extends State<App> {
   String defaultLocale = Platform.localeName;
   late Locale _locale = Locale(defaultLocale.split('_')[0]);
   late SharedPreferences prefs;
+  late String _fontFamily = "Roboto";
 
   changeLanguage(Locale locale) {
     setState(() {
       prefs.setString('lang',locale.languageCode);
       _locale = locale;
+      getFontFamily(locale.languageCode);
     });
+  }
+
+  getFontFamily(String language) {
+    if(language == "en") {
+        _fontFamily = "Roboto";
+      } else if (language == "ar") {
+        _fontFamily = "Cairo";
+      }
+      setState(() {
+        
+      });
   }
 
   getLocalLocale() async {
     prefs = await SharedPreferences.getInstance();
     final String? language = prefs.getString('lang');
     if(language!=null){
-      print(language);
       _locale = Locale(language);
       setState(() {
         
@@ -46,6 +58,7 @@ class _AppState extends State<App> {
     } else {
       _locale = Locale(defaultLocale.split('_')[0]);
     }
+    getFontFamily(_locale.languageCode);
   }
 
   @override
@@ -92,6 +105,7 @@ class _AppState extends State<App> {
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: _fontFamily,
         colorScheme: const ColorScheme.light(
             primary: Color(0xffffb319), secondary: Color(0xffE8F6EF)),
       ),

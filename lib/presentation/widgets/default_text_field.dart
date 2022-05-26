@@ -14,7 +14,8 @@ class DefaultTextField extends StatefulWidget {
   final bool? obsecure;
   final String? hintText;
 
-  DefaultTextField({Key? key,
+  DefaultTextField({
+    Key? key,
     required this.label,
     required this.controller,
     this.hintText,
@@ -32,7 +33,6 @@ class DefaultTextField extends StatefulWidget {
 }
 
 class _DefaultTextFieldState extends State<DefaultTextField> {
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -43,13 +43,12 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         controller: widget.controller,
         keyboardType: widget.type,
         decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(5),
             label: Text(widget.label),
             hintText: widget.hintText,
             prefixIcon: Icon(
               widget.prefixIcon,
             ),
-            suffixIcon: widget.suffixIcon
-        )
-    );
+            suffixIcon: widget.suffixIcon));
   }
 }

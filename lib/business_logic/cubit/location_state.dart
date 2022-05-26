@@ -12,6 +12,18 @@ class LocationLoaded extends LocationState {
   LocationLoaded({required this.lat, required this.long});
 }
 
+class LocationServiceDisabled extends LocationState {
+  final String errorMessage;
+
+  LocationServiceDisabled(this.errorMessage);
+}
+
+class LocationPermissionDenied extends LocationState {
+  final String errorMessage;
+
+  LocationPermissionDenied(this.errorMessage);
+}
+
 class LocationDetected extends LocationState {
   final String placeName;
   final int placeId;

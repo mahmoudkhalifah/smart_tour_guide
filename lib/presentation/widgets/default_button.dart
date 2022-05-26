@@ -33,21 +33,24 @@ class DefaultButton extends StatefulWidget {
 class _DefaultButtonState extends State<DefaultButton> {
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      elevation: 0,
-      onPressed: widget.onPressed,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22),
-          side: BorderSide(
-              color: widget.borderColor ?? Colors.transparent
-          )
-      ),
-      minWidth: widget.width,
-      height: widget.height,
-      color: widget.color ?? Theme.of(context).colorScheme.primary,
-      child: widget.child,
-      textColor: widget.textColor??Colors.white,
+    return LimitedBox(
+      maxWidth: widget.width,
+      child: MaterialButton(
+        elevation: 0,
+        onPressed: widget.onPressed,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+            side: BorderSide(
+                color: widget.borderColor ?? Colors.transparent
+            )
+        ),
+        height: widget.height,
+        minWidth: widget.width,
+        color: widget.color ?? Theme.of(context).colorScheme.primary,
+        child: widget.child,
+        textColor: widget.textColor??Colors.white,
 
+      ),
     );
   }
 }

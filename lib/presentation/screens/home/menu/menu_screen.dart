@@ -6,20 +6,18 @@ import 'package:flutter/material.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 40),
       shrinkWrap: true,
-      children: <Widget>[
+      children: [
         ListTile(
           title: Text(
             AppLocalizations.of(context).translate("favourite places"),
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(
@@ -38,7 +36,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(
@@ -57,7 +54,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(Icons.location_on),
@@ -73,7 +69,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(Icons.settings),
@@ -89,7 +84,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(Icons.error_outline),
@@ -105,7 +99,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(
@@ -124,7 +117,6 @@ class MenuScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
-              fontWeight: FontWeight.w600,
             ),
           ),
           leading: Icon(
