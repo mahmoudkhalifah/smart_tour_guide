@@ -237,49 +237,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : SizedBox(),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 state is LocationServiceDisabled
-                ? LimitedBox(
-                    maxWidth: MediaQuery.of(context).size.width * 0.3,
-                    child: Text(
-                      AppLocalizations.of(context)
-                          .translate(state.errorMessage),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
-                : SizedBox(),
-            state is LocationPermissionDenied
-                ? LimitedBox(
-                    maxWidth: MediaQuery.of(context).size.width * 0.3,
-                    child: Text(
-                      AppLocalizations.of(context)
-                          .translate(state.errorMessage),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
-                : SizedBox(),
+                    ? LimitedBox(
+                        maxWidth: MediaQuery.of(context).size.width * 0.3,
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate(state.errorMessage),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )
+                    : SizedBox(),
+                state is LocationPermissionDenied
+                    ? LimitedBox(
+                        maxWidth: MediaQuery.of(context).size.width * 0.3,
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate(state.errorMessage),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )
+                    : SizedBox(),
                 state is LocationServiceDisabled ||
-                              state is LocationPermissionDenied
-                          ? MaterialButton(
-                              onPressed: () {
-                                state is LocationServiceDisabled
-                                    ? BlocProvider.of<LocationCubit>(context)
-                                        .openLocationSettings()
-                                    : BlocProvider.of<LocationCubit>(context)
-                                        .openAppSettings();
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate("change settings"),
-                              ),
-                              textColor: Colors.white,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          : SizedBox()
+                        state is LocationPermissionDenied
+                    ? MaterialButton(
+                        onPressed: () {
+                          state is LocationServiceDisabled
+                              ? BlocProvider.of<LocationCubit>(context)
+                                  .openLocationSettings()
+                              : BlocProvider.of<LocationCubit>(context)
+                                  .openAppSettings();
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate("change settings"),
+                        ),
+                        textColor: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : SizedBox()
               ],
             ),
             state is LocationNotDetected
@@ -341,6 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 BlocProvider.of<LocationCubit>(context).clearLocation();
               },
+              color: Theme.of(context).colorScheme.primary,
               icon: Icon(
                 Icons.replay,
                 size: 20,
