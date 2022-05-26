@@ -35,5 +35,15 @@
     "snap tip1":"Place the object in the center.",
     "snap tip2":"For more accurate recognition, make sure the picture features only one statue.",
     "snap tip3":"If the statue is too big, take a photo to all object not a part of it.",
-    "got it":"Got It"
+    "got it":"Got It",
+
+    "not detected": "Not Detected",
+    "GPS off":"Please open GPS or choose yourself",
+    "no permissions":"No Permissions! allow the permissions or choose yourself",
+    "current location":"You are currently at",
+    "change settings":"Change Settings",
+    "too far":"You are too far from the places",
+    "choose place":"Choose your place",
+    "choose first":"Choose your place firstly"
+
 }

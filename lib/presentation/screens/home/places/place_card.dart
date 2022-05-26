@@ -146,6 +146,7 @@ class _PlaceCardState extends State<PlaceCard> {
                       onPressed: widget.onPressed,
                       child: Text(
                         AppLocalizations.of(context).translate("learn more"),
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -159,6 +160,7 @@ class _PlaceCardState extends State<PlaceCard> {
                         child: Text(
                           AppLocalizations.of(context)
                               .translate("browse place"),
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

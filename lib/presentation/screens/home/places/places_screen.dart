@@ -64,6 +64,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
             controller: _searchController,
             decoration: InputDecoration(
                 label: Text(AppLocalizations.of(context).translate("search")),
+                contentPadding: EdgeInsets.all(10),
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: _isSearching
                     ? IconButton(
