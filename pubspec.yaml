@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^8.0.0
   url_launcher: ^6.1.0
   audioplayers: ^0.20.1
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -83,9 +84,10 @@ flutter:
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
 
-    - family: Cairo
+    - family: Tajawal
       fonts:
-        - asset: assets/fonts/Cairo-VariableFont_wght.ttf
+        - asset: assets/fonts/Tajawal-Regular.ttf
+        - asset: assets/fonts/Tajawal-Bold.ttf
           weight: 400
   #   - family: Trajan Pro
   #     fonts:

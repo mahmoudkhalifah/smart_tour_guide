@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-import 'package:flutter/material.dart';
-
 class VoicePlayer extends StatefulWidget {
   const VoicePlayer({Key? key, required this.url}) : super(key: key);
   final String url;

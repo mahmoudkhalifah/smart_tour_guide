@@ -1,4 +1,3 @@
-import 'package:app/data/models/statue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Place {
@@ -9,6 +8,7 @@ class Place {
   late List<dynamic> images;
   late double lat;
   late double long;
+  late int range;
   
   Place.fromJson(Map<String,dynamic> json) {
     id = json["id"];
@@ -18,8 +18,9 @@ class Place {
     images = json["images"];
     lat = json["lat"];
     long = json["lon"];
+    range = json["range"];
   }
-
+  
     void openLocation(double lat, double long) async {
     var uri = Uri.parse("geo:$lat,$long?z=18");
     try {

@@ -2,12 +2,16 @@
 
 import 'package:app/business_logic/cubit/location_cubit.dart';
 import 'package:app/business_logic/cubit/places_cubit.dart';
+import 'package:app/business_logic/cubit/statues_cubit.dart';
+import 'package:app/data/api/statues_api.dart';
 import 'package:app/data/models/place.dart';
+import 'package:app/data/repository/statues_repository.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
+import 'package:app/presentation/screens/statue_info/statue_info_screen.dart';
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'places/places_screen.dart';
@@ -23,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isHome = true;
   late List<Place> availablePlaces;
   LocationCubit locationCubit = LocationCubit();
+  StatuesCubit statuesCubit = StatuesCubit(StatuesRepository(StatuesAPI()));
 
   void getPlaces() async {
     availablePlaces =
@@ -40,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     locationCubit.close();
+    statuesCubit.close();
     super.dispose();
   }
 
@@ -98,25 +104,30 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: BlocProvider(
         create: (context) => locationCubit,
-        child: FloatingActionButton(
-          elevation: 0,
-          onPressed: () {
-            var sheetController = showModalBottomSheet(
-                backgroundColor: Colors.grey[100],
-                context: context,
-                builder: (newContext) => BlocProvider.value(
-                    //create:(_) => LocationCubit(),
-                    value: locationCubit,
-                    child:
-                        Scaffold(body: buildCameraImagePickerBottomSheet())));
-            sheetController.then((value) {});
+        child: BlocBuilder<PlacesCubit, PlacesState>(
+          builder: (context, state) {
+            return FloatingActionButton(
+              elevation: 0,
+              onPressed: state is PlacesLoaded && state is! PlacesError
+                  ? () {
+                      var sheetController = showModalBottomSheet(
+                          backgroundColor: Colors.grey[100],
+                          context: context,
+                          builder: (newContext) => BlocProvider.value(
+                              value: locationCubit,
+                              child: Scaffold(
+                                  body: buildCameraImagePickerBottomSheet())));
+                      sheetController.then((value) {});
+                    }
+                  : () {},
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Icon(
+                Icons.camera_alt_rounded,
+                size: 35,
+                color: Colors.white,
+              ),
+            );
           },
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          child: Icon(
-            Icons.camera_alt_rounded,
-            size: 35,
-            color: Colors.white,
-          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -201,7 +212,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text(AppLocalizations.of(context).translate("not detected")),
       ));
     }
-    print(items.map((e) => e.value));
     return items;
   }
 
@@ -354,86 +364,192 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget buildAfterTakePhoto() {
+    Navigator.pop(context);
+    return BlocBuilder<StatuesCubit, StatuesState>(
+      builder: (context, state) {
+        if (state is StatuePredictionLoading) {
+          print("statue loading");
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Container(
+                height: 100,
+                width: 100,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
+          );
+        } else if (state is StatuePredicted) {
+          print("statue predicted");
+          Navigator.pushNamed(context, statueInfoViewRoute,
+              arguments: state.statue);
+        } else if (state is StatueNotPredicted) {
+          print("statue not predicted");
+        } else {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Container(
+                height: 100,
+                width: 100,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
+          );
+        }
+        return SizedBox();
+      },
+    );
+  }
+
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            buildLocationRow(),
-            SizedBox(
-              height: 10,
-            ),
-            BlocBuilder<LocationCubit, LocationState>(
-              builder: (context, state) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    MaterialButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: state is LocationDetected
-                          ? () async {
-                              print(state.placeId);
-                              // Capture a photo
-                              final XFile? photo = await _picker.pickImage(
-                                  source: ImageSource.camera);
-                            }
-                          : () {
-                              final snackbar = SnackBar(
-                                content: Text(AppLocalizations.of(context)
-                                    .translate("choose first")),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackbar);
-                            },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      shape: CircleBorder(),
-                    ),
-                    MaterialButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: state is LocationDetected
-                          ? () async {
-                              // Pick an image
-                              final XFile? image = await _picker.pickImage(
-                                  source: ImageSource.gallery);
-                            }
-                          : () {
-                              final snackbar = SnackBar(
-                                content: Text(AppLocalizations.of(context)
-                                    .translate("choose first")),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackbar);
-                            },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.photo,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      shape: CircleBorder(),
-                    ),
-                  ],
-                );
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            buildSnapTips(),
-          ],
+    return BlocProvider(
+      create: (context) => StatuesCubit(StatuesRepository(StatuesAPI())),
+      //create: (context) => statuesCubit,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              buildLocationRow(),
+              SizedBox(
+                height: 10,
+              ),
+              BlocBuilder<LocationCubit, LocationState>(
+                builder: (context, state) {
+                  return BlocBuilder<StatuesCubit, StatuesState>(
+                    builder: (context, statuesState) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MaterialButton(
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: state is LocationDetected
+                                ? () async {
+                                    // Capture a photo
+                                    XFile? image = await _picker.pickImage(
+                                        source: ImageSource.camera,
+                                        maxHeight: 250,
+                                        maxWidth: 250);
+
+                                    //buildAfterTakePhoto();
+
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      },
+                                    );
+                                    if (image != null) {
+                                      print("got image");
+                                      BlocProvider.of<StatuesCubit>(context)
+                                          .getStatueInfoByPhoto(
+                                              image, state.placeId);
+                                      print(statuesState);
+                                      if (statuesState
+                                          is StatuePredicted) {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                        print("statue predicted");
+                                        Navigator.pushNamed(
+                                            context, statueInfoViewRoute,
+                                            arguments: StatueInfoScreen(
+                                                statue: statuesState.statue));
+                                      } else if (statuesState
+                                          is StatueNotPredicted) {
+                                        print("statue not predicted");
+                                      }
+
+                                      int length = await image.length();
+                                      print(length);
+                                    } else {
+                                      print("image is null");
+                                    }
+                                  }
+                                : () {
+                                    final snackbar = SnackBar(
+                                      content: Text(AppLocalizations.of(context)
+                                          .translate("choose first")),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar);
+                                  },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                            shape: CircleBorder(),
+                          ),
+                          MaterialButton(
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: state is LocationDetected
+                                ? () async {
+                                    // Pick an image
+                                    XFile? image = await _picker.pickImage(
+                                        source: ImageSource.gallery,
+                                        maxHeight: 250,
+                                        maxWidth: 250);
+                                    if (image != null) {
+                                      print("got image");
+                                      BlocProvider.of<StatuesCubit>(context)
+                                          .getStatueInfoByPhoto(
+                                              image, state.placeId);
+                                      int length = await image.length();
+
+                                      print(length);
+                                    } else {
+                                      print("image is null");
+                                    }
+                                    //TODO statue builder to show loading and navigate to another page
+                                    print("gallery");
+                                  }
+                                : () {
+                                    final snackbar = SnackBar(
+                                      content: Text(AppLocalizations.of(context)
+                                          .translate("choose first")),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar);
+                                  },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Icon(
+                                Icons.photo,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                            shape: CircleBorder(),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              buildSnapTips(),
+            ],
+          ),
         ),
       ),
     );

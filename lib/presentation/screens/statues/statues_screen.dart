@@ -1,18 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/business_logic/cubit/places_cubit.dart';
+import 'package:app/business_logic/cubit/statues_cubit.dart';
 import 'package:app/data/models/statue.dart';
+import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/statue_info/statue_info_screen.dart';
 import 'package:app/presentation/screens/statues/statue_card.dart';
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../widgets/router.dart';
 
 class StatuesScreeen extends StatefulWidget {
   const StatuesScreeen({Key? key,required this.title,required this.placeId}) : super(key: key);
   final String title;
-  final placeId;
+  final int placeId;
   @override
   _StatuesScreeenState createState() => _StatuesScreeenState();
 }
@@ -23,14 +23,16 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PlacesCubit>(context).getStatues(widget.placeId);
+    BlocProvider.of<StatuesCubit>(context).getStatues(widget.placeId);
   }
 
   Widget buildBlocWidget() {
-    return BlocBuilder<PlacesCubit, PlacesState>(builder: (context, state) {
+    return BlocBuilder<StatuesCubit, StatuesState>(builder: (context, state) {
       if (state is StatuesLoaded) {
         statues = state.statues;
         return buildStatuesList();
+      } else if (state is StatuesError) {
+        return Text(AppLocalizations.of(context).translate("internet error"));
       } else {
         return Center(
           child: CircularProgressIndicator(
@@ -50,7 +52,7 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
         onPressed: () {
           Navigator.pushNamed(
               context,
-              AppRoute.statueInfoViewRoute,
+              statueInfoViewRoute,
               arguments: StatueInfoScreen(statue: statues[index]));
         },
       ),

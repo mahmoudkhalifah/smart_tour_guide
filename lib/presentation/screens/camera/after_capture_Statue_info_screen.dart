@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'dart:io';
 
 import 'package:app/data/models/statue.dart';

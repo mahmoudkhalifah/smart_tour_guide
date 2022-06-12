@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/business_logic/cubit/places_cubit.dart';
-import 'package:app/data/api/places_api.dart';
+
 import 'package:app/data/models/place.dart';
-import 'package:app/data/repository/places_repository.dart';
+
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/places/place_card.dart';
 import 'package:app/presentation/screens/place_info/place_info_screen.dart';
 import 'package:app/presentation/screens/statues/statues_screen.dart';
-import 'package:app/presentation/widgets/router.dart';
+
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +37,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
       if (state is PlacesLoaded) {
         places = state.places;
         return buildPlacesList();
-      } else {
+      } else if (state is PlacesError) {
+        return Text(AppLocalizations.of(context).translate("internet error"));
+      }else {
         return Center(
           child: CircularProgressIndicator(
             color: Theme.of(context).colorScheme.primary,
@@ -93,15 +96,14 @@ class _PlacesScreenState extends State<PlacesScreen> {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  AppRoute.placeInfoViewRoute,
+                  placeInfoViewRoute,
                   arguments: PlaceInfoScreen(place: places[index],),
                 );
               },
               onPressedBrowse: () {
                 Navigator.pushNamed(
-
                     context,
-                    AppRoute.statuesViewRoute,
+                    statuesViewRoute,
                   arguments: StatuesScreeen(
                       title: places[index].name,
                       placeId: places[index].id,

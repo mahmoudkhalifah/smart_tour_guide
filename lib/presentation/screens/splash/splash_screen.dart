@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/login_signup/login_signup_screen.dart';
 import 'package:app/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
