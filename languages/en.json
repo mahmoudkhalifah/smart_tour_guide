@@ -46,5 +46,6 @@
     "choose place":"Choose your place",
     "choose first":"Choose your place firstly",
 
-    "internet error":"Internet Connection Error"
+    "internet error":"Internet Connection Error",
+    "prediction error":"Can't predict the statue, please try again later"
 }

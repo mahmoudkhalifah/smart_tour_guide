@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isHome = true;
   late List<Place> availablePlaces;
   LocationCubit locationCubit = LocationCubit();
-  StatuesCubit statuesCubit = StatuesCubit(StatuesRepository(StatuesAPI()));
 
   void getPlaces() async {
     availablePlaces =
@@ -45,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     locationCubit.close();
-    statuesCubit.close();
     super.dispose();
   }
 
@@ -364,50 +362,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildAfterTakePhoto() {
-    Navigator.pop(context);
-    return BlocBuilder<StatuesCubit, StatuesState>(
-      builder: (context, state) {
-        if (state is StatuePredictionLoading) {
-          print("statue loading");
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Container(
-                height: 100,
-                width: 100,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
-          );
-        } else if (state is StatuePredicted) {
-          print("statue predicted");
-          Navigator.pushNamed(context, statueInfoViewRoute,
-              arguments: state.statue);
-        } else if (state is StatueNotPredicted) {
-          print("statue not predicted");
-        } else {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Container(
-                height: 100,
-                width: 100,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
-          );
-        }
-        return SizedBox();
-      },
-    );
-  }
 
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
@@ -428,117 +382,118 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, state) {
                   return BlocBuilder<StatuesCubit, StatuesState>(
                     builder: (context, statuesState) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MaterialButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            onPressed: state is LocationDetected
-                                ? () async {
-                                    // Capture a photo
-                                    XFile? image = await _picker.pickImage(
-                                        source: ImageSource.camera,
-                                        maxHeight: 250,
-                                        maxWidth: 250);
+                      return BlocListener<StatuesCubit, StatuesState>(
+                        bloc: BlocProvider.of<StatuesCubit>(context),
+                        listener: (context, state) {
+                          print(state);
+                          if (state is StatuePredictionLoading) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            );
+                          } else if (state is StatuePredicted) {
+                            Navigator.pop(context);
+                            //Navigator.pop(context);
+                            Navigator.pushNamed(context, statueInfoViewRoute,
+                                arguments: StatueInfoScreen(statue: state.statue));
+                          } else if (state is StatueNotPredicted) {
+                            Navigator.pop(context);
+                            final snackbar = SnackBar(
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .translate("prediction error")),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackbar);
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MaterialButton(
+                              color: Theme.of(context).colorScheme.primary,
+                              onPressed: state is LocationDetected
+                                  ? () async {
+                                      // Capture a photo
+                                      XFile? image = await _picker.pickImage(
+                                          source: ImageSource.camera,
+                                          maxHeight: 250,
+                                          maxWidth: 250);
 
-                                    //buildAfterTakePhoto();
+                                      if (image != null) {
 
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (context) {
-                                        return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      },
-                                    );
-                                    if (image != null) {
-                                      print("got image");
-                                      BlocProvider.of<StatuesCubit>(context)
-                                          .getStatueInfoByPhoto(
-                                              image, state.placeId);
-                                      print(statuesState);
-                                      if (statuesState
-                                          is StatuePredicted) {
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                        print("statue predicted");
-                                        Navigator.pushNamed(
-                                            context, statueInfoViewRoute,
-                                            arguments: StatueInfoScreen(
-                                                statue: statuesState.statue));
-                                      } else if (statuesState
-                                          is StatueNotPredicted) {
-                                        print("statue not predicted");
+                                        BlocProvider.of<StatuesCubit>(context)
+                                            .getStatueInfoByPhoto(
+                                                image, state.placeId);
+
+                                        int length = await image.length();
+                                        print(length);
                                       }
-
-                                      int length = await image.length();
-                                      print(length);
-                                    } else {
-                                      print("image is null");
                                     }
-                                  }
-                                : () {
-                                    final snackbar = SnackBar(
-                                      content: Text(AppLocalizations.of(context)
-                                          .translate("choose first")),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackbar);
-                                  },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Icon(
-                                Icons.camera_alt,
-                                color: Colors.white,
-                                size: 30,
+                                  : () {
+                                      final snackbar = SnackBar(
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .translate("choose first")),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackbar);
+                                    },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
                               ),
+                              shape: CircleBorder(),
                             ),
-                            shape: CircleBorder(),
-                          ),
-                          MaterialButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            onPressed: state is LocationDetected
-                                ? () async {
-                                    // Pick an image
-                                    XFile? image = await _picker.pickImage(
-                                        source: ImageSource.gallery,
-                                        maxHeight: 250,
-                                        maxWidth: 250);
-                                    if (image != null) {
-                                      print("got image");
-                                      BlocProvider.of<StatuesCubit>(context)
-                                          .getStatueInfoByPhoto(
-                                              image, state.placeId);
-                                      int length = await image.length();
+                            MaterialButton(
+                              color: Theme.of(context).colorScheme.primary,
+                              onPressed: state is LocationDetected
+                                  ? () async {
+                                      // Pick an image
+                                      XFile? image = await _picker.pickImage(
+                                          source: ImageSource.gallery,
+                                          maxHeight: 250,
+                                          maxWidth: 250);
+                                      if (image != null) {
+                                        BlocProvider.of<StatuesCubit>(context)
+                                            .getStatueInfoByPhoto(
+                                                image, state.placeId);
+                                        int length = await image.length();
 
-                                      print(length);
-                                    } else {
-                                      print("image is null");
+                                        print(length);
+                                      }
                                     }
-                                    //TODO statue builder to show loading and navigate to another page
-                                    print("gallery");
-                                  }
-                                : () {
-                                    final snackbar = SnackBar(
-                                      content: Text(AppLocalizations.of(context)
-                                          .translate("choose first")),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackbar);
-                                  },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Icon(
-                                Icons.photo,
-                                color: Colors.white,
-                                size: 30,
+                                  : () {
+                                      final snackbar = SnackBar(
+                                        content: Text(
+                                            AppLocalizations.of(context)
+                                                .translate("choose first")),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackbar);
+                                    },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Icon(
+                                  Icons.photo,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
                               ),
+                              shape: CircleBorder(),
                             ),
-                            shape: CircleBorder(),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   );
