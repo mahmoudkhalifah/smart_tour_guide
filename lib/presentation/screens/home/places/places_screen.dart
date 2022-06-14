@@ -101,7 +101,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
         ),
         Expanded(
           child: RefreshIndicator(
-            onRefresh: () async{
+            onRefresh: () async {
               BlocProvider.of<PlacesCubit>(context).getAllPlaces();
             },
             child: ListView.separated(
@@ -125,9 +125,10 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     context,
                     statuesViewRoute,
                     arguments: StatuesScreeen(
-                      title: Localizations.localeOf(context).languageCode == "en"
-                        ? places[index].name
-                        : places[index].arabicName,
+                      title:
+                          Localizations.localeOf(context).languageCode == "en"
+                              ? places[index].name
+                              : places[index].arabicName,
                       placeId: places[index].id,
                     ),
                   );
@@ -153,8 +154,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   void _search(String searchText) {
     _searchedPlaces = places
-        .where((place) => Localizations.localeOf(context).languageCode == "en"?
-            place.name.toLowerCase().contains(searchText.toLowerCase()):place.arabicName.toLowerCase().contains(searchText.toLowerCase()))
+        .where((place) => Localizations.localeOf(context).languageCode == "en"
+            ? place.name.toLowerCase().contains(searchText.toLowerCase())
+            : place.arabicName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
   }
 

@@ -194,17 +194,17 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 10.0,
         ),
-        buildTip("assets/images/tip 1.png",
+        buildTip("assets/images/tip1.png",
             AppLocalizations.of(context).translate("snap tip1")),
         const SizedBox(
           height: 10.0,
         ),
-        buildTip("assets/images/tip 2.png",
+        buildTip("assets/images/tip2.png",
             AppLocalizations.of(context).translate("snap tip2")),
         const SizedBox(
           height: 10.0,
         ),
-        buildTip("assets/images/tip 3.png",
+        buildTip("assets/images/tip3.png",
             AppLocalizations.of(context).translate("snap tip3")),
       ],
     );
