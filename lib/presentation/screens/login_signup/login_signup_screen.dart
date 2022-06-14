@@ -45,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               : MediaQuery.of(context).size.height * 0.55),
                       child: Image.asset(
                         "assets/images/pyramids.jpg",
+                        errorBuilder: (context, error, stackTrace) =>
+                            SizedBox(),
                       ),
                     ),
                   ),

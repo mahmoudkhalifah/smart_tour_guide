@@ -152,9 +152,11 @@ class _HomeScreenState extends State<HomeScreen> {
           errorBuilder: (context, error, stackTrace) => SizedBox(
             height: 50,
             width: 50,
-            child: Icon(
-              Icons.error,
-              color: Colors.red,
+            child: Center(
+              child: Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
             ),
           ),
           height: 50,
