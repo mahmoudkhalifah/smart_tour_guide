@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/data/models/place.dart';
+import 'package:app/localization/app_localizations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -31,7 +32,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: Text(widget.place.name),
+        title: Text(Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.name
+                      : widget.place.arabicName,),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
@@ -42,7 +45,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.place.name,
+                    Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.name
+                      : widget.place.arabicName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -124,11 +129,11 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                       textColor: Theme.of(context).colorScheme.primary,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.location_on),
                           SizedBox(width: 10),
                           Text(
-                            "show on map",
+                            AppLocalizations.of(context).translate("show on map"),
                             style: TextStyle(fontSize: 16),
                           )
                         ],
@@ -138,7 +143,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                       height: 15,
                     ),
                     Text(
-                      widget.place.description,
+                      Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.description
+                      : widget.place.arabicDescription,
                       style: TextStyle(
                         fontSize: 20,
                       ),

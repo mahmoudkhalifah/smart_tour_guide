@@ -20,10 +20,9 @@ class PlacesAPI {
     dio.options.headers["Authorization"] = "Token fe17fa90bc66b10e2ca10ee4da8e7bde1080f671";
   }
 
-  //TODO language change
   Future<List<dynamic>> getAllPlaces() async {
     try {
-      Response response = await dio.get("en/places/");
+      Response response = await dio.get("places/");
       return response.data;
     } catch (e) {
       print(e);

@@ -11,9 +11,17 @@ class StatuesCubit extends Cubit<StatuesState> {
 
   final StatuesRepository statuesRepository;
 
+  void resetToInitial() {
+    emit(StatuesInitial());
+  }
+
   void getStatues(int placeId) {
     statuesRepository.getStatues(placeId).then((statues) {
-      emit(StatuesLoaded(statues));
+      if(statues.isNotEmpty) {
+        emit(StatuesLoaded(statues));
+      } else {
+        emit(StatuesError());
+      }
     });
   }
 

@@ -8,6 +8,10 @@ class PlacesRepository {
 
   Future<List<Place>> getAllPlaces() async {
     final places = await placesAPI.getAllPlaces();
-    return places.map((place) => Place.fromJson(place)).toList();
+    List<Place> sortedPlaces = places.map((place) => Place.fromJson(place)).toList();
+    sortedPlaces.sort((a,b) {
+      return a.isAvailable == true? 0:1;
+    });
+    return sortedPlaces;
   }
 }

@@ -49,7 +49,9 @@ class _PlaceCardState extends State<PlaceCard> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.place.name,
+                    Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.name
+                      : widget.place.arabicName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -105,7 +107,9 @@ class _PlaceCardState extends State<PlaceCard> {
             ),
             Column(children: [
               Text(
-                widget.place.description,
+                Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.description
+                      : widget.place.arabicDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

@@ -65,7 +65,7 @@ class LocationCubit extends Cubit<LocationState> {
       }
     }
     if (minDistance < nearestPlace!.range ) {
-      emit(LocationDetected(nearestPlace.name, nearestPlace.id));
+      emit(LocationDetected(nearestPlace.name,nearestPlace.arabicName, nearestPlace.id));
     } else {
       emit(LocationNotDetected("too far"));
     }
@@ -73,8 +73,8 @@ class LocationCubit extends Cubit<LocationState> {
 
   void setPlace(String placeName, List<Place> places) {
     if (placeName != "") {
-      int placeId = places.singleWhere((place) => place.name == placeName).id;
-      emit(LocationDetected(placeName, placeId));
+      Place place = places.singleWhere((place) => place.name == placeName);
+      emit(LocationDetected(place.name,place.arabicName,place.id));
     } else {
       emit(LocationNotDetected("choose place"));
     }

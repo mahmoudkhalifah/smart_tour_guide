@@ -23,7 +23,7 @@ class PlacesScreen extends StatefulWidget {
 class _PlacesScreenState extends State<PlacesScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
-  //todo make a list of type places
+
   late List<Place> places;
   late List<Place> _searchedPlaces;
 
@@ -38,8 +38,22 @@ class _PlacesScreenState extends State<PlacesScreen> {
         places = state.places;
         return buildPlacesList();
       } else if (state is PlacesError) {
-        return Text(AppLocalizations.of(context).translate("internet error"));
-      }else {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(AppLocalizations.of(context).translate("no data")),
+            MaterialButton(
+              onPressed: () {
+                BlocProvider.of<PlacesCubit>(context).resetToInitial();
+                BlocProvider.of<PlacesCubit>(context).getAllPlaces();
+              },
+              child: Text(AppLocalizations.of(context).translate("try again")),
+              color: Theme.of(context).colorScheme.primary,
+              textColor: Colors.white,
+            )
+          ],
+        );
+      } else {
         return Center(
           child: CircularProgressIndicator(
             color: Theme.of(context).colorScheme.primary,
@@ -97,19 +111,22 @@ class _PlacesScreenState extends State<PlacesScreen> {
                 Navigator.pushNamed(
                   context,
                   placeInfoViewRoute,
-                  arguments: PlaceInfoScreen(place: places[index],),
+                  arguments: PlaceInfoScreen(
+                    place: places[index],
+                  ),
                 );
               },
               onPressedBrowse: () {
                 Navigator.pushNamed(
-                    context,
-                    statuesViewRoute,
+                  context,
+                  statuesViewRoute,
                   arguments: StatuesScreeen(
-                      title: places[index].name,
-                      placeId: places[index].id,
+                    title: Localizations.localeOf(context).languageCode == "en"
+                      ? places[index].name
+                      : places[index].arabicName,
+                    placeId: places[index].id,
                   ),
                 );
-
               },
             ),
             itemCount: _searchController.text.isNotEmpty
@@ -131,8 +148,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   void _search(String searchText) {
     _searchedPlaces = places
-        .where((place) =>
-            place.name.toLowerCase().contains(searchText.toLowerCase()))
+        .where((place) => Localizations.localeOf(context).languageCode == "en"?
+            place.name.toLowerCase().contains(searchText.toLowerCase()):place.arabicName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
   }
 

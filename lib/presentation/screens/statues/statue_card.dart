@@ -40,7 +40,9 @@ class _StatuesCardState extends State<StatuesCard> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
-                  widget.statue.name,
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.name
+                      : widget.statue.arabicName,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
@@ -68,7 +70,9 @@ class _StatuesCardState extends State<StatuesCard> {
             ),
             Column(children: [
               Text(
-                widget.statue.description,
+                Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.description
+                      : widget.statue.arabicDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

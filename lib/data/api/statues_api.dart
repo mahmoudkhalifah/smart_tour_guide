@@ -22,10 +22,9 @@ class StatuesAPI {
         "Token fe17fa90bc66b10e2ca10ee4da8e7bde1080f671";
   }
 
-  //TODO language change
   Future<List<dynamic>> getStatues(int placeId) async {
     try {
-      Response response = await dio.get("en/statues/place=$placeId");
+      Response response = await dio.get("statues/place=$placeId");
       return response.data;
     } catch (e) {
       print(e);
@@ -34,14 +33,13 @@ class StatuesAPI {
   }
 
   Future<List<dynamic>> getStatueInfoByPhoto(XFile image, int placeId) async {
-    //TODO api call with passing photo
     try {
       String imageName = image.path.split('/').last;
       FormData formData = FormData.fromMap({
         "image":
             await MultipartFile.fromFile(image.path, filename:imageName),
       });
-      Response response = await dio.post("en/predict/place=$placeId",data: formData);
+      Response response = await dio.post("predict/place=$placeId",data: formData);
       print(response.data);
       return response.data;
     } catch (e) {

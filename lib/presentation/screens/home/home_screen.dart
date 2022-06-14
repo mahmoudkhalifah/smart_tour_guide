@@ -9,9 +9,11 @@ import 'package:app/data/repository/statues_repository.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/menu/menu_screen.dart';
 import 'package:app/presentation/screens/statue_info/statue_info_screen.dart';
+import 'package:app/presentation/widgets/offline_builder.dart';
 import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'places/places_screen.dart';
@@ -54,8 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
             child: Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: isHome ? PlacesScreen() : MenuScreen(),
-        )), //child changes regarding to bottom bar selection
+          child: isHome
+              ? OfflineBuilderWidget(child:PlacesScreen(),isButton: false,)
+              : MenuScreen(),
+        )),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 4,
@@ -100,32 +104,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: BlocProvider(
-        create: (context) => locationCubit,
-        child: BlocBuilder<PlacesCubit, PlacesState>(
-          builder: (context, state) {
-            return FloatingActionButton(
-              elevation: 0,
-              onPressed: state is PlacesLoaded && state is! PlacesError
-                  ? () {
-                      var sheetController = showModalBottomSheet(
-                          backgroundColor: Colors.grey[100],
-                          context: context,
-                          builder: (newContext) => BlocProvider.value(
-                              value: locationCubit,
-                              child: Scaffold(
-                                  body: buildCameraImagePickerBottomSheet())));
-                      sheetController.then((value) {});
-                    }
-                  : () {},
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: Icon(
-                Icons.camera_alt_rounded,
-                size: 35,
-                color: Colors.white,
-              ),
-            );
-          },
+
+      floatingActionButton: OfflineBuilderWidget(
+        isButton: true,
+        child: BlocProvider(
+          create: (context) => locationCubit,
+          child: BlocBuilder<PlacesCubit, PlacesState>(
+            builder: (context, state) {
+              return FloatingActionButton(
+                elevation: 0,
+                onPressed: state is PlacesLoaded && state is! PlacesError
+                    ? () {
+                        var sheetController = showModalBottomSheet(
+                            backgroundColor: Colors.grey[100],
+                            context: context,
+                            builder: (newContext) => BlocProvider.value(
+                                value: locationCubit,
+                                child: Scaffold(
+                                    body: buildCameraImagePickerBottomSheet())));
+                        sheetController.then((value) {});
+                      }
+                    : () { },
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Icon(
+                  Icons.camera_alt_rounded,
+                  size: 35,
+                  color: Colors.white,
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -192,14 +200,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<DropdownMenuItem<String>> getDropDownItemsList(bool isDetected) {
     List<DropdownMenuItem<String>> items = availablePlaces
-        .map((e) => e.name)
-        .map<DropdownMenuItem<String>>((String value) {
+        .map((e) => [e.name, e.arabicName])
+        .map<DropdownMenuItem<String>>((List<String> value) {
       return DropdownMenuItem<String>(
-        value: value,
+        value: value[0],
         child: LimitedBox(
             maxWidth: MediaQuery.of(context).size.width * 0.4,
             child: Text(
-              value,
+              Localizations.localeOf(context).languageCode == "en"
+                  ? value[0]
+                  : value[1],
               overflow: TextOverflow.ellipsis,
             )),
       );
@@ -362,7 +372,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget buildCameraImagePickerBottomSheet() {
     final ImagePicker _picker = ImagePicker();
     return BlocProvider(
@@ -400,16 +409,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pop(context);
                             //Navigator.pop(context);
                             Navigator.pushNamed(context, statueInfoViewRoute,
-                                arguments: StatueInfoScreen(statue: state.statue));
+                                arguments:
+                                    StatueInfoScreen(statue: state.statue));
                           } else if (state is StatueNotPredicted) {
                             Navigator.pop(context);
                             final snackbar = SnackBar(
-                                        content: Text(
-                                            AppLocalizations.of(context)
-                                                .translate("prediction error")),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackbar);
+                              content: Text(AppLocalizations.of(context)
+                                  .translate("prediction error")),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackbar);
                           }
                         },
                         child: Row(
@@ -427,7 +436,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           maxWidth: 250);
 
                                       if (image != null) {
-
                                         BlocProvider.of<StatuesCubit>(context)
                                             .getStatueInfoByPhoto(
                                                 image, state.placeId);

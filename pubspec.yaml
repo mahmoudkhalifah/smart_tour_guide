@@ -45,6 +45,7 @@ dependencies:
   url_launcher: ^6.1.0
   audioplayers: ^0.20.1
   dio: ^4.0.6
+  flutter_offline: ^2.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -66,8 +67,6 @@ flutter:
     - assets/images/
     - languages/en.json
     - languages/ar.json
-    - assets/data/places.json
-    - assets/data/statues.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

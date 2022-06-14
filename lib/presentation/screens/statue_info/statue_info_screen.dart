@@ -39,7 +39,9 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
-                  widget.statue.name,
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.name
+                      : widget.statue.arabicName,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
@@ -97,14 +99,18 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  widget.statue.description,
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.description
+                      : widget.statue.arabicDescription,
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
               ),
             ),
-            VoicePlayer(url: widget.statue.voiceOver)
+            VoicePlayer(url: Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.voiceOver
+                      : widget.statue.arabicVoiceOver,)
           ],
         ),
       ),

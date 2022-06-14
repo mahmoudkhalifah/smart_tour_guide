@@ -26,8 +26,9 @@ class LocationPermissionDenied extends LocationState {
 
 class LocationDetected extends LocationState {
   final String placeName;
+  final String arabicPlaceName;
   final int placeId;
-  LocationDetected(this.placeName,this.placeId);
+  LocationDetected(this.placeName,this.arabicPlaceName,this.placeId);
 }
 
 class LocationNotDetected extends LocationState {

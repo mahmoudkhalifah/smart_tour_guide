@@ -10,6 +10,10 @@ class PlacesCubit extends Cubit<PlacesState> {
   final PlacesRepository placesRepository;
 
   PlacesCubit(this.placesRepository) : super(PlacesInitial());
+
+  void resetToInitial() {
+    emit(PlacesInitial());
+  }
   
   Future<List<Place>> getAllPlaces() {
     return placesRepository.getAllPlaces().then((places) {
