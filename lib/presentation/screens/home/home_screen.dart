@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width * 0.6,
           child: Text(
             tip,
-            maxLines: 3,
+            maxLines: 5,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 16,
