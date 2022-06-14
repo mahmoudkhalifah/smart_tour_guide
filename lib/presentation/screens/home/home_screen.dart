@@ -56,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Padding(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: isHome
-              ? OfflineBuilderWidget(child:PlacesScreen(),isButton: false,)
+              ? OfflineBuilderWidget(
+                  child: PlacesScreen(),
+                  isButton: false,
+                )
               : MenuScreen(),
         )),
       ),
@@ -103,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
       floatingActionButton: OfflineBuilderWidget(
         isButton: true,
         child: BlocProvider(
@@ -120,10 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (newContext) => BlocProvider.value(
                                 value: locationCubit,
                                 child: Scaffold(
-                                    body: buildCameraImagePickerBottomSheet())));
+                                    body:
+                                        buildCameraImagePickerBottomSheet())));
                         sheetController.then((value) {});
                       }
-                    : () { },
+                    : () {},
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 child: Icon(
                   Icons.camera_alt_rounded,
@@ -146,6 +149,14 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Image.asset(
           image,
+          errorBuilder: (context, error, stackTrace) => SizedBox(
+            height: 50,
+            width: 50,
+            child: Icon(
+              Icons.error,
+              color: Colors.red,
+            ),
+          ),
           height: 50,
           width: 50,
         ),

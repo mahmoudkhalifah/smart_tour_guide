@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               scrollDirection: Axis.horizontal,
               physics: const NeverScrollableScrollPhysics(),
               child: Opacity(
-                opacity: 0.4,
+                opacity: 0.6,
                 child: ClipOval(
                   child: CircleAvatar(
                     radius: MediaQuery.of(context).size.width,
