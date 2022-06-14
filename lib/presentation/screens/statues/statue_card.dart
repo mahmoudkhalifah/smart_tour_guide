@@ -3,6 +3,7 @@
 import 'package:app/data/models/statue.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class StatuesCard extends StatefulWidget {
@@ -91,13 +92,16 @@ class _StatuesCardState extends State<StatuesCard> {
                   child: Hero(
                     tag: widget.statue.id,
                     child: ClipRRect(
-                        child: FadeInImage.assetNetwork(
-                      placeholder: "assets/images/loading.gif",
-                      image: widget.statue.images[0],
-                      width: 308,
-                      height: 163,
-                      fit: BoxFit.cover,
-                    )),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.statue.images[0],
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                          width: 308,
+                          height: 163,
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+                        )
+
+                    ),
                   )),
               SizedBox(
                 height: 9,

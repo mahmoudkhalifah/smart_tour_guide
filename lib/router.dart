@@ -16,7 +16,7 @@ import 'presentation/screens/statue_info/statue_info_screen.dart';
 import 'presentation/screens/statues/statues_screen.dart';
 
 class AppRoute{
-  //TODO offline
+
   static Route<dynamic> generateRoute(RouteSettings settings){
 
     switch(settings.name){

@@ -13,7 +13,6 @@ import 'package:app/presentation/widgets/offline_builder.dart';
 import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'places/places_screen.dart';
@@ -394,7 +393,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       return BlocListener<StatuesCubit, StatuesState>(
                         bloc: BlocProvider.of<StatuesCubit>(context),
                         listener: (context, state) {
-                          print(state);
                           if (state is StatuePredictionLoading) {
                             showDialog(
                               context: context,
@@ -439,9 +437,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         BlocProvider.of<StatuesCubit>(context)
                                             .getStatueInfoByPhoto(
                                                 image, state.placeId);
-
-                                        int length = await image.length();
-                                        print(length);
                                       }
                                     }
                                   : () {
@@ -476,9 +471,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         BlocProvider.of<StatuesCubit>(context)
                                             .getStatueInfoByPhoto(
                                                 image, state.placeId);
-                                        int length = await image.length();
-
-                                        print(length);
                                       }
                                     }
                                   : () {

@@ -6,11 +6,9 @@ import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/statue_info/statue_info_screen.dart';
 import 'package:app/presentation/screens/statues/statue_card.dart';
 import 'package:app/presentation/widgets/offline_builder.dart';
-
 import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 
 class StatuesScreeen extends StatefulWidget {
   const StatuesScreeen({Key? key, required this.title, required this.placeId})
@@ -63,19 +61,24 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
   }
 
   Widget buildStatuesList() {
-    return ListView.separated(
-      padding: const EdgeInsets.all(20.0),
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) => StatuesCard(
-        statue: statues[index],
-        onPressed: () {
-          Navigator.pushNamed(context, statueInfoViewRoute,
-              arguments: StatueInfoScreen(statue: statues[index]));
-        },
-      ),
-      itemCount: statues.length,
-      separatorBuilder: (context, index) => SizedBox(
-        height: 20,
+    return RefreshIndicator(
+      onRefresh: () async {
+        BlocProvider.of<StatuesCubit>(context).getStatues(widget.placeId);
+      },
+      child: ListView.separated(
+        padding: const EdgeInsets.all(20.0),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) => StatuesCard(
+          statue: statues[index],
+          onPressed: () {
+            Navigator.pushNamed(context, statueInfoViewRoute,
+                arguments: StatueInfoScreen(statue: statues[index]));
+          },
+        ),
+        itemCount: statues.length,
+        separatorBuilder: (context, index) => SizedBox(
+          height: 20,
+        ),
       ),
     );
   }

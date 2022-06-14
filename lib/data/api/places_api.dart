@@ -25,7 +25,6 @@ class PlacesAPI {
       Response response = await dio.get("places/");
       return response.data;
     } catch (e) {
-      print(e);
       return [];
     }
   }

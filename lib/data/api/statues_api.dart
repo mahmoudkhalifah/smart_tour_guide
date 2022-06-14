@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:app/data/models/statue.dart';
 import 'package:app/strings.dart';
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
@@ -27,9 +24,9 @@ class StatuesAPI {
       Response response = await dio.get("statues/place=$placeId");
       return response.data;
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
+    
   }
 
   Future<List<dynamic>> getStatueInfoByPhoto(XFile image, int placeId) async {
@@ -40,11 +37,9 @@ class StatuesAPI {
             await MultipartFile.fromFile(image.path, filename:imageName),
       });
       Response response = await dio.post("predict/place=$placeId",data: formData);
-      print(response.data);
       return response.data;
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
   }
 }

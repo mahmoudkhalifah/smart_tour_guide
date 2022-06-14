@@ -100,40 +100,45 @@ class _PlacesScreenState extends State<PlacesScreen> {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.all(20.0),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) => PlaceCard(
-              place: _searchController.text.isNotEmpty
-                  ? _searchedPlaces[index]
-                  : places[index],
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  placeInfoViewRoute,
-                  arguments: PlaceInfoScreen(
-                    place: places[index],
-                  ),
-                );
-              },
-              onPressedBrowse: () {
-                Navigator.pushNamed(
-                  context,
-                  statuesViewRoute,
-                  arguments: StatuesScreeen(
-                    title: Localizations.localeOf(context).languageCode == "en"
-                      ? places[index].name
-                      : places[index].arabicName,
-                    placeId: places[index].id,
-                  ),
-                );
-              },
-            ),
-            itemCount: _searchController.text.isNotEmpty
-                ? _searchedPlaces.length
-                : places.length,
-            separatorBuilder: (context, index) => SizedBox(
-              height: 20,
+          child: RefreshIndicator(
+            onRefresh: () async{
+              BlocProvider.of<PlacesCubit>(context).getAllPlaces();
+            },
+            child: ListView.separated(
+              padding: const EdgeInsets.all(20.0),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) => PlaceCard(
+                place: _searchController.text.isNotEmpty
+                    ? _searchedPlaces[index]
+                    : places[index],
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    placeInfoViewRoute,
+                    arguments: PlaceInfoScreen(
+                      place: places[index],
+                    ),
+                  );
+                },
+                onPressedBrowse: () {
+                  Navigator.pushNamed(
+                    context,
+                    statuesViewRoute,
+                    arguments: StatuesScreeen(
+                      title: Localizations.localeOf(context).languageCode == "en"
+                        ? places[index].name
+                        : places[index].arabicName,
+                      placeId: places[index].id,
+                    ),
+                  );
+                },
+              ),
+              itemCount: _searchController.text.isNotEmpty
+                  ? _searchedPlaces.length
+                  : places.length,
+              separatorBuilder: (context, index) => SizedBox(
+                height: 20,
+              ),
             ),
           ),
         ),

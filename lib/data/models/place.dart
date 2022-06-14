@@ -30,7 +30,7 @@ class Place {
     try {
       await launchUrl(uri);
     } catch (e) {
-      print(e);
+      e.toString();
     }
   }
 }

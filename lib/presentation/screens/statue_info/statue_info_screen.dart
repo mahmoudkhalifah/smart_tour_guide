@@ -2,6 +2,7 @@
 
 import 'package:app/data/models/statue.dart';
 import 'package:app/presentation/screens/statue_info/voice_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -108,9 +109,11 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
                 ),
               ),
             ),
-            VoicePlayer(url: Localizations.localeOf(context).languageCode == "en"
-                      ? widget.statue.voiceOver
-                      : widget.statue.arabicVoiceOver,)
+            VoicePlayer(
+              url: Localizations.localeOf(context).languageCode == "en"
+                  ? widget.statue.voiceOver
+                  : widget.statue.arabicVoiceOver,
+            )
           ],
         ),
       ),
@@ -122,12 +125,21 @@ class _StatueInfoScreenState extends State<StatueInfoScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-      child: FadeInImage.assetNetwork(
-        placeholder: "assets/images/loading.gif",
-        image: imagePath,
-        width: double.infinity,
+      child: CachedNetworkImage(
+        imageUrl: imagePath,
+        placeholder: (context, url) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        width: 308,
+        height: 163,
         fit: BoxFit.cover,
-      ));
+        errorWidget: (context, url, error) => Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
+      )
+
+      );
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
