@@ -112,6 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
           create: (context) => locationCubit,
           child: BlocBuilder<PlacesCubit, PlacesState>(
             builder: (context, state) {
+              if(state is PlacesLoaded) {
+                getPlaces();
+              }
               return FloatingActionButton(
                 elevation: 0,
                 onPressed: state is PlacesLoaded && state is! PlacesError
