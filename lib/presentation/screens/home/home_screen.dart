@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Center(
             child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          padding: EdgeInsets.fromLTRB(10,10,10,0),
           child: isHome
               ? OfflineBuilderWidget(
                   child: PlacesScreen(),
@@ -443,8 +443,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       // Capture a photo
                                       XFile? image = await _picker.pickImage(
                                           source: ImageSource.camera,
-                                          maxHeight: 250,
-                                          maxWidth: 250);
+                                          maxHeight: 500,
+                                          maxWidth: 500);
 
                                       if (image != null) {
                                         BlocProvider.of<StatuesCubit>(context)
@@ -478,8 +478,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       // Pick an image
                                       XFile? image = await _picker.pickImage(
                                           source: ImageSource.gallery,
-                                          maxHeight: 250,
-                                          maxWidth: 250);
+                                          maxHeight: 500,
+                                          maxWidth: 500);
                                       if (image != null) {
                                         BlocProvider.of<StatuesCubit>(context)
                                             .getStatueInfoByPhoto(

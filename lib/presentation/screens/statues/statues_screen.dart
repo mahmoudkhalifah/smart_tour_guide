@@ -20,7 +20,11 @@ class StatuesScreeen extends StatefulWidget {
 }
 
 class _StatuesScreeenState extends State<StatuesScreeen> {
+  final TextEditingController _searchController = TextEditingController();
+  bool _isSearching = false;
+
   late List<Statue> statues;
+  late List<Statue> _searchedStatues;
 
   @override
   void initState() {
@@ -65,20 +69,68 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
       onRefresh: () async {
         BlocProvider.of<StatuesCubit>(context).getStatues(widget.placeId);
       },
-      child: ListView.separated(
-        padding: const EdgeInsets.all(20.0),
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => StatuesCard(
-          statue: statues[index],
-          onPressed: () {
-            Navigator.pushNamed(context, statueInfoViewRoute,
-                arguments: StatueInfoScreen(statue: statues[index]));
-          },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10,10,10,0),
+            child: SizedBox(
+            width: 350,
+            height: 45,
+            child: TextFormField(
+              onTap: () {
+                _startSearching();
+              },
+              onChanged: (value) {
+                setState(() {
+                  _search(value);
+                });
+              },
+              controller: _searchController,
+              decoration: InputDecoration(
+                  label: Text(AppLocalizations.of(context).translate("search")),
+                  contentPadding: EdgeInsets.all(10),
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: _isSearching
+                      ? IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            setState(() {
+                              FocusScope.of(context).unfocus();
+                              _stopSearching();
+                            });
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  )),
+            ),
         ),
-        itemCount: statues.length,
-        separatorBuilder: (context, index) => SizedBox(
-          height: 20,
-        ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(20.0),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) => StatuesCard(
+                statue: _searchController.text.isNotEmpty
+                          ? _searchedStatues[index]
+                          : statues[index],
+                onPressed: () {
+                  Navigator.pushNamed(context, statueInfoViewRoute,
+                      arguments: StatueInfoScreen(statue: _searchController.text.isNotEmpty
+                          ? _searchedStatues[index]
+                          : statues[index],));
+                },
+              ),
+              itemCount: _searchController.text.isNotEmpty
+                  ? _searchedStatues.length
+                  : statues.length,
+              separatorBuilder: (context, index) => SizedBox(
+                height: 20,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -91,5 +143,27 @@ class _StatuesScreeenState extends State<StatuesScreeen> {
       ),
       body: OfflineBuilderWidget(child: buildBlocWidget(),isButton: false,),
     );
+  }
+
+    void _search(String searchText) {
+    _searchedStatues = statues
+        .where((statue) => Localizations.localeOf(context).languageCode == "en"
+            ? statue.name.toLowerCase().contains(searchText.toLowerCase())
+            : statue.arabicName.contains(searchText))
+        .toList();
+  }
+
+  void _startSearching() {
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void _stopSearching() {
+    setState(() {
+      _isSearching = false;
+      _searchController.clear();
+      _searchedStatues.clear();
+    });
   }
 }

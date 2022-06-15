@@ -1,6 +1,6 @@
 import 'package:app/strings.dart';
-import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class StatuesAPI {

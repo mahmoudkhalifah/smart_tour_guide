@@ -128,24 +128,18 @@ class _PlaceCardState extends State<PlaceCard> {
                   clipBehavior: Clip.hardEdge,
                   child: Hero(
                     tag: widget.place.id,
-                    child: ClipRRect(
-                        child: CachedNetworkImage(
-                          imageUrl: widget.place.images[0],
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
-                          width: 308,
-                          height: 163,
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
-                        )
-                        //   FadeInImage.assetNetwork(
-                        //     placeholder: "assets/images/loading.gif",
-                        //     imageErrorBuilder: (context, error, stackTrace) => SizedBox(width: 308,
-                        //     height: 163,child: Icon(Icons.error,color: Colors.red,)),
-                        //     image: widget.place.images[0],
-                        //     width: 308,
-                        //     height: 163,
-                        //     fit: BoxFit.cover,
-                        // )س
+                    child: GestureDetector(
+                      onTap: widget.onPressed,
+                      child: ClipRRect(
+                          child: CachedNetworkImage(
+                            imageUrl: widget.place.images[0],
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                            width: 308,
+                            height: 163,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+                          )
+                      ),
                     ),
                   )),
               SizedBox(
@@ -158,7 +152,7 @@ class _PlaceCardState extends State<PlaceCard> {
                 children: [
                   DefaultButton(
                       height: 35,
-                      width: 125,
+                      width: widget.place.isAvailable? 125:150,
                       onPressed: widget.onPressed,
                       child: Text(
                         AppLocalizations.of(context).translate("learn more"),

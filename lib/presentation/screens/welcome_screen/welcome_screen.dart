@@ -29,7 +29,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   var welcomeController = PageController();
   List<WelcomeModel> welcome = [
-    //TODO change photos
     WelcomeModel(
         image: 'assets/images/welcome1.png',
         descKey: "welcome desc1"

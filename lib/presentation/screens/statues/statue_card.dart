@@ -91,16 +91,19 @@ class _StatuesCardState extends State<StatuesCard> {
                   clipBehavior: Clip.hardEdge,
                   child: Hero(
                     tag: widget.statue.id,
-                    child: ClipRRect(
-                        child: CachedNetworkImage(
-                          imageUrl: widget.statue.images[0],
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
-                          width: 308,
-                          height: 163,
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
-                        )
-
+                    child: GestureDetector(
+                      onTap: widget.onPressed,
+                      child: ClipRRect(
+                          child: CachedNetworkImage(
+                            imageUrl: widget.statue.images[0],
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                            width: 308,
+                            height: 163,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+                          )
+                    
+                      ),
                     ),
                   )),
               SizedBox(
@@ -108,7 +111,7 @@ class _StatuesCardState extends State<StatuesCard> {
               ),
               DefaultButton(
                   height: 35,
-                  width: 125,
+                  width: 150,
                   onPressed: widget.onPressed,
                   child: Text(
                     AppLocalizations.of(context).translate("learn more"),

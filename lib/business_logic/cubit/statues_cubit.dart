@@ -1,7 +1,7 @@
 import 'package:app/data/models/statue.dart';
 import 'package:app/data/repository/statues_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 part 'statues_state.dart';

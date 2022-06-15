@@ -116,7 +116,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     context,
                     placeInfoViewRoute,
                     arguments: PlaceInfoScreen(
-                      place: places[index],
+                      place: _searchController.text.isNotEmpty
+                          ? _searchedPlaces[index]
+                          : places[index],
                     ),
                   );
                 },
@@ -156,7 +158,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
     _searchedPlaces = places
         .where((place) => Localizations.localeOf(context).languageCode == "en"
             ? place.name.toLowerCase().contains(searchText.toLowerCase())
-            : place.arabicName.toLowerCase().contains(searchText.toLowerCase()))
+            : place.arabicName.contains(searchText))
         .toList();
   }
 
@@ -170,6 +172,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
     setState(() {
       _isSearching = false;
       _searchController.clear();
+      _searchedPlaces.clear();
     });
   }
 }

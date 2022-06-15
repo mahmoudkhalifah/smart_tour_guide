@@ -87,7 +87,6 @@ class _VoicePlayerState extends State<VoicePlayer> {
             value: position.inSeconds.toDouble(),
             onChanged: (value) async {
               seekToSec(value.toInt());
-
               await audioPlayer.resume();
             },
           ),
