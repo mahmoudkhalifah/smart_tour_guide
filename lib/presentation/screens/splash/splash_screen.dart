@@ -14,6 +14,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+
+  final TextStyle style = TextStyle(
+    fontFamily: "Roboto",
+    fontWeight: FontWeight.bold,
+    fontSize: 35,
+    color: Colors.white
+  );
+
   Future checkFirstTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
@@ -52,14 +61,24 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           gradient: LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
         colors: const [Color(0xffffb319), Color(0xffFFE194)],
       )),
-      child: Center(
-        child: Image.asset("assets/images/splash.png",width: MediaQuery.of(context).size.width*0.8,errorBuilder: (context, error, stackTrace) => SizedBox(),)
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Smart",style: style,),
+          Text("Tour",style: style,),
+          Text("Guide",style: style,),
+          // Center(
+          //   child: Image.asset("assets/images/splash.png",width: MediaQuery.of(context).size.width*0.8,errorBuilder: (context, error, stackTrace) => SizedBox(),)
+          // ),
+        ],
       ),
     ));
   }
