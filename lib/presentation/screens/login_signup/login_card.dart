@@ -1,9 +1,8 @@
 import 'package:app/localization/app_localizations.dart';
-import 'package:app/presentation/screens/forgot_password/forgot_password_screen.dart';
 import 'package:app/presentation/widgets/default_text_field.dart';
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/router.dart';
 
 class LoginCard extends StatefulWidget {
   const LoginCard({Key? key}) : super(key: key);
@@ -56,7 +55,7 @@ class _LoginCardState extends State<LoginCard> {
             onPressed: () {
               Navigator.pushNamed(
                   context,
-                  AppRoute.forgotPasswordViewRoute,
+                  forgotPasswordViewRoute,
               );
             },
             child: Text(

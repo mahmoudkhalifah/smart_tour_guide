@@ -38,17 +38,27 @@ dependencies:
   permission_handler: ^8.3.0
   shared_preferences: ^2.0.13
   smooth_page_indicator: ^1.0.0+2
-  camera: ^0.9.4+21
   image_picker: ^0.8.5
   geocoding: ^2.0.4
   geolocator: ^8.0.0
   url_launcher: ^6.1.0
   audioplayers: ^0.20.1
+  dio: ^4.0.6
+  flutter_offline: ^2.1.0
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/icon_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,11 +72,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icons/
     - assets/images/
     - languages/en.json
     - languages/ar.json
-    - assets/data/places.json
-    - assets/data/statues.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -83,9 +92,10 @@ flutter:
         - asset: assets/fonts/Roboto-Bold.ttf
           weight: 700
 
-    - family: Cairo
+    - family: Tajawal
       fonts:
-        - asset: assets/fonts/Cairo-VariableFont_wght.ttf
+        - asset: assets/fonts/Tajawal-Regular.ttf
+        - asset: assets/fonts/Tajawal-Bold.ttf
           weight: 400
   #   - family: Trajan Pro
   #     fonts:

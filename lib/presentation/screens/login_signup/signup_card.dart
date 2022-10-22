@@ -47,7 +47,6 @@ class _SignupCardState extends State<SignupCard> {
           ),
           validator: (value) {
             if(value!.isEmpty) {
-              // TODO
               return AppLocalizations.of(context).translate("password validation");
             }
           },
@@ -68,7 +67,6 @@ class _SignupCardState extends State<SignupCard> {
           ),
           validator: (value) {
             if(value!.isEmpty) {
-              // TODO
               return AppLocalizations.of(context).translate("confirm password validation");
             }
           },

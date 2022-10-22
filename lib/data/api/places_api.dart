@@ -1,37 +1,31 @@
-import 'dart:convert';
 
-import 'package:flutter/services.dart';
+import 'package:app/strings.dart';
+import 'package:dio/dio.dart';
+
 
 class PlacesAPI {
-  //todo add dio and get form API not local json file
 
+
+  late Dio dio;
+
+  PlacesAPI() {
+    BaseOptions options = BaseOptions(
+      baseUrl: baseUrl,
+      receiveDataWhenStatusError: true,
+      connectTimeout: 20 * 1000, // 60 seconds,
+      receiveTimeout: 20 * 1000,
+    );
+
+    dio = Dio(options);
+    dio.options.headers["Authorization"] = "Token fe17fa90bc66b10e2ca10ee4da8e7bde1080f671";
+  }
 
   Future<List<dynamic>> getAllPlaces() async {
-    //todo get from API not local using dio
     try {
-      print("getAllPlaces");
-      String jsonString = await rootBundle.loadString("assets/data/places.json");
-      print(json.decode(jsonString));
-      return json.decode(jsonString);
+      Response response = await dio.get("places/");
+      return response.data;
     } catch (e) {
-      print(e);
       return [];
     }
-    //todo now
   }
-
-  Future<List<dynamic>> getStatues(int placeId) async {
-    //todo get from API not local using dio
-    //todo must provide place id to the API
-    try {
-      String jsonString = await rootBundle.loadString("assets/data/statues.json");
-      print(json.decode(jsonString));
-      return json.decode(jsonString);
-    } catch (e) {
-      print(e);
-    }
-    return [];
-    //todo now
-  }
-
 }
