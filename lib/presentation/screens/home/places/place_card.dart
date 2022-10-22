@@ -2,6 +2,7 @@
 
 import 'package:app/data/models/place.dart';
 import 'package:app/localization/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/default_button.dart';
@@ -49,7 +50,9 @@ class _PlaceCardState extends State<PlaceCard> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.place.name,
+                    Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.name
+                      : widget.place.arabicName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -105,7 +108,9 @@ class _PlaceCardState extends State<PlaceCard> {
             ),
             Column(children: [
               Text(
-                widget.place.description,
+                Localizations.localeOf(context).languageCode == "en"
+                      ? widget.place.description
+                      : widget.place.arabicDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -123,14 +128,19 @@ class _PlaceCardState extends State<PlaceCard> {
                   clipBehavior: Clip.hardEdge,
                   child: Hero(
                     tag: widget.place.id,
-                    child: ClipRRect(
-                        child: FadeInImage.assetNetwork(
-                      placeholder: "assets/images/loading.gif",
-                      image: widget.place.images[0],
-                      width: 308,
-                      height: 163,
-                      fit: BoxFit.cover,
-                    )),
+                    child: GestureDetector(
+                      onTap: widget.onPressed,
+                      child: ClipRRect(
+                          child: CachedNetworkImage(
+                            imageUrl: widget.place.images[0],
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                            width: 308,
+                            height: 163,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+                          )
+                      ),
+                    ),
                   )),
               SizedBox(
                 height: 9,
@@ -142,7 +152,7 @@ class _PlaceCardState extends State<PlaceCard> {
                 children: [
                   DefaultButton(
                       height: 35,
-                      width: 125,
+                      width: widget.place.isAvailable? 125:150,
                       onPressed: widget.onPressed,
                       child: Text(
                         AppLocalizations.of(context).translate("learn more"),

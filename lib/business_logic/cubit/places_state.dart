@@ -11,9 +11,6 @@ class PlacesLoaded extends PlacesState {
   PlacesLoaded(this.places);
 }
 
-class StatuesLoaded extends PlacesState {
-  final List<Statue> statues;
-  StatuesLoaded(this.statues);
-}
+class PlacesError extends PlacesState {}
 
 

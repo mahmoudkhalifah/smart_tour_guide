@@ -24,6 +24,8 @@
     "learn more":"Learn More",
     "browse place":"Browse Place",
 
+    "show on map":"show on map",
+
     "favourite places":"Favourite Places",
     "favourite statues":"Favourite Statues",
     "visited places":"Visited Places",
@@ -44,6 +46,11 @@
     "change settings":"Change Settings",
     "too far":"You are too far from the places",
     "choose place":"Choose your place",
-    "choose first":"Choose your place firstly"
+    "choose first":"Choose your place firstly",
 
+    "internet error":"Internet Connection Error",
+    "prediction error":"Can't predict the statue try again",
+
+    "no data":"No data available now please try again later",
+    "try again":"Try Again"
 }

@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/business_logic/cubit/places_cubit.dart';
 import 'package:app/data/models/place.dart';
+import 'package:app/localization/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PlaceInfoScreen extends StatefulWidget {
   final Place place;
@@ -34,7 +33,11 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: Text(widget.place.name),
+        title: Text(
+          Localizations.localeOf(context).languageCode == "en"
+              ? widget.place.name
+              : widget.place.arabicName,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsetsDirectional.only(
@@ -45,7 +48,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.place.name,
+                    Localizations.localeOf(context).languageCode == "en"
+                        ? widget.place.name
+                        : widget.place.arabicName,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: true,
@@ -127,11 +132,12 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                       textColor: Theme.of(context).colorScheme.primary,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.location_on),
                           SizedBox(width: 10),
                           Text(
-                            "show on map",
+                            AppLocalizations.of(context)
+                                .translate("show on map"),
                             style: TextStyle(fontSize: 16),
                           )
                         ],
@@ -141,7 +147,9 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
                       height: 15,
                     ),
                     Text(
-                      widget.place.description,
+                      Localizations.localeOf(context).languageCode == "en"
+                          ? widget.place.description
+                          : widget.place.arabicDescription,
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -161,12 +169,20 @@ class _PlaceInfoScreenState extends State<PlaceInfoScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
-      child: FadeInImage.assetNetwork(
-        placeholder: "assets/images/loading.gif",
-        image: imagePath,
-        width: double.infinity,
+      child: CachedNetworkImage(
+        imageUrl: imagePath,
+        placeholder: (context, url) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        width: 308,
+        height: 163,
         fit: BoxFit.cover,
-      ));
+        errorWidget: (context, url, error) => Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
+      )
+      );
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,

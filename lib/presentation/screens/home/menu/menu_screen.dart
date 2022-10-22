@@ -9,7 +9,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
       shrinkWrap: true,
       children: [
         ListTile(

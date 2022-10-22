@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:app/localization/app_localizations.dart';
-import 'package:app/presentation/widgets/router.dart';
+import 'package:app/router.dart';
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,31 +31,27 @@ class _AppState extends State<App> {
 
   changeLanguage(Locale locale) {
     setState(() {
-      prefs.setString('lang',locale.languageCode);
+      prefs.setString('lang', locale.languageCode);
       _locale = locale;
       getFontFamily(locale.languageCode);
     });
   }
 
   getFontFamily(String language) {
-    if(language == "en") {
-        _fontFamily = "Roboto";
-      } else if (language == "ar") {
-        _fontFamily = "Cairo";
-      }
-      setState(() {
-        
-      });
+    if (language == "en") {
+      _fontFamily = "Roboto";
+    } else if (language == "ar") {
+      _fontFamily = "Tajawal";
+    }
+    setState(() {});
   }
 
   getLocalLocale() async {
     prefs = await SharedPreferences.getInstance();
     final String? language = prefs.getString('lang');
-    if(language!=null){
+    if (language != null) {
       _locale = Locale(language);
-      setState(() {
-        
-      });
+      setState(() {});
     } else {
       _locale = Locale(defaultLocale.split('_')[0]);
     }
@@ -100,7 +97,7 @@ class _AppState extends State<App> {
         // from the list (English, in this case).
         return supportedLocales.first;
       },
-      initialRoute: AppRoute.splashViewRoute,
+      initialRoute: splashViewRoute,
       onGenerateRoute: AppRoute.generateRoute,
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,

@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/business_logic/cubit/places_cubit.dart';
-import 'package:app/data/api/places_api.dart';
+
 import 'package:app/data/models/place.dart';
-import 'package:app/data/repository/places_repository.dart';
+
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/screens/home/places/place_card.dart';
 import 'package:app/presentation/screens/place_info/place_info_screen.dart';
 import 'package:app/presentation/screens/statues/statues_screen.dart';
-import 'package:app/presentation/widgets/router.dart';
+
+import 'package:app/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +23,7 @@ class PlacesScreen extends StatefulWidget {
 class _PlacesScreenState extends State<PlacesScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
-  //todo make a list of type places
+
   late List<Place> places;
   late List<Place> _searchedPlaces;
 
@@ -36,6 +37,22 @@ class _PlacesScreenState extends State<PlacesScreen> {
       if (state is PlacesLoaded) {
         places = state.places;
         return buildPlacesList();
+      } else if (state is PlacesError) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(AppLocalizations.of(context).translate("no data")),
+            MaterialButton(
+              onPressed: () {
+                BlocProvider.of<PlacesCubit>(context).resetToInitial();
+                BlocProvider.of<PlacesCubit>(context).getAllPlaces();
+              },
+              child: Text(AppLocalizations.of(context).translate("try again")),
+              color: Theme.of(context).colorScheme.primary,
+              textColor: Colors.white,
+            )
+          ],
+        );
       } else {
         return Center(
           child: CircularProgressIndicator(
@@ -83,38 +100,48 @@ class _PlacesScreenState extends State<PlacesScreen> {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.all(20.0),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) => PlaceCard(
-              place: _searchController.text.isNotEmpty
-                  ? _searchedPlaces[index]
-                  : places[index],
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  AppRoute.placeInfoViewRoute,
-                  arguments: PlaceInfoScreen(place: places[index],),
-                );
-              },
-              onPressedBrowse: () {
-                Navigator.pushNamed(
-
+          child: RefreshIndicator(
+            onRefresh: () async {
+              BlocProvider.of<PlacesCubit>(context).getAllPlaces();
+            },
+            child: ListView.separated(
+              padding: const EdgeInsets.all(20.0),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) => PlaceCard(
+                place: _searchController.text.isNotEmpty
+                    ? _searchedPlaces[index]
+                    : places[index],
+                onPressed: () {
+                  Navigator.pushNamed(
                     context,
-                    AppRoute.statuesViewRoute,
-                  arguments: StatuesScreeen(
-                      title: places[index].name,
+                    placeInfoViewRoute,
+                    arguments: PlaceInfoScreen(
+                      place: _searchController.text.isNotEmpty
+                          ? _searchedPlaces[index]
+                          : places[index],
+                    ),
+                  );
+                },
+                onPressedBrowse: () {
+                  Navigator.pushNamed(
+                    context,
+                    statuesViewRoute,
+                    arguments: StatuesScreeen(
+                      title:
+                          Localizations.localeOf(context).languageCode == "en"
+                              ? places[index].name
+                              : places[index].arabicName,
                       placeId: places[index].id,
-                  ),
-                );
-
-              },
-            ),
-            itemCount: _searchController.text.isNotEmpty
-                ? _searchedPlaces.length
-                : places.length,
-            separatorBuilder: (context, index) => SizedBox(
-              height: 20,
+                    ),
+                  );
+                },
+              ),
+              itemCount: _searchController.text.isNotEmpty
+                  ? _searchedPlaces.length
+                  : places.length,
+              separatorBuilder: (context, index) => SizedBox(
+                height: 20,
+              ),
             ),
           ),
         ),
@@ -129,8 +156,9 @@ class _PlacesScreenState extends State<PlacesScreen> {
 
   void _search(String searchText) {
     _searchedPlaces = places
-        .where((place) =>
-            place.name.toLowerCase().contains(searchText.toLowerCase()))
+        .where((place) => Localizations.localeOf(context).languageCode == "en"
+            ? place.name.toLowerCase().contains(searchText.toLowerCase())
+            : place.arabicName.contains(searchText))
         .toList();
   }
 
@@ -144,6 +172,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
     setState(() {
       _isSearching = false;
       _searchController.clear();
+      _searchedPlaces.clear();
     });
   }
 }

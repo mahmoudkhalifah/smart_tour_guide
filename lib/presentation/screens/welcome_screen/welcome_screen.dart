@@ -30,15 +30,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   var welcomeController = PageController();
   List<WelcomeModel> welcome = [
     WelcomeModel(
-        image: 'assets/images/pyramids.jpg',
+        image: 'assets/images/welcome1.png',
         descKey: "welcome desc1"
     ),
     WelcomeModel(
-        image: 'assets/images/fb.png',
+        image: 'assets/images/welcome2.png',
         descKey: "welcome desc2"
     ),
     WelcomeModel(
-        image: 'assets/images/go.png',
+        image: 'assets/images/welcome3.png',
         descKey: "welcome desc3"
     ),
   ];
@@ -112,6 +112,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 },
                   child: const Icon(
                     Icons.arrow_forward_ios,
+                    color: Colors.white,
                   ),
                   backgroundColor: Color(0xffffb319),
                 ),

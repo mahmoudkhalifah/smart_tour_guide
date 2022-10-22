@@ -15,7 +15,17 @@ class SocialMediaButton extends StatelessWidget {
       onPressed: () {},
       elevation: 0,
       mini: true,
-      child: Image.asset(name),
+      child: Image.asset(
+        name,
+        errorBuilder: (context, error, stackTrace) => const  SizedBox(
+          child: Center(
+            child: Icon(
+              Icons.error,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
     );
   }

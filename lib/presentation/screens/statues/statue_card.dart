@@ -3,6 +3,7 @@
 import 'package:app/data/models/statue.dart';
 import 'package:app/localization/app_localizations.dart';
 import 'package:app/presentation/widgets/default_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class StatuesCard extends StatefulWidget {
@@ -40,7 +41,9 @@ class _StatuesCardState extends State<StatuesCard> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
-                  widget.statue.name,
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.name
+                      : widget.statue.arabicName,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
@@ -68,7 +71,9 @@ class _StatuesCardState extends State<StatuesCard> {
             ),
             Column(children: [
               Text(
-                widget.statue.description,
+                Localizations.localeOf(context).languageCode == "en"
+                      ? widget.statue.description
+                      : widget.statue.arabicDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -86,21 +91,27 @@ class _StatuesCardState extends State<StatuesCard> {
                   clipBehavior: Clip.hardEdge,
                   child: Hero(
                     tag: widget.statue.id,
-                    child: ClipRRect(
-                        child: FadeInImage.assetNetwork(
-                      placeholder: "assets/images/loading.gif",
-                      image: widget.statue.images[0],
-                      width: 308,
-                      height: 163,
-                      fit: BoxFit.cover,
-                    )),
+                    child: GestureDetector(
+                      onTap: widget.onPressed,
+                      child: ClipRRect(
+                          child: CachedNetworkImage(
+                            imageUrl: widget.statue.images[0],
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                            width: 308,
+                            height: 163,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+                          )
+                    
+                      ),
+                    ),
                   )),
               SizedBox(
                 height: 9,
               ),
               DefaultButton(
                   height: 35,
-                  width: 125,
+                  width: 150,
                   onPressed: widget.onPressed,
                   child: Text(
                     AppLocalizations.of(context).translate("learn more"),
